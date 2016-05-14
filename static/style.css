@@ -1,0 +1,40 @@
+html {
+    height:100%;
+    min-height:100%;
+}
+
+body {
+    margin: 0 0;
+    height:100%;
+    min-height:100%;
+    background-color: white;
+    color: black;
+    text-align: center;
+    font-family: "Helvetica Neue", Helvectica, sans-serif;
+}
+
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.btn {
+    color: white;
+    background: #e74c3c;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    letter-spacing: 2.5px;
+    border: none;
+    line-height: 22px;
+    padding: 10px 20px 10px;
+    text-align: center;
+    display: inline-block;
+    margin-top: 5px;
+    margin-bottom: 18px;
+    text-decoration: none;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    font-weight: bold;
+}
