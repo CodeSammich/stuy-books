@@ -23,28 +23,24 @@ body {
 .navbar-form {
   float:right;
 }
-
-.bg {
+.jumbotron {
   background: url('../static/stuylib.jpg') no-repeat center center;
   position: fixed;
   width: 100%;
-  height: 100vh; /*same height as jumbotron */
+  height: 100vh;
   top:50px;
   left:0;
-  z-index: -1;
-}
-
-.jumbotron {
-  margin-bottom: 0px;
-  height: 350px;
   color: white;
   text-shadow: black 0 0.25em 0.25em;
-  background:transparent;
 }
-/*
+
 .columns {
     margin-right: -10px;
-    margin-left: -10px
+    margin-left: -10px;
+    position: absolute;
+    width: 90vw;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .columns::before {
@@ -62,6 +58,6 @@ body {
     float: left;
     padding-right: 10px;
     padding-left: 10px;
-    text-align: center;
+    width: 50%;
+    margin: auto;
 }
-*/
