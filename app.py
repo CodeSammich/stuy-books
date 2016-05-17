@@ -8,8 +8,8 @@ app = Flask(__name__)
 def home():
     return render_template("home.html")
 
-@app.route("/login", methods=["GET","POST"])
-def login():
+@app.route("/signin", methods=["GET","POST"])
+def signin():
     if request.method == "GET":
         return render_template("login.html")
     else:
