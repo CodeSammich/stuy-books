@@ -5,16 +5,17 @@
     <div class="jumbotron">
       <div class="container-responsive">
         <div class="columns">
-          <div class="column">
-            <h1>Hello world</h1>
+          <div class="column" style="width:65%;">
+            <h1 style="font-size:75px; letter-spacing:5px; padding-top:50px;">StuyBooks</h1>
           </div>
-          <div class="column">
+          <div class="column" style="width:35%;padding-top:10%;">
             <form accept-charset="UTF-8" action="/join" autocomplete="off" method="post">
             <div class="form-group">
-              <dl class="form"><dd><input type="text" name="user[login]" class="form-control form-control-lg input-block" placeholder="Pick a username"></dd></dl>
-              <dl class="form"><dd><input type="text" name="user[email]" class="form-control form-control-lg input-block" placeholder="Your email address"></dd></dl>
-              <dl class="form"><dd><input type="password" name="user[password]" class="form-control form-control-lg input-block" placeholder="Create a password"></dd></dl>
-            </div>
+              <dl class="form"><dd><input type="text" name="user[login]" class="form-control form-control-lg s" placeholder="Pick a username"></dd></dl>
+              <dl class="form"><dd><input type="text" name="user[email]" class="form-control form-control-lg s" placeholder="Your email address"></dd></dl>
+              <dl class="form"><dd><input type="password" name="user[password]" class="form-control form-control-lg input-block s" placeholder="Create a password"></dd><br></dl>
+            </div><br>
+            <button class="btn btn-success btn-block s" style="height:50px; font-size:16px; letter-spacing:1.5px;" type="submit" id="submit">Sign up for StuyBooks</button>
             </form>
           </div>
         </div>

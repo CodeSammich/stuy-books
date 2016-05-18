@@ -8,12 +8,38 @@ body {
     height:100%;
     min-height:100%;
     color: white;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    /*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.5
+}
+
+h1 {
+    font-size: 40px;
+    letter-spacing: 1.5px;
+}
+
+h2 {
+  font-size: 30px;
+  letter-spacing: 1px;
+}
+
+h3 {
+  font-size: 20px;
+  letter-spacing: .75px;
 }
 
 p {
     margin-top: 0;
     margin-bottom: 10px;
+}
+
+.s {
+  width:80%;
 }
 
 /*  BASE.HTML  */
@@ -37,8 +63,6 @@ p {
     margin-left: -10px;
     position: absolute;
     width: 90vw;
-    top: 40%;
-    transform: translateY(-40%);
 }
 
 .columns::before {
@@ -54,6 +78,7 @@ p {
 
 .column {
     float: left;
+    text-align: center;
     padding-right: 10px;
     padding-left: 10px;
     width: 50%;
@@ -75,10 +100,15 @@ p {
   text-align: center;
 }
 
+.form-control-lg {
+  height: 42px;
+  font-size: 16px;
+}
+
 /*  LOGIN.HTML  */
 .container-login {
-    height:100vh;
-    background-color: #EEEEEE;
+  height:100vh;
+  background-color: #EEEEEE;
 }
 
 .container-form {
@@ -110,16 +140,24 @@ p {
 }
 
 /*  SIGNUP.HTML  */
+
+
 .container-signup {
   color:black;
   height: 100vh;
-  padding-top: 50px;
+  padding-top: 75px;
+  width:70%;
   margin: auto;
 }
 
-#signup-info {
-  width: 400px;
-  padding: 40px 50px 30px 40px;
-  border-radius: 10px;
-  border-style: groove;
+#signup {
+  padding-top: 150px;
+}
+
+table, tr, td {
+  text-align: center;
+  background-color: white;
+  padding: 10px 20px 0;
+  border: .25px solid #828282;
+  width: 300px;
 }
