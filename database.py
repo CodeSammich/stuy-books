@@ -21,8 +21,6 @@ def addUser(email, passwordHash, first, last):
         String with errors, or empty string if there aren't any
     '''
     db = connection['Users']
-    if email.find('@stuy.edu') == -1:
-        return 'You must register with your stuy.edu account'
     useraccounts = db.accounts.find({'email':email})
     if len(r) != 0:
         return 'An account has already been registered under this email'
