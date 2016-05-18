@@ -139,6 +139,17 @@ p {
   width: 400px;
 }
 
+.gmail {
+  margin: auto;
+  background-color: white;
+  padding: 10px 0 0;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #828282;
+  border-width: .25px;
+  width: 400px;
+}
+
 /*  SIGNUP.HTML  */
 
 
