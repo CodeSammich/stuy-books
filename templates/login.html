@@ -1,20 +1,36 @@
-<!DOCTYPE html>
-
+<!DOCTYPE HTML>
+<html>
 <head>
-  <h1>LOGIN</h1>
-
+  <title>Sign in - StuyBooks</title>
+  <link href="../static/bootstrap.min.css" rel="stylesheet">
+  <link rel="shortcut icon" href="../static/logo.png">
+  <link rel="stylesheet" type="text/css" href="../static/style.css"/>
 </head>
 
 <body>
+  <div class="container-login">
+  <div class="login">
+    <div>
+      <img class="logo" src="{{ url_for('static', filename='logo.png') }}" height="65"><br><br>
+      <p style="font-size: 30px;">Sign in to StuyBooks</p>
+    </div>
+    <br>
+    <div class="container-form">
+    <!--<button class="btn btn-default" type="button" id="emailLogin">Log in via Gmail</button><br><br>-->
 
-  <button type="button" id="emailLogin">Log in via Gmail</button><br><br>
-  
-  <form name="login" method="POST">
-    Email: <input type="text" name="uname" id="uname"><br><br>
-    Password: <input type="text" name="pword" id="pword"><br><br>
-    <button type="submit" id="submit">Submit</button>
-  </form>
-
-</body>
-
+    <form name="login" method="POST">
+      Email<br><div class="input-group">
+        <input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon2">
+        <span class="input-group-addon" id="basic-addon2">@stuy.edu</span>
+      </div><br>
+      Password<br><input type="password" class="form-control form-control-lg input-block" placeholder="Create a password"><br>
+      <button class="btn btn-success btn-block" type="submit" id="submit">Submit</button>
+    </form>
+    </div>
+    <br>
+    <div class="new">
+      <p style="font-size: 15px;">New to StuyBooks? <a href="signup">Create an account</a></p>
+    </div>
+  </div>
+  </body>
 </html>

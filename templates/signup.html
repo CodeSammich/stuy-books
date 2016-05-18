@@ -1,22 +1,23 @@
-<!DOCTYPE html>
-
-<head>
-  <h1>SIGNUP</h1>
-
-</head>
-
-<body>
-
-  <button type="button" id="emailLogin">Log in via Gmail</button><br><br>
-  
-  <form name="login" method="POST">
-    Name: <input type="text" name="name" id="name"><br><br>
-    Email: <input type="text" name="email" id="email"><br><br>
-<!--    Username: <input type="text" name="uname" id="uname"><br><br> -->
-    Password: <input type="text" name="pword" id="pword"><br><br>
-    <button type="submit" id="submit">Submit</button>
-  </form>
-
-</body>
-
-</html>
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block contents %}
+<div class="container-signup" id="grad">
+  <p style="font-size:35px; letter-spacing:2px;">Join StuyBooks</p>
+  <div class="columns">
+    <div class="column" style="padding-top:100px;">
+      <!--<button type="button" id="emailLogin" class="btn btn-default">Log in via Gmail</button><br><br>-->
+      <form name="login" method="POST">
+        Email<br><div class="input-group" style="width:85%">
+          <input type="text" class="form-control" aria-describedby="basic-addon2"><span class="input-group-addon" id="basic-addon2">@stuy.edu</span>
+        </div>
+        <p style="color:#8F8F8F; font-size:13px;">Enter the stuy.edu username issued to you.</p><br>
+        Password<br><input type="password" class="form-control" name="pword" id="pword" style="width:85%"><br><br>
+        <button type="submit" id="submit" class="btn btn-success" style="width: 150px;">Create an account</button>
+      </form>
+    </div>
+    <div class="column" style="padding-top:150px;">
+      Hello
+    </div>
+  </div>
+</div>
+{% endblock %}
