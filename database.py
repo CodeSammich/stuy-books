@@ -24,7 +24,7 @@ def addUser(email, passwordHash, first, last):
     if email.find('@stuy.edu') == -1:
         return 'You must register with your stuy.edu account'
     useraccounts = db.accounts.find({'email':email})
-    if len(r) != 0:
+    if len(useraccounts) != 0:
         return 'An account has already been registered under this email'
     db.accounts.insert_one({
         'email': replaceApostrophe(email),
@@ -44,10 +44,14 @@ def authenticate(email, passwordHash):
         True if the password and email exist in the database, False otherwise
     '''
     db = connection['Users']
-    result = db.accounts.find_one({'email': email})
+    '''result = db.accounts.find_one({'email': email}) #definitely only 1 acc.
     if len(result) == 0:
+        return False '''
+    try
+        db.accounts.find( {'email':email, 'password':passwordHash } )
+    except:
         return False
-    return result['passwordHash'] == passwordHash
+    return True
 
 def updatePassword(email, newPasswordHash):
     '''
@@ -59,14 +63,17 @@ def updatePassword(email, newPasswordHash):
         True if successful, False otherwise
     '''
     db = connection['Users']
-    result = db.accounts.find_one({'email': email})
+'''    result = db.accounts.find_one({'email': email})
     if len(result) == 0:
         return False
-    else:
+    else:'''
+    try:
         db.accounts.update_one(
             {'email':email},
             {
                 '$set': {'passwordHash': newPasswordHash}
             }
         )
-        return True
+    except: # catch *all* exceptions
+        return False
+    return True
