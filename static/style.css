@@ -8,11 +8,52 @@ body {
     height:100%;
     min-height:100%;
     color: white;
-    letter-spacing: 2.5px;
-    text-align: center;
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
+.container {
+  margin-top: 75px;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 1.5
+}
+
+h1 {
+    font-size: 40px;
+    letter-spacing: 1.5px;
+}
+
+h2 {
+  font-size: 30px;
+  letter-spacing: 1px;
+}
+
+h3 {
+  font-size: 20px;
+  letter-spacing: .75px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.s {
+  width:80%;
+}
+
+.vcenter {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+}
+
+/*  BASE.HTML  */
 .navbar {
   height: 75px;
 }
@@ -20,31 +61,18 @@ body {
 .navbar-header {
   display: inline-block;
 }
+
 .navbar-form {
   float:right;
 }
 
-.bg {
-  background: url('../static/stuylib.jpg') no-repeat center center;
-  position: fixed;
-  width: 100%;
-  height: 100vh; /*same height as jumbotron */
-  top:50px;
-  left:0;
-  z-index: -1;
-}
 
-.jumbotron {
-  margin-bottom: 0px;
-  height: 350px;
-  color: white;
-  text-shadow: black 0 0.25em 0.25em;
-  background:transparent;
-}
-/*
+/*  INDEX.HTML  */
 .columns {
     margin-right: -10px;
-    margin-left: -10px
+    margin-left: -10px;
+    position: absolute;
+    width: 90vw;
 }
 
 .columns::before {
@@ -60,8 +88,116 @@ body {
 
 .column {
     float: left;
+    text-align: center;
     padding-right: 10px;
     padding-left: 10px;
-    text-align: center;
+    width: 50%;
+    margin: auto;
 }
-*/
+
+.index {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  text-align: center;
+
+}
+
+.jumbotron {
+  background: url('../static/stuylib.jpg') no-repeat center center;
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top:50px;
+  left:0;
+  color: white;
+  /*text-shadow: black 0 0.25em 0.25em;*/
+}
+
+.login {
+  text-align: center;
+}
+
+.notneeded {
+  margin: auto;
+  font-size:20px;
+  color:black;
+  background-color: white;
+  padding: 10px 10px 10px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #828282;
+  border-width: .25px;
+  width: 500px;
+}
+
+.form-control-lg {
+  height: 42px;
+  font-size: 16px;
+}
+
+/*  LOGIN.HTML  */
+.container-login {
+  height:100vh;
+  background-color: #EEEEEE;
+}
+
+.container-form {
+  text-align: left;
+  margin: auto;
+  width: 400px;
+  background-color: white;
+  padding: 40px 50px 30px 40px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #828282;
+  border-width: .25px;
+}
+
+.login {
+  padding-top: 100px;
+  color: black;
+}
+
+.new {
+  margin: auto;
+  background-color: white;
+  padding: 10px 0 0;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #828282;
+  border-width: .25px;
+  width: 400px;
+}
+
+.gmail {
+  margin: auto;
+  background-color: white;
+  padding: 10px 0 0;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #828282;
+  border-width: .25px;
+  width: 400px;
+}
+
+/*  SIGNUP.HTML  */
+
+
+.container-signup {
+  color:black;
+  height: 100vh;
+  padding-top: 75px;
+  width:70%;
+  margin: auto;
+}
+
+#signup {
+  padding-top: 150px;
+}
+
+table, tr, td {
+  text-align: center;
+  background-color: white;
+  padding: 10px 20px 0;
+  border: .25px solid #828282;
+  width: 300px;
+}

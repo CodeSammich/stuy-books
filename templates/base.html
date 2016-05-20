@@ -9,23 +9,22 @@
     <title>{% block title %}{% endblock %} - StuyBooks</title>
     <!-- Bootstrap -->
     <link href="../static/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}">
     <link rel="stylesheet" type="text/css" href="../static/style.css"/>
   <body>
     <div class="top">
     <nav class="navbar navbar-default navbar-fixed-top">
        <div class="test">
          <div class="navbar-header">
-           <a class="navbar-brand" href="#"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
+           <a class="navbar-brand" href="/"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
          </div>
          <div class="navbar-header" style="padding-top:12px; float:right; padding-right:15px;">
            <form class="navbar-form navbar-right" role="search">
              <div class="form-group">
                <input type="text" class="form-control" placeholder="Search StuyBooks" style="width:200px;">
              </div>
-             <!--<button href="signin" type="submit" class="btn btn-default" id="signin">Sign in</button>
-             <button href="signup" type="submit" class="btn btn-success" id="signup">Sign up</button>-->
-             <a class="pure-button" href="/signin">Sign In</a>
-             <a class="pure-button" href="/signup">Sign Up</a>
+             <a class="btn btn-default" href="/signin">Sign In</a>
+             <a class="btn btn-success" href="/signup">Sign Up</a>
            </form>
         </div>
       </nav>
