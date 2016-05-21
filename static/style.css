@@ -8,8 +8,11 @@ body {
     height:100%;
     min-height:100%;
     color: white;
-    /*font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;*/
     font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  margin-top: 75px;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -42,6 +45,14 @@ p {
   width:80%;
 }
 
+.vcenter {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+}
+
 /*  BASE.HTML  */
 .navbar {
   height: 75px;
@@ -50,12 +61,11 @@ p {
 .navbar-header {
   display: inline-block;
 }
+
 .navbar-form {
   float:right;
 }
-.container {
-  margin-top: 75px;
-}
+
 
 /*  INDEX.HTML  */
 .columns {
@@ -85,6 +95,12 @@ p {
     margin: auto;
 }
 
+.index {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  text-align: center;
+
+}
+
 .jumbotron {
   background: url('../static/stuylib.jpg') no-repeat center center;
   position: fixed;
@@ -93,11 +109,24 @@ p {
   top:50px;
   left:0;
   color: white;
-  text-shadow: black 0 0.25em 0.25em;
+  /*text-shadow: black 0 0.25em 0.25em;*/
 }
 
 .login {
   text-align: center;
+}
+
+.notneeded {
+  margin: auto;
+  font-size:20px;
+  color:black;
+  background-color: white;
+  padding: 10px 10px 10px;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #828282;
+  border-width: .25px;
+  width: 500px;
 }
 
 .form-control-lg {
@@ -129,6 +158,17 @@ p {
 }
 
 .new {
+  margin: auto;
+  background-color: white;
+  padding: 10px 0 0;
+  border-radius: 10px;
+  border-style: solid;
+  border-color: #828282;
+  border-width: .25px;
+  width: 400px;
+}
+
+.gmail {
   margin: auto;
   background-color: white;
   padding: 10px 0 0;
