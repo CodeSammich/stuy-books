@@ -25,8 +25,7 @@ def login():
         print 'hello'
         return render_template("login.html")
     else:
-        print 'hello'
-        print request.form['email']
+        print request.form
         email = request.form['email']
         pword = request.form['pword']
         print email
@@ -45,6 +44,7 @@ def login():
 @app.route("/signup")
 def signup():
     if request.method == "GET":
+        print request
         return render_template("signup.html")
     else:
         email = request.form['email']

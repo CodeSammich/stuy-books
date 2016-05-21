@@ -45,7 +45,7 @@ def authenticate(email, passwordHash):
     '''result = db.accounts.find_one({'email': email}) #definitely only 1 acc.
     if len(result) == 0:
         return False '''
-    try
+    try:
         db.accounts.find( {'email':email, 'password':passwordHash } )
     except:
         return False
@@ -59,8 +59,7 @@ def updatePassword(email, newPasswordHash):
         newPasswordHash (string)
     Returns:
         True if successful, False otherwise
-    '''
-'''    result = db.accounts.find_one({'email': email})
+    result = db.accounts.find_one({'email': email})
     if len(result) == 0:
         return False
     else:'''
