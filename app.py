@@ -22,10 +22,15 @@ def home():
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "GET":
+        print 'hello'
         return render_template("login.html")
     else:
+        print 'hello'
+        print request.form['email']
         email = request.form['email']
         pword = request.form['pword']
+        print email
+        print pword
 
         m = sha256()
         m.update(pword)

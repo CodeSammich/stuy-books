@@ -60,11 +60,11 @@ def updatePassword(email, newPasswordHash):
     Returns:
         True if successful, False otherwise
     '''
-    db = connection['Users']
 '''    result = db.accounts.find_one({'email': email})
     if len(result) == 0:
         return False
     else:'''
+    db = connection['Users']
     try:
         db.accounts.update_one(
             {'email':email},
