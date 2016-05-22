@@ -124,7 +124,7 @@ def deleteBook(email, bookName):
     '''
     db = client['books-database']
     books = db['books']
-    books.find_one_and_delete({'email': email, 'bookName', bookName})
+    books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
 
 def getNamesForBook(bookName):
@@ -138,4 +138,4 @@ def getNamesForBook(bookName):
     db = client['books-database']
     books = db['books']
     results = books.find({'bookName', bookName})
-    return [results[i]['email'] for i in range(results.count)
+    return [results[i]['email'] for i in range(results.count)]
