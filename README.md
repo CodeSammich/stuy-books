@@ -41,3 +41,6 @@ Book marketplace for Stuyvesant High School
 
 
 ** Not initial feature, may devolve into irrelevant chat **
+
+### Finalize To-Do
+- Turn into Github Projects page
