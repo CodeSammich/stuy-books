@@ -28,8 +28,11 @@ def login():
         print request.form
         email = request.form['email']
         pword = request.form['pword']
-        print email
-        print pword
+
+        if email == '':
+            return render_template('login.html', msg = 'Please enter your email')
+        if pword == '':
+            return render_template('login.html', msg = 'Please enter your password')
 
         m = sha256()
         m.update(pword)

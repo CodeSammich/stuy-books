@@ -43,14 +43,11 @@ def authenticate(email, passwordHash):
         True if the password and email exist in the database, False otherwise
     '''
     db = connection['Users']
-    '''result = db.accounts.find_one({'email': email}) #definitely only 1 acc.
-    if len(result) == 0:
-        return False '''
-    try:
-        db.accounts.find_one( {'email':email, 'password':passwordHash } )
-    except:
+    result = db.accounts.find_one({'email': email}) #definitely only 1 acc.
+    if result == None:
         return False
     return True
+
 
 def updatePassword(email, newPasswordHash):
     '''
