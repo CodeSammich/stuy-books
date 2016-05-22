@@ -2,7 +2,7 @@
 # Description: Deals with the database
 
 from pymongo import MongoClient
-
+import gridfs
 #------------------------- Establish MongoDB Connection ----------------#
 client = MongoClient()
 
@@ -67,7 +67,7 @@ def authenticate(email, passwordHash):
     db = client['accounts-database']
     accounts = db['accounts']
     #definitely only 1 acc.
-    result = accounts.find_one({'email': email, 'passwordHash': passwordHash}) 
+    result = accounts.find_one({'email': email, 'passwordHash': passwordHash})
     if result == None:
         return False
     return True
@@ -98,7 +98,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, isbn, subject):
+def addBook(email, bookName, isbn, subject, picture, description, avgPrice):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -106,12 +106,15 @@ def addBook(email, bookName, isbn, subject):
         bookName (string)
         isbn (string)
         subject (string)
+        picture (string)
+        description (string)
+        avgPrice (string)
     Returns:
         True
     '''
     db = client['books-database']
     books = db['books']
-    books.insert_one({'email':email, 'bookName': bookName, 'isbn': isbn, 'subject': subject})
+    books.insert_one({'email':email, 'bookName': bookName, 'isbn': isbn, 'subject': subject, 'picture': picture, 'description': description, 'avgPrice': avgPrice})
     return True
 
 def deleteBook(email, bookName):
