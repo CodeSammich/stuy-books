@@ -21,8 +21,8 @@ def addUser(email, passwordHash):
         String with errors, or empty string if there aren't any
     '''
     db = connection['Users']
-    useraccounts = db.accounts.find({'email': email})
-    if useraccounts.count() == 0:
+    useraccounts = db.accounts.find_one({'email': email})
+    if useraccounts != None:
         print 'no go'
         return 'An account has already been registered under this email'
     db.accounts.insert_one({

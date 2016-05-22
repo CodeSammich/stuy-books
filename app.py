@@ -62,7 +62,7 @@ def signup():
         passwordHash = m.hexdigest()
 
         message = addUser(email, passwordHash)
-        print 'message'
+        print message
         if (message == ''):
             return redirect(url_for('home'))
         return render_template('signup.html', msg = message)
