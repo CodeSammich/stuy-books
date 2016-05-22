@@ -51,8 +51,8 @@ def addUser(email, passwordHash):
         #'last': last
     })
 
-    user_account = accounts.find_one( {'email': email})
-    print user_account['email']
+#    user_account = accounts.find_one( {'email': email})
+#    print user_account['email']
     return ''
 
 def authenticate(email, passwordHash):
