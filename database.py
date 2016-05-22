@@ -2,7 +2,7 @@
 # Description: Deals with the database
 
 from pymongo import MongoClient
-
+import gridfs
 #------------------------- Establish MongoDB Connection ----------------#
 client = MongoClient()
 
@@ -67,7 +67,7 @@ def authenticate(email, passwordHash):
     db = client['accounts-database']
     accounts = db['accounts']
     #definitely only 1 acc.
-    result = accounts.find_one({'email': email, 'passwordHash': passwordHash}) 
+    result = accounts.find_one({'email': email, 'passwordHash': passwordHash})
     if result == None:
         return False
     return True
@@ -98,7 +98,11 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
+<<<<<<< HEAD
 def addBook(email, bookName, author, isbn, subject):
+=======
+def addBook(email, bookName, isbn, subject, picture, description, avgPrice):
+>>>>>>> cdc44e686b09c3c719a730e0cc900ff1d043a745
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -107,12 +111,19 @@ def addBook(email, bookName, author, isbn, subject):
         author (string)
         isbn (string)
         subject (string)
+        picture (string)
+        description (string)
+        avgPrice (string)
     Returns:
         True
     '''
     db = client['books-database']
     books = db['books']
+<<<<<<< HEAD
     books.insert_one({'email':email, 'bookName': bookName, 'author': author, 'isbn': isbn, 'subject': subject})
+=======
+    books.insert_one({'email':email, 'bookName': bookName, 'isbn': isbn, 'subject': subject, 'picture': picture, 'description': description, 'avgPrice': avgPrice})
+>>>>>>> cdc44e686b09c3c719a730e0cc900ff1d043a745
     return True
 
 def deleteBook(email, bookName):
@@ -141,6 +152,7 @@ def getSellersForBook(bookName):
     books = db['books']
     results = books.find({'bookName', bookName})
     return [results[i]['email'] for i in range(results.count)]
+<<<<<<< HEAD
 
 def searchForBook(query):
     '''
@@ -165,3 +177,5 @@ def searchForBook(query):
                 break; #goes to next book
                 
     return results
+=======
+>>>>>>> cdc44e686b09c3c719a730e0cc900ff1d043a745
