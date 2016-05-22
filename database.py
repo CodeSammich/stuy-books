@@ -32,10 +32,7 @@ def addUser(email, passwordHash):
     print 'before empty db test'
     if 'accounts-database' not in dbnames: #init database and collection
         print 'database initialized'
-        #generating password hex for init account
-        m = sha256()
-        m.update( "dummy_password" ) #may need to be more secure
-        dummy_pass = m.hexdigest()
+        dummy_pass = "dummy_pass" #may need to be more secure
         init_account = {
             'email': 'dummy_email@stuy.edu',
             'passwordHash': dummy_pass,
@@ -53,6 +50,9 @@ def addUser(email, passwordHash):
         #'first': first,
         #'last': last
     })
+
+    user_account = accounts.find_one( {'email': email})
+    print user_account['email']
     return ''
 
 def authenticate(email, passwordHash):
