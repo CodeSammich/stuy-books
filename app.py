@@ -3,6 +3,7 @@ from database import *
 from functools import wraps
 from hashlib import sha256
 from smtplib import SMTP #TODO
+from uuid import uuid4
 
 app = Flask(__name__)
 
@@ -18,6 +19,8 @@ def requireLogin(f):
 @app.route('/index')
 @app.route("/home/")
 def home():
+    if 'email' in session:
+        return render_template('index.html', email = session['email'])
     return render_template("index.html")
 
 @app.route("/login", methods=["GET","POST"])
@@ -67,7 +70,6 @@ def signup():
         return render_template('signup.html', msg = message)
 
 if __name__ == "__main__":
-    app.secret_key = 'pinkunicorn'
-    app.config['SESSION_TYPE'] = 'filesystem'
+    app.secret_key = str(uuid4())
     app.debug = True
     app.run('0.0.0.0',port=8000)
