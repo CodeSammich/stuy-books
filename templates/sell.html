@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% block title %}Selling Form{% endblock %}
+{% block contents %}
+<div class="columns">
+  <h1>Sell a book</h1>
+  <div class="column" id="signup-form">
+    <form name="signup" method="POST">
+      <b>Email</b><br><div class="input-group" style="width:85%">
+        <input name='email' type="text" class="form-control" aria-describedby="basic-addon2"><span class="input-group-addon" id="basic-addon2">@stuy.edu</span>
+      </div>
+      <p style="color:#8F8F8F; font-size:13px;">Enter the stuy.edu username issued to you.</p><br>
+      <b>Password</b><br><input type="password" class="form-control" name="pword" id="pword" style="width:85%">
+      <p style="color:#8F8F8F; font-size:13px;">Must be more than 8 characters.</p><br>
+      <button type="submit" id="submit" class="btn btn-success" style="width: 150px;">Create</button>
+    </form>
+  </div>
+  <div class="column">
+      <table class="why">
+        <tr>
+          <td><p style="font-size:15px;font-weight:bold;letter-spacing:.5px;">Why you'll love StuyBooks</p></td>
+        </tr>
+        <tr>
+          <td><p>u wont ha</p></td>
+        </tr>
+      </table>
+    </div>
+{% endblock %}

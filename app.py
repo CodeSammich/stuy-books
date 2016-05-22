@@ -19,12 +19,12 @@ def requireLogin(f):
 @app.route('/index')
 @app.route("/home/")
 def home():
-    if 'email' in session:
-        return render_template('index.html', email = session['email'])
+    session["logged"]=0
     return render_template("index.html")
 
 @app.route("/login", methods=["GET","POST"])
 def login():
+    session["logged"]=0
     if request.method == "GET":
         return render_template("login.html")
     else:
@@ -42,12 +42,14 @@ def login():
 
         if authenticate(email, passwordHash):
             session['email'] = email
-            return redirect(url_for("home"))
+            session['logged'] = 1
+            return redirect(url_for("userpage", email=email))
         else:
             return render_template('login.html', msg = 'Incorrect email/password combination')
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
+    session["logged"]=0
     if request.method == "GET":
         return render_template("signup.html")
     else:
@@ -68,6 +70,18 @@ def signup():
         if (message == ''):
             return redirect(url_for('home'))
         return render_template('signup.html', msg = message)
+
+@app.route("/userpage")
+def userpage():
+    if request.method == "GET":
+        session["logged"]=1
+        return render_template("sell.html")
+
+    if session["logged"]==0:
+        return redirect(url_for("login"))
+    else:
+        return render_template("userpage.html")
+
 
 if __name__ == "__main__":
     app.secret_key = str(uuid4())

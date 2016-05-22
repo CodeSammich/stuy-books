@@ -181,7 +181,6 @@ p {
 
 /*  SIGNUP.HTML  */
 
-
 .container-signup {
   color:black;
   height: 100vh;
@@ -200,4 +199,10 @@ table, tr, td {
   padding: 10px 20px 0;
   border: .25px solid #828282;
   width: 300px;
+}
+
+/*  USERPAGE.HTML  */
+.userpage {
+  margin-top: 75px;
+  color:black;
 }
