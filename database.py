@@ -9,7 +9,7 @@ def replaceApostrophe(s):
     return s.replace("'", '&#8217')
 
 #------------------------- Setup User -------------------------#
-def addUser(email, passwordHash, first, last):
+def addUser(email, passwordHash):
     '''
     Adds user to the database
     Args:
@@ -21,14 +21,15 @@ def addUser(email, passwordHash, first, last):
         String with errors, or empty string if there aren't any
     '''
     db = connection['Users']
-    useraccounts = db.accounts.find({'email':email})
-    if len(useraccounts) != 0:
+    useraccounts = db.accounts.find({'email': email})
+    if useraccounts.count() == 0:
+        print 'no go'
         return 'An account has already been registered under this email'
     db.accounts.insert_one({
         'email': replaceApostrophe(email),
-        'passwordHash': passwordHash,
-        'first': first,
-        'last': last
+        'passwordHash': passwordHash
+        #'first': first,
+        #'last': last
     })
     return ''
 
@@ -46,7 +47,7 @@ def authenticate(email, passwordHash):
     if len(result) == 0:
         return False '''
     try:
-        db.accounts.find( {'email':email, 'password':passwordHash } )
+        db.accounts.find_one( {'email':email, 'password':passwordHash } )
     except:
         return False
     return True
