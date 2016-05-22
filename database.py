@@ -98,12 +98,13 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, isbn, subject):
+def addBook(email, bookName, author, isbn, subject):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
         email (string)
         bookName (string)
+        author (string)
         isbn (string)
         subject (string)
     Returns:
@@ -111,7 +112,7 @@ def addBook(email, bookName, isbn, subject):
     '''
     db = client['books-database']
     books = db['books']
-    books.insert_one({'email':email, 'bookName': bookName, 'isbn': isbn, 'subject': subject})
+    books.insert_one({'email':email, 'bookName': bookName, 'author': author, 'isbn': isbn, 'subject': subject})
     return True
 
 def deleteBook(email, bookName):
@@ -125,10 +126,10 @@ def deleteBook(email, bookName):
     '''
     db = client['books-database']
     books = db['books']
-    books.find_one_and_delete({'email': email, 'bookName', bookName})
+    books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
 
-def getNamesForBook(bookName):
+def getSellersForBook(bookName):
     '''
     Looks up people who are selling a book
     Args:
@@ -139,4 +140,28 @@ def getNamesForBook(bookName):
     db = client['books-database']
     books = db['books']
     results = books.find({'bookName', bookName})
-    return [results[i]['email'] for i in range(results.count)
+    return [results[i]['email'] for i in range(results.count)]
+
+def searchForBook(query):
+    '''
+    Looks up a list book given a simple search query (no logical operators)
+    Args:
+        query (string)
+    Returns:
+        A list of books with that name/author
+    '''
+    db = client['books-database']
+    books = db['books']
+
+    #parse query to find relevant results
+    results = []
+    query = query.remove(',')
+    query = query.split(' ')
+    for i in range(books.count): #goes through book database
+        for j in range(query.count): #goes through query
+            if books[i]['bookName'].find(query[j]) != -1: #if found
+                print 'book found, going to next book'
+                results.append( books[i] )
+                break; #goes to next book
+                
+    return results
