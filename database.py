@@ -153,7 +153,6 @@ def getSellersForBook(bookName):
     books = db['books']
     results = books.find({'bookName', bookName})
     return [results[i]['email'] for i in range(results.count)]
-<<<<<<< HEAD
 
 def searchForBook(query):
     '''
@@ -178,5 +177,4 @@ def searchForBook(query):
                 break; #goes to next book
                 
     return results
-=======
->>>>>>> cdc44e686b09c3c719a730e0cc900ff1d043a745
+
