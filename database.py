@@ -96,3 +96,47 @@ def updatePassword(email, newPasswordHash):
     except: # catch *all* exceptions
         return False
     return True
+
+#------------------------- Book keeping -------------------------#
+def addBook(email, bookName, isbn, subject):
+    '''
+    Updates the books that are being sold and the user that is selling
+    Args:
+        email (string)
+        bookName (string)
+        isbn (string)
+        subject (string)
+    Returns:
+        True
+    '''
+    db = client['books-database']
+    books = db['books']
+    books.insert_one({'email':email, 'bookName': bookName, 'isbn': isbn, 'subject': subject})
+    return True
+
+def deleteBook(email, bookName):
+    '''
+    Deletes the first appearance of a book under a seller
+    Args:
+        email (string)
+        bookName (string)
+    Returns:
+        True
+    '''
+    db = client['books-database']
+    books = db['books']
+    books.find_one_and_delete({'email': email, 'bookName', bookName})
+    return True
+
+def getNamesForBook(bookName):
+    '''
+    Looks up people who are selling a book
+    Args:
+        bookName (string)
+    Returns:
+        A list of sellers for the book
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find({'bookName', bookName})
+    return [results[i]['email'] for i in range(results.count)
