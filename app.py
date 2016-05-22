@@ -1,4 +1,4 @@
-from flask import Flask, render_template, url_for, session, request
+from flask import Flask, render_template, url_for, session, request, redirect
 from database import *
 from functools import wraps
 from hashlib import sha256
@@ -25,7 +25,6 @@ def login():
     if request.method == "GET":
         return render_template("login.html")
     else:
-        print request.form
         email = request.form['email']
         pword = request.form['pword']
 
@@ -51,7 +50,6 @@ def signup():
     else:
         email = request.form['email']
         pword = request.form['pword']
-        print 'hello'
 
         if email == '':
             return render_template('signup.html', msg = 'Please enter your stuy.edu email')
@@ -59,17 +57,17 @@ def signup():
             return render_template('signup.html', msg = 'Please enter a password that is at least 8 characters long')
         #if pword != confirm:
             #return render_template('signup.html', msg = 'Password does not match the confirm password')
-        print 'hello2'
         m = sha256()
         m.update(pword)
         passwordHash = m.hexdigest()
 
         message = addUser(email, passwordHash)
-        print message
         if (message == ''):
             return redirect(url_for('home'))
         return render_template('signup.html', msg = message)
 
 if __name__ == "__main__":
+    app.secret_key = 'pinkunicorn'
+    app.config['SESSION_TYPE'] = 'filesystem'
     app.debug = True
     app.run('0.0.0.0',port=8000)

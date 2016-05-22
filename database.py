@@ -65,7 +65,8 @@ def authenticate(email, passwordHash):
         True if the password and email exist in the database, False otherwise
     '''
     db = client['accounts-database']
-    result = accounts.find_one({'email': email}) #definitely only 1 acc.
+    accounts = db['accounts']
+    result = accounts.find_one({'email': email, 'passwordHash': passwordHash}) #definitely only 1 acc.
     if result == None:
         return False
     return True
