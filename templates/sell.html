@@ -1,27 +1,89 @@
 {% extends "base.html" %}
 {% block title %}Selling Form{% endblock %}
 {% block contents %}
-<div class="columns">
+<div class="columns" style="margin-top:50px;color:black;">
   <h1>Sell a book</h1>
-  <div class="column" id="signup-form">
+  <div class="column" style="padding-top:20px; padding-bottom:100px; width:60%; text-align:left;">
     <form name="signup" method="POST">
-      <b>Email</b><br><div class="input-group" style="width:85%">
-        <input name='email' type="text" class="form-control" aria-describedby="basic-addon2"><span class="input-group-addon" id="basic-addon2">@stuy.edu</span>
+      <b>Title</b><input type="text" class="form-control" name="title" required>
+      <p style="color:#8F8F8F; font-size:13px;">Please record exactly as it appears on the cover.</p><br>
+      <b>Author</b><input type="text" class="form-control" name="author"><br>
+      <b>ISBN</b><input type="text" class="form-control" name="serial" placeholder="Serial number">
+<br><hr><br>
+      <b>Subject</b><br>
+        <select class="selectpicker" title="Select..." data-size="8">
+          <optgroup label="Science">
+            <option>Biology</option>
+            <option>Chemistry</option>
+            <option>Physics</option>
+            <option>Science: Other</option>
+          </optgroup>
+          <optgroup label="Math">
+            <option>Geometry</option>
+            <option>Algebra II/Trig</option>
+            <option>Pre-Calculus</option>
+            <option>Calculus</option>
+            <option>Math: Other</option>
+          </optgroup>
+          <optgroup label="Social Studies">
+            <option>World History</option>
+            <option>US History</option>
+            <option>Government</option>
+            <option>Economics</option>
+            <option>Social Studies: Other</option>
+          </optgroup>
+          <optgroup label="English">
+            <option>Language &amp; Composition</option>
+            <option>Literature &amp; Composition</option>
+            <option>English: Other</option>
+          </optgroup>
+          <optgroup label="Miscellaneous">
+            <option>Computer Science</option>
+            <option>Art</option>
+            <option>Music</option>
+            <option>Foreign Language</option>
+          </optgroup>
+          <optgroup label="SAT">
+            <option>SAT</option>
+            <option>Reading</option>
+            <option>Math</option>
+            <option>Writing &amp; Language</option>
+            <option>Essay</option>
+          </optgroup>
+          <optgroup label="ACT">
+            <option>ACT</option>
+            <option>English</option>
+            <option>Math</option>
+            <option>Reading</option>
+            <option>Science</option>
+          </optgroup>
+          <option>OTHER</option>
+        </select>
+      <p style="color:#8F8F8F; font-size:13px;">Scroll through subject options and choose most accurate.</p><br>
+
+      <b>Condition</b><br>
+      <select class="selectpicker" title="Select...">
+        <option>Brand New</option>
+        <option>Like New</option>
+        <option>Very Good</option>
+        <option>Good</option>
+        <option>Acceptable</option>
+      </select>
+      <p style="color:#8F8F8F; font-size:13px;">Please refer to <a href="../static/book-rating.png">this</a> for more info</p><br>
+
+      <b>Price</b><br>
+      <div class="input-group" style="width:150px;">
+        <span class="input-group-addon">$</span>
+        <input type="text" class="form-control" maxlength="3">
+        <span class="input-group-addon">.00</span>
       </div>
-      <p style="color:#8F8F8F; font-size:13px;">Enter the stuy.edu username issued to you.</p><br>
-      <b>Password</b><br><input type="password" class="form-control" name="pword" id="pword" style="width:85%">
-      <p style="color:#8F8F8F; font-size:13px;">Must be more than 8 characters.</p><br>
-      <button type="submit" id="submit" class="btn btn-success" style="width: 150px;">Create</button>
+      <p style="color:#8F8F8F; font-size:13px;">(Price you would like to sell for)</p><br>
+
+      <b>Description (Optional)</b><br><textarea class="form-control" rows="5" id="comment" placeholder="Anything you would like to add?"></textarea><br>
+
+
+      <button type="submit" id="submit" class="btn btn-success" style="width: 150px;">ADD LISTING</button>
     </form>
   </div>
-  <div class="column">
-      <table class="why">
-        <tr>
-          <td><p style="font-size:15px;font-weight:bold;letter-spacing:.5px;">Why you'll love StuyBooks</p></td>
-        </tr>
-        <tr>
-          <td><p>u wont ha</p></td>
-        </tr>
-      </table>
-    </div>
+</div>
 {% endblock %}
