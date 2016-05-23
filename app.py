@@ -121,9 +121,9 @@ def sell():
 
         return redirect(url_for('userpage'))
 
-@app.route('/buy')
+@app.route('/buypage')
 def buy():
-    return render_template('buy.html')
+    return render_template('buypage.html', info=listAll())
 
 
 @app.route('/logout')
