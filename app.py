@@ -7,6 +7,9 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
+ourEmail = ''
+ourPassword = '' #get from a text doc
+
 def requireLogin(f):
     @wraps(f)
     def dec(*args):
@@ -69,6 +72,26 @@ def signup():
 
         message = addUser(email, passwordHash)
         if (message == ''):
+            """
+            s = SMTP('smpt.gmail.com' 587)
+            s.startls()
+            s.ehlo()
+            s.login(ourEmail, ourPassword)
+
+            messge = '''To: %s
+            From: %s
+            Subject: Getting Started with StuyBooks
+
+            Dear %s,
+
+            Thanks for signing up with StuyBooks!
+            If you did not register for StuyBooks, contact us at %s
+
+            Sincerely,
+            Team JASH''' %(email, ourEmail, name, ourEmail)
+            s.sendmail(ourEmail, sellerEmail, message)
+            s.close()
+            """
             return redirect(url_for('home'))
         return render_template('signup.html', msg = message)
 
