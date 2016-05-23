@@ -127,11 +127,19 @@ def buy():
 
 @app.route('/googleLogin')
 def googleLogin():
-    if request.method=="POST":
-        name = request.POST.get("name")
-        email = request.POST.get("email")
-        return render_template("google.html", name=name, email=email)
-    return render_template("google.html")
+    if request.method=="GET":
+        print "hello"
+        name = request.args.get('name')
+        print name
+        email = request.args.get('email')
+        print email
+        session['email'] = email
+        session['logged'] = 1
+        print session['email']
+        print session['logged']
+        return redirect(url_for("userpage", email=email))
+    else:
+        return render_template("google.html")
 
 @app.route('/logout')
 @requireLogin

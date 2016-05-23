@@ -10,7 +10,6 @@ pip install --upgrade oauth2client
     <link rel="shortcut icon" href="../static/logo.png">
     <link rel="stylesheet" type="text/css" href="../static/style.css"/>
     <meta name="google-signin-client_id" content="546971034348-fflcn8cq3l3g5a9od0dnorlbgckrquuo.apps.googleusercontent.com">
-
   </head>
 
   <body>
@@ -36,6 +35,8 @@ pip install --upgrade oauth2client
 	</div>
 	<br>
 	<div id="my-signin2"></div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
 	<script>
 	  function onSuccess(googleUser) {
 	  var profile = googleUser.getBasicProfile();
@@ -46,13 +47,16 @@ pip install --upgrade oauth2client
 	  console.log('Image URL: ' + profile.getImageUrl());
 	  console.log('Email: ' + profile.getEmail());
 	  console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-
+	  name = profile.getName();
+	  email = profile.getEmail();
+	  //console.log(name);
+	  //console.log(email);
 	  $.ajax({
-	  type: "POST",
+	  type: "GET",
 	  url:"/googleLogin",
-	  data:{"name":profile.getName(),"email":profile.getEmail()}
-	  });	  
+	  data:{"name":name,"email":email}
 
+	  });	  
 	  }
 
 
