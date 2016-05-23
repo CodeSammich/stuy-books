@@ -8,10 +8,10 @@
       <b>Title</b><input type="text" class="form-control" name="title" required>
       <p style="color:#8F8F8F; font-size:13px;">Please record exactly as it appears on the cover.</p><br>
       <b>Author</b><input type="text" class="form-control" name="author"><br>
-      <b>ISBN</b><input type="text" class="form-control" name="serial" placeholder="Serial number">
+      <b>ISBN</b><input type="text" class="form-control" name="serial" placeholder="Serial number" maxlength="10">
 <br><hr><br>
       <b>Subject</b><br>
-        <select class="selectpicker" title="Select..." data-size="8">
+        <select class="selectpicker" title="Select..." data-size="8" name="subject">
           <optgroup label="Science">
             <option>Biology</option>
             <option>Chemistry</option>
@@ -62,7 +62,7 @@
       <p style="color:#8F8F8F; font-size:13px;">Scroll through subject options and choose most accurate.</p><br>
 
       <b>Condition</b><br>
-      <select class="selectpicker" title="Select...">
+      <select class="selectpicker" title="Select..." name="condition">
         <option>Brand New</option>
         <option>Like New</option>
         <option>Very Good</option>
@@ -74,12 +74,12 @@
       <b>Price</b><br>
       <div class="input-group" style="width:150px;">
         <span class="input-group-addon">$</span>
-        <input type="text" class="form-control" maxlength="3">
+        <input type="text" class="form-control" maxlength="3" name="price">
         <span class="input-group-addon">.00</span>
       </div>
       <p style="color:#8F8F8F; font-size:13px;">(Price you would like to sell for)</p><br>
 
-      <b>Description (Optional)</b><br><textarea class="form-control" rows="5" id="comment" placeholder="Anything you would like to add?"></textarea><br>
+      <b>Description (Optional)</b><br><textarea class="form-control" rows="5" id="comment" name="comment" placeholder="Anything you would like to add?"></textarea><br>
 
 
       <button type="submit" id="submit" class="btn btn-success" style="width: 150px;">ADD LISTING</button>

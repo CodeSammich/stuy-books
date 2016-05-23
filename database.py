@@ -98,7 +98,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, picture, description, avgPrice):
+def addBook(email, bookName, author, isbn, subject, condition, price, description):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -107,10 +107,10 @@ def addBook(email, bookName, author, isbn, subject, picture, description, avgPri
         author (string)
         isbn (string)
         subject (string)
-        picture (string)
+        condition (string)
+        price (string)
         description (string)
-        avgPrice (string)
-    Empty string if information doesn't exist 
+    Empty string if information doesn't exist
     Email + bookName will never be empty
     Returns:
         True
@@ -122,9 +122,9 @@ def addBook(email, bookName, author, isbn, subject, picture, description, avgPri
                       'author': author,
                       'isbn': isbn,
                       'subject': subject,
-                      'picture': picture,
-                      'description': description,
-                      'avgPrice': avgPrice})
+                      'condition': condition,
+                      'price': price,
+                      'description': description})
     return True
 
 def deleteBook(email, bookName):
@@ -175,6 +175,18 @@ def searchForBook(query):
                 print 'book found, going to next book'
                 results.append( books[i] )
                 break; #goes to next book
-                
+
     return results
 
+def listBooksForUser(email):
+    '''
+    Looks for books under a single user
+    Args:
+        email (string)
+    Returns:
+        A list of documents under an email
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find({'email': email})
+    return [results[i] for i in range(results.count)]

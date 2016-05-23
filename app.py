@@ -78,9 +78,25 @@ def userpage():
         return render_template("userpage.html")
     return redirect(url_for('sell'))
 
-@app.route('/sell')
+@app.route('/sell', methods=['GET', 'POST'])
 def sell():
-    return render_template('sell.html')
+    if request.method == 'GET':
+        return render_template('sell.html')
+    else:
+        email = session['email']
+        bookName = request.form['title']
+        author = request.form['author']
+        isbn = request.form['serial']
+        subject = request.form['subject']
+        condition = request.form['condition']
+        price = request.form['price']
+        description = request.form['comment']
+
+        addBook(email, bookName, author, isbn, subject, condition, price, description)
+
+        info = listBooksForUser(email)
+
+        return redirect(url_for('userpage', info=info))
 
 @app.route('/logout')
 @requireLogin
