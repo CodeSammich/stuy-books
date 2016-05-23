@@ -152,7 +152,14 @@ def getSellersForBook(bookName):
     db = client['books-database']
     books = db['books']
     results = books.find({'bookName', bookName})
-    return [results[i]['email'] for i in range(results.count)]
+    #return [results[i]['email'] for i in range(results.count)]
+    people = []
+    for r in results:
+        people.append[r]
+    #remove duplicates
+    seen = set()
+    seenmore = seen.add
+    return [x for x in people if not (x in seen or x in seenmore(x))]
 
 def searchForBook(query):
     '''
@@ -189,4 +196,7 @@ def listBooksForUser(email):
     db = client['books-database']
     books = db['books']
     results = books.find({'email': email})
-    return [results[i] for i in range(results.count)]
+    docs = []
+    for r in results:
+        docs.append(r)
+    return docs

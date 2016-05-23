@@ -75,7 +75,10 @@ def signup():
 @app.route("/userpage", methods=['GET', 'POST'])
 def userpage():
     if request.method == "GET":
-        return render_template("userpage.html")
+        email = session['email']
+        info = listBooksForUser(email)
+        print info
+        return render_template("userpage.html", info=info)
     return redirect(url_for('sell'))
 
 @app.route('/sell', methods=['GET', 'POST'])
@@ -94,9 +97,7 @@ def sell():
 
         addBook(email, bookName, author, isbn, subject, condition, price, description)
 
-        info = listBooksForUser(email)
-
-        return redirect(url_for('userpage', info=info))
+        return redirect(url_for('userpage'))
 
 @app.route('/logout')
 @requireLogin
