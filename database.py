@@ -103,7 +103,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price, description, image_url):
+def addBook(email, bookName, author, isbn, subject, condition, price, description):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -115,7 +115,6 @@ def addBook(email, bookName, author, isbn, subject, condition, price, descriptio
         condition (string)
         price (string)
         description (string)
-        image_url (string)
     Empty string if information doesn't exist
     Email + bookName will never be empty
     Returns:
@@ -123,6 +122,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, descriptio
     '''
     db = client['books-database']
     books = db['books']
+    image_url = get_image_url( bookName + author + isbn )
     books.insert_one({'email':email,
                       'bookName': bookName,
                       'author': author,
@@ -130,7 +130,8 @@ def addBook(email, bookName, author, isbn, subject, condition, price, descriptio
                       'subject': subject,
                       'condition': condition,
                       'price': price,
-                      'description': description})
+                      'description': description,
+                      'image_url': image_url})
     return True
 
 def deleteBook(email, bookName):
