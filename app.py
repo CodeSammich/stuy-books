@@ -77,7 +77,6 @@ def userpage():
     if request.method == "GET":
         email = session['email']
         info = listBooksForUser(email)
-        print info
         return render_template("userpage.html", info=info)
     return redirect(url_for('sell'))
 
@@ -98,6 +97,11 @@ def sell():
         addBook(email, bookName, author, isbn, subject, condition, price, description)
 
         return redirect(url_for('userpage'))
+
+@app.route('/buy')
+def buy():
+    return render_template('buy.html')
+
 
 @app.route('/logout')
 @requireLogin

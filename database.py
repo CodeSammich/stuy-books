@@ -200,3 +200,19 @@ def listBooksForUser(email):
     for r in results:
         docs.append(r)
     return docs
+
+def listAll():
+    '''
+    Returns the entire collection of books
+    Args:
+        None
+    Returns:
+        The entire database in a list
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find({})
+    all = []
+    for r in results:
+        all.append(r)
+    return all
