@@ -24,7 +24,7 @@ def home():
 
 @app.route("/login", methods=["GET","POST"])
 def login():
-    session["logged"]=0
+    session['logged'] == 0
     if request.method == "GET":
         return render_template("login.html")
     else:
@@ -41,6 +41,7 @@ def login():
         passwordHash = m.hexdigest()
 
         if authenticate(email, passwordHash):
+            print 'hello sir'
             session['email'] = email
             session['logged'] = 1
             return redirect(url_for("userpage", email=email))
@@ -71,8 +72,7 @@ def signup():
             return redirect(url_for('home'))
         return render_template('signup.html', msg = message)
 
-@app.route("/userpage")
-@requireLogin
+@app.route("/userpage", methods=['GET', 'POST'])
 def userpage():
     if request.method == "GET":
         return render_template("userpage.html")
