@@ -72,16 +72,21 @@ def signup():
         return render_template('signup.html', msg = message)
 
 @app.route("/userpage")
+@requireLogin
 def userpage():
     if request.method == "GET":
-        session["logged"]=1
-        return render_template("sell.html")
-
-    if session["logged"]==0:
-        return redirect(url_for("login"))
-    else:
         return render_template("userpage.html")
+    return redirect(url_for('sell'))
 
+@app.route('/sell')
+def sell():
+    return render_template('sell.html')
+
+@app.route('/logout')
+@requireLogin
+def logout():
+    del session['email']
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.secret_key = str(uuid4())
