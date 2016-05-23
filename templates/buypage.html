@@ -6,6 +6,7 @@
 {% if info|length > 0 %}
 <table>
   <tr>
+    <th>Email</th>
     <th>Title</th>
     <th>Author</th>
     <th>ISBN</th>
@@ -17,6 +18,7 @@
   <!--same as the user page, except it displays ALL listings (we'll worry about filter/organizing later)-->
   {% for item in info %}
   <tr>
+    <td>{{item['email'] + '@stuy.edu'}}</td>
     <td>{{item['bookName']}}</td>
     <td>{{item['author']}}</td>
     <td>{{item['isbn']}}</td>
