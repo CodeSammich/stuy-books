@@ -1,0 +1,78 @@
+<!--$ pip install --upgrade google-api-python-client
+pip install --upgrade oauth2client
+-->
+
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Sign in - StuyBooks</title>
+    <link href="../static/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../static/logo.png">
+    <link rel="stylesheet" type="text/css" href="../static/style.css"/>
+    <meta name="google-signin-client_id" content="546971034348-fflcn8cq3l3g5a9od0dnorlbgckrquuo.apps.googleusercontent.com">
+
+  </head>
+
+  <body>
+    <div class="container-login">
+      <div class="login">
+	<div>
+	  <img class="logo" src="{{ url_for('static', filename='logo.png') }}" height="65"><br><br>
+	  <h1>Sign in to StuyBooks</h1>
+	</div>
+	<br>
+	<div class="container-form">
+	  <!--<button class="btn btn-default" type="button" id="emailLogin">Log in via Gmail</button><br><br>-->
+
+	  <form name="login" method="POST">
+	    <p style='color:red'>{{msg}}</p><br>
+	    Email<br><div class="input-group">
+              <input name='email' type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon2">
+              <span class="input-group-addon" id="basic-addon2">@stuy.edu</span>
+	    </div><br>
+	    Password<br><input name='pword' type="password" class="form-control input-block"><br>
+	    <button class="btn btn-success btn-block" type="submit" id="submit">Submit</button>
+	  </form>
+	</div>
+	<br>
+	<div id="my-signin2"></div>
+	<script>
+	  function onSuccess(googleUser) {
+	  var profile = googleUser.getBasicProfile();
+	  console.log('ID: ' + profile.getId());
+	  console.log('Full Name: ' + profile.getName());
+	  console.log('Given Name: ' + profile.getGivenName());
+	  console.log('Family Name: ' + profile.getFamilyName());
+	  console.log('Image URL: ' + profile.getImageUrl());
+	  console.log('Email: ' + profile.getEmail());
+	  console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+	  }
+	  function onFailure(error) {
+	  console.log(error);
+	  }
+	  function renderButton() {
+	  gapi.signin2.render('my-signin2', {
+	  'scope': 'profile email',
+	  'width': 240,
+	  'height': 50,
+	  'longtitle': true,
+	  'theme': 'dark',
+	  'onsuccess': onSuccess,
+	  'onfailure': onFailure
+	  });
+	  }
+	</script>
+
+	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
+
+	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+	<!--
+	    <br>
+	    <div class="new">
+	      <p style="font-size: 15px;">New to StuyBooks? <a href="signup">Create an account</a></p>
+	    </div>-->
+      </div>
+    </div>
+  </body>
+</html>
