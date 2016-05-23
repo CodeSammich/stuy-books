@@ -3,6 +3,7 @@
 {% block contents %}
 <div class="userpage">
 <h1>Your listings</h1>
+{% if info|length > 0 %}
 <table>
   <tr>
     <th>Title</th>
@@ -14,16 +15,19 @@
     <th>Description</th>
   </tr>
   <!--assuming, starting for loop here-->
+  {% for item in info %}
   <tr>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
-    <td></td>
+    <td>{{item['bookName']}}</td>
+    <td>{{item['author']}}</td>
+    <td>{{item['isbn']}}</td>
+    <td>{{item['subject']}}</td>
+    <td>{{item['condition']}}</td>
+    <td>{{item['price']}}</td>
+    <td>{{item['description']}}</td>
   </tr>
+  {% endfor %}
   <!--end for loop-->
 </table>
+{% endif %}
 </div>
 {% endblock %}
