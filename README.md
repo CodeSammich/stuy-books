@@ -34,7 +34,7 @@ Book marketplace for Stuyvesant High School
 - Comment section/forum for peer confirmation**
 
 ##### Expansions
-- Study guide compilation (Midnightswam)
+- Study guide compilation (Midnightswan)
 - Calculator marketplace, etc.
   - *Suggested Amount*: "Similar items have been sold for __ amount"
 - Notifications on smart device
@@ -44,3 +44,12 @@ Book marketplace for Stuyvesant High School
 
 ### Finalize To-Do
 - Turn into Github Projects page
+
+### Dev-log
+##### 5/22/16
+- Added login functionality
+ - user databases, books database/structure
+ - create backend basic search functionality
+##### 5/19/16
+- Added pages for home, login, signup, sell/buy, master book list
+ - middleware integration with html/css
