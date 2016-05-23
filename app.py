@@ -125,12 +125,19 @@ def sell():
 def buy():
     return render_template('buypage.html', info=listAll())
 
+@app.route('/googleLogin')
+def googleLogin():
+    if request.method=="POST":
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        return render_template("google.html", name=name, email=email)
+    return render_template("google.html")
 
 @app.route('/logout')
 @requireLogin
 def logout():
     del session['email']
-    return redirect(url_for('home'))
+    return redirect(url_for(''))
 
 if __name__ == "__main__":
     app.secret_key = str(uuid4())

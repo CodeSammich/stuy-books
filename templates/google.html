@@ -46,7 +46,16 @@ pip install --upgrade oauth2client
 	  console.log('Image URL: ' + profile.getImageUrl());
 	  console.log('Email: ' + profile.getEmail());
 	  console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+
+	  $.ajax({
+	  type: "POST",
+	  url:"/googleLogin",
+	  data:{"name":profile.getName(),"email":profile.getEmail()}
+	  });	  
+
 	  }
+
+
 	  function onFailure(error) {
 	  console.log(error);
 	  }
