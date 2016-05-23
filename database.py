@@ -3,6 +3,11 @@
 
 from pymongo import MongoClient
 import gridfs
+
+# Google Image
+from bs4 import BeautifulSoup
+import urllib2
+import re
 #------------------------- Establish MongoDB Connection ----------------#
 client = MongoClient()
 
@@ -98,7 +103,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price, description):
+def addBook(email, bookName, author, isbn, subject, condition, price, description, image_url):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -110,6 +115,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, descriptio
         condition (string)
         price (string)
         description (string)
+        image_url (string)
     Empty string if information doesn't exist
     Email + bookName will never be empty
     Returns:
@@ -140,6 +146,38 @@ def deleteBook(email, bookName):
     books = db['books']
     books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
+
+# image scraping for Google
+def get_soup(url, header):
+    '''
+    Helper function for get_image_url
+    Input:
+        url (string)
+        header (string)
+    Output:
+        Blaaah
+    '''
+    return BeautifulSoup( urllib2.urlopen(urllib2.Request(url,headers=header)), "html.parser" )
+
+def get_image_url(query):
+    '''
+    Returns the url of the first google image with found using query
+    Input:
+        query (string)
+    Output:
+        url (string) 
+    '''
+    query = query.split()
+    query = '+'.join(query)
+    url = "https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch"
+    print url + "\n\n"
+    header = {'User-Agent': 'Mozilla/5.0'}
+    soup = get_soup(url,header)
+
+    images = [a['src'] for a in soup.find_all("img", {"src": re.compile("gstatic.com")})]
+
+    #for second choice, return images[1], etc.
+    return images[0]
 
 def getSellersForBook(bookName):
     '''
@@ -194,3 +232,5 @@ def listAll():
     for r in results:
         all.append(r)
     return all
+
+print get_image("calculus book")
