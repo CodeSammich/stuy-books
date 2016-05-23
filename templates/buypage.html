@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Buying{% endblock %}
+{% block contents %}
+<div class="buying">
+<h1>All listings</h1>
+{% if info|length > 0 %}
+<table>
+  <tr>
+    <th>Title</th>
+    <th>Author</th>
+    <th>ISBN</th>
+    <th>Subject</th>
+    <th>Condition</th>
+    <th>Price</th>
+    <th>Description</th>
+  </tr>
+  <!--same as the user page, except it displays ALL listings (we'll worry about filter/organizing later)-->
+  {% for item in info %}
+  <tr>
+    <td>{{item['bookName']}}</td>
+    <td>{{item['author']}}</td>
+    <td>{{item['isbn']}}</td>
+    <td>{{item['subject']}}</td>
+    <td>{{item['condition']}}</td>
+    <td>{{item['price']}}</td>
+    <td>{{item['description']}}</td>
+  </tr>
+  {% endfor %}
+  <!--end for loop-->
+</table>
+{% endif %}
+</div>
+{% endblock %}
