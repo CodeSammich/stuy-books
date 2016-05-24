@@ -7,8 +7,8 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
-ourEmail = 'stuybooks.JASH@gmail.com'
-ourPassword = open('password.txt', 'r').read()[:-1]
+#ourEmail = 'stuybooks.JASH@gmail.com'
+#ourPassword = open('password.txt', 'r').read()[:-1]
 
 def requireLogin(f):
     @wraps(f)
