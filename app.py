@@ -7,8 +7,8 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
-ourEmail = ''
-ourPassword = '' #get from a text doc
+ourEmail = 'stuybooks.JASH@gmail.com'
+ourPassword = open('password.txt', 'r').read()[:-1]
 
 def requireLogin(f):
     @wraps(f)
@@ -73,6 +73,9 @@ def signup():
         message = addUser(email, passwordHash)
         if (message == ''):
             """
+            data = urllib.urlencode({'email': email, 'passwordHash': passwordHash})
+            activateLink = 'localhost:8000/activate?%s' %(data)
+
             s = SMTP('smpt.gmail.com' 587)
             s.startls()
             s.ehlo()
@@ -85,15 +88,20 @@ def signup():
             Dear %s,
 
             Thanks for signing up with StuyBooks!
+            Click on this link to activate your account: %s
             If you did not register for StuyBooks, contact us at %s
 
             Sincerely,
-            Team JASH''' %(email, ourEmail, name, ourEmail)
+            Team JASH''' %(email + '@stuy.edu', ourEmail, name, activateLink ,ourEmail)
             s.sendmail(ourEmail, sellerEmail, message)
             s.close()
             """
             return redirect(url_for('home'))
         return render_template('signup.html', msg = message)
+
+@app.route('/activate')
+def activate():
+    return render_template('activate.html')
 
 @app.route("/userpage", methods=['GET', 'POST'])
 def userpage():

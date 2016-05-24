@@ -166,7 +166,7 @@ def get_image_url(query):
     Input:
         query (string)
     Output:
-        url (string) 
+        url (string)
     '''
     query = query.split()
     query = '+'.join(query)
@@ -234,4 +234,4 @@ def listAll():
         all.append(r)
     return all
 
-print get_image("calculus book")
+#print get_image("calculus book")
