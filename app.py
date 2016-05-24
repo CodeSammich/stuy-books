@@ -133,6 +133,14 @@ def sell():
 def buy():
     return render_template('buypage.html', info=listAll())
 
+@app.route("/itempage/<email>/<bookName>")
+def itempage(email, bookName):
+    info = listAll()
+    for i in range(len(info)):
+        if email == info[i]['email'] and bookName == info[i]['bookName']:
+            thisBook = info[i]
+            return render_template("itempage.html", thisBook=thisBook)
+
 @app.route('/googleLogin')
 def googleLogin():
     if request.method=="GET":

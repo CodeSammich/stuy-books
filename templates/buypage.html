@@ -3,6 +3,7 @@
 {% block contents %}
 <div class="buying">
 <h1>All listings</h1>
+{{info}}
 {% if info|length > 0 %}
 <table>
   <tr>
@@ -14,6 +15,7 @@
     <th>Condition</th>
     <th>Price</th>
     <th>Description</th>
+    <th>Buy?</th>
   </tr>
   <!--same as the user page, except it displays ALL listings (we'll worry about filter/organizing later)-->
   {% for item in info %}
@@ -26,6 +28,7 @@
     <td>{{item['condition']}}</td>
     <td>{{item['price']}}</td>
     <td>{{item['description']}}</td>
+    <td><button onclick="window.location.href='/itempage/{{item['email']}}/{{item['bookName']}}'" class="buy" type="submit">Buy This!</button>
   </tr>
   {% endfor %}
   <!--end for loop-->
