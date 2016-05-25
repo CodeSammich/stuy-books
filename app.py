@@ -72,7 +72,7 @@ def signup():
 
         message = addUser(email, passwordHash)
         if (message == ''):
-            '''
+            """
             data = urllib.urlencode({'email': email, 'passwordHash': passwordHash})
             activateLink = 'localhost:8000/activate?%s' %(data)
 
@@ -97,7 +97,7 @@ def signup():
             s.close()
 
             return redirect(url_for('home'))
-            '''
+            """
         return render_template('signup.html', msg = message)
 
 @app.route('/activate')
