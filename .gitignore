@@ -60,3 +60,10 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+# Autosave Files
+*#
+*~
+
+# -------- REQUIRED PASSWORD FILE FOR SMTP ( ignored for security reasons) ------
+password.txt

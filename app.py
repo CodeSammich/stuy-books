@@ -7,9 +7,8 @@ from uuid import uuid4
 
 app = Flask(__name__)
 
-#ourEmail = 'stuybooks.JASH@gmail.com'
-#ourPassword = open('password.txt', 'r').read()[:-1]
-
+ourEmail = 'stuybooks.JASH@gmail.com'
+ourPassword = open('password.txt', 'r').read()[:-1]
 
 #def requireLogin(f):
 #    @wraps(f)
@@ -73,7 +72,7 @@ def signup():
 
         message = addUser(email, passwordHash)
         if (message == ''):
-            """
+            '''
             data = urllib.urlencode({'email': email, 'passwordHash': passwordHash})
             activateLink = 'localhost:8000/activate?%s' %(data)
 
@@ -96,8 +95,9 @@ def signup():
             Team JASH''' %(email + '@stuy.edu', ourEmail, name, activateLink ,ourEmail)
             s.sendmail(ourEmail, sellerEmail, message)
             s.close()
-            """
+
             return redirect(url_for('home'))
+            '''
         return render_template('signup.html', msg = message)
 
 @app.route('/activate')
