@@ -10,13 +10,14 @@ app = Flask(__name__)
 #ourEmail = 'stuybooks.JASH@gmail.com'
 #ourPassword = open('password.txt', 'r').read()[:-1]
 
-def requireLogin(f):
-    @wraps(f)
-    def dec(*args):
-        if 'email' not in session:
-            return render_template('login.html', msg = 'You must login to view the page')
-        return f(*args)
-    return dec
+
+#def requireLogin(f):
+#    @wraps(f)
+#    def dec(*args):
+#        if 'email' not in session:
+#            return render_template('login.html', msg = 'You must login to view the page')
+#        return f(*args)
+#    return dec
 
 @app.route('/')
 @app.route('/index')
@@ -158,10 +159,11 @@ def googleLogin():
         return render_template("google.html")
 
 @app.route('/logout')
-@requireLogin
+#@requireLogin
 def logout():
     del session['email']
-    return redirect(url_for(''))
+    session['logged'] = 0
+    return redirect(url_for('home'))
 
 if __name__ == "__main__":
     app.secret_key = str(uuid4())
