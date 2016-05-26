@@ -29,13 +29,11 @@ def addUser(email, passwordHash, status=0):
     Returns:
         String with errors, or empty string if there aren't any
     '''
-    print 'starting'
     dbnames = client.database_names()
-    print 'next'
     db = client['accounts-database']
-    print 'database called'
+
     accounts = db['accounts']
-    print 'before empty db test'
+
     if 'accounts-database' not in dbnames: #init database and collection
         print 'database initialized'
         dummy_pass = "dummy_pass" #may need to be more secure
@@ -45,11 +43,10 @@ def addUser(email, passwordHash, status=0):
             'status': 0
         }
         init_id = accounts.insert_one( init_account).inserted_id #dummy account
-    print 'after empty test'
+
     user_account = accounts.find_one({'email': email})
-    print "looked through db"
+
     if user_account != None:
-        print 'no go'
         return 'An account has already been registered under this email'
     accounts.insert_one({
         'email': replaceApostrophe(email.strip('@stuy.edu')),
@@ -76,6 +73,8 @@ def getStatus(email):
     results = accounts.find_one({'email': email})
     if results == None:
         return False
+    print "not none"
+    print results
     if results['status'] == 0:
         return False
     return True
@@ -111,8 +110,8 @@ def authenticate(email, passwordHash):
     result = accounts.find_one({'email': email, 'passwordHash': passwordHash})
     if result == None:
         return False
-    if not getStatus(email):
-        return False
+    #if not getStatus(email):
+        #return False
     return True
 
 
@@ -277,3 +276,11 @@ def listAll():
     return all
 
 #print get_image("calculus book")
+# -------------------- Clean Database ---------------------- #
+def delete_account( email ): #without @stuy.edu
+    db = client['accounts-database']
+    accounts = db['accounts']
+    accounts.find_one_and_delete( {'email': email })
+    
+delete_account( "szhang5" )
+
