@@ -46,6 +46,10 @@ Book marketplace for Stuyvesant High School
 - Turn into Github Projects page
 
 ### Dev-log
+##### 5/26/16
+- Added remove functionality for backend databases
+- Added auto-email functionality
+ - Confirmation link not yet functional/secure
 ##### 5/25/16
 - Added image to listings
 - Improved visual presentation of pages (and listings) after login

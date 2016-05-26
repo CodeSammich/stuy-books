@@ -123,10 +123,7 @@ def updatePassword(email, newPasswordHash):
         newPasswordHash (string)
     Returns:
         True if successful, False otherwise
-    result = db.accounts.find_one({'email': email})
-    if len(result) == 0:
-        return False
-    else:'''
+    '''
     db = client['accounts-database']
     try:
         db.accounts.update_one(
