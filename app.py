@@ -113,7 +113,7 @@ def signup():
         return render_template('signup.html', msg = message)
 
 #TODO
-@app.route('/activate', ['GET', 'POST'])
+@app.route('/activate', methods = ['GET', 'POST'])
 def activate():
     if request.method == 'GET':
         return render_template('activate.html')
