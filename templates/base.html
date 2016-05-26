@@ -55,10 +55,10 @@
             <a class="navbar-brand" href="/"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
           </div>
          <div class="navbar-header" style="padding-top:12px; float:right; padding-right:15px;">
-           <form class="navbar-form navbar-right" role="search">
+           <form method="POST" class="navbar-form navbar-right" role="search">
              <div class="form-group">
-               <input type="text" class="form-control" placeholder="Search StuyBooks" style="width:250px;">
-               <input class="btn" type="submit" value="Search"></input>
+               <input method="POST" type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
+               <input method="POST" class="btn" type="submit" value="Search"></input>
              </div>
              <a class="btn btn-default" href="/login">Sign In</a>
              <a class="btn btn-success" href="/signup">Sign Up</a>

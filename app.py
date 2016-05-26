@@ -21,12 +21,19 @@ ourPassword = open('password.txt', 'r').read()[:-1]
 #        return f(*args)
 #    return dec
 
-@app.route('/')
-@app.route('/index')
-@app.route("/home/")
+@app.route('/', methods=["GET","POST"])
+@app.route('/index', methods=["GET","POST"])
+@app.route("/home/", methods=["GET","POST"])
 def home():
     session["logged"]=0
-    return render_template("index.html")
+    if request.method == "GET":
+        return render_template("index.html")
+    else:
+        print "hello"        
+        search = request.form['searchQuery']
+        print search
+        return render_template("hello.html",search=search)
+        
 
 @app.route("/login", methods=["GET","POST"])
 def login():
