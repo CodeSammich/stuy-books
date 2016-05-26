@@ -206,7 +206,11 @@ def get_image_url(query):
     header = {'User-Agent': 'Mozilla/5.0'}
     soup = get_soup(url,header)
 
+
     images = [a['src'] for a in soup.find_all("img", {"src": re.compile("gstatic.com")})]
+
+    for i in images:
+        i = str(") + i + str(")
 
     #for second choice, return images[1], etc.
     return images[0]

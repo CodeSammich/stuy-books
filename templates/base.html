@@ -8,7 +8,7 @@
 
     <title>{% block title %}{% endblock %} - StuyBooks</title>
     <!-- Bootstrap -->
-    <link href="../static/bootstrap.min.css" rel="stylesheet">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
     <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- Bootstrap for select drop-down menus-->
@@ -17,7 +17,7 @@
 
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}">
-    <link rel="stylesheet" type="text/css" href="../static/style.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/style.css"/>
   <body>
     <div class="top">
     <nav class="navbar navbar-default navbar-fixed-top">
@@ -31,16 +31,19 @@
             </div>
           </form>
         </div>
-        <div class="navbar-header" style="padding-top:12px; float:right; padding-right:25px;">
-          <a class='btn btn-primary btn-lg' href='/buypage' style='width:160px;'>ALL BOOKS</a>&nbsp;&nbsp;&nbsp; 
-          <a class="btn btn-primary btn-lg" href="/sell" style="width:90px;">SELL</a>&nbsp;&nbsp;&nbsp;
-          <div class="btn-group">
-            <button type="button" class="btn btn-default btn-lg" style="width:150px;">Username</button>
-            <button type="button" class="btn btn-default btn-lg dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <!--<div class="navbar-header" style="padding-top:12px; float:right; padding-right:25px;">
+          <a class='btn btn-primary btn-lg' href='/buypage' style='width:160px;'>ALL BOOKS</a>&nbsp;&nbsp;&nbsp;
+          <a class="btn btn-primary btn-lg" href="/sell" style="width:90px;">SELL</a>&nbsp;&nbsp;&nbsp;-->
+        <ul class="nav navbar-nav navbar-right" style="padding-top:12px;padding-right:50px;">
+          <li class="in"><a href="/buypage">ALL LISTINGS</a></li>
+          <li class="in" style="padding-right:10px;"><a href="/sell">SELL</a></li>
+          <li class="btn-group" style="padding-top:5px;">
+            <button type="button" class="btn btn-default" style="width:150px;height:40px;">Username</button>
+            <button type="button" class="btn btn-default dropdown-toggle" style="height:40px;"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               <span class="caret"></span>
               <span class="sr-only">Toggle Dropdown</span>
             </button>
-            <ul class="dropdown-menu">
+            <ul class="dropdown-menu" style="width:100%; margin-top:3px;">
               <li><a href="#">Settings</a></li>
               <li><a href="#">Something</a></li>
               <li role="separator" class="divider"></li>

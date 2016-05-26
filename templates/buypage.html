@@ -4,34 +4,22 @@
 <div class="buying">
 <h1>All listings</h1>
 {% if info|length > 0 %}
-<table>
-  <tr>
-    <th>Email</th>
-    <th>Title</th>
-    <th>Author</th>
-    <th>ISBN</th>
-    <th>Subject</th>
-    <th>Condition</th>
-    <th>Price</th>
-    <th>Description</th>
-    <th>Buy?</th>
-  </tr>
+
   <!--same as the user page, except it displays ALL listings (we'll worry about filter/organizing later)-->
   {% for item in info %}
-  <tr>
-    <td>{{item['email'] + '@stuy.edu'}}</td>
-    <td>{{item['bookName']}}</td>
-    <td>{{item['author']}}</td>
-    <td>{{item['isbn']}}</td>
-    <td>{{item['subject']}}</td>
-    <td>{{item['condition']}}</td>
-    <td>{{item['price']}}</td>
-    <td>{{item['description']}}</td>
-    <td><button onclick="window.location.href='/itempage/{{item['email']}}/{{item['bookName']}}'" class="buy" type="submit">Buy This!</button>
-  </tr>
+  <table style="height:150px;width:80% !important;">
+    <tr><td rowspan="3" style="width:150px;"><img src={{item['image_url']}}></td></tr>
+    <tr>
+      <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+        <span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+        <p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+      </td>
+    </tr>
+  </table>
+  <hr>
   {% endfor %}
   <!--end for loop-->
-</table>
+
 {% endif %}
 </div>
 {% endblock %}

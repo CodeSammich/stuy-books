@@ -194,7 +194,6 @@ p {
 }
 
 table, tr, td {
-  text-align: center;
   background-color: white;
   padding: 10px 20px 0;
   border: .25px solid #828282;
@@ -210,4 +209,18 @@ table, tr, td {
 .buying {
   padding-top:50px;
   color:black;
+}
+
+.in {
+  font-size: 15px;
+  text-align: center;
+}
+
+.in a:hover {
+  color: #990000 !important;
+  border-bottom: 3px solid #990000;
+}
+
+hr {
+  border-top: 1px solid #8c8b8b;
 }
