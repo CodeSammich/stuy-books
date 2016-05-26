@@ -6,10 +6,10 @@ Book marketplace for Stuyvesant High School
 ## Members
 | Name        | Github           |
 | ------------- |:-------------:|
-| Amanda Chiu  | [achiu2](https://github.com/achiu2)           |
+| Amanda Chiu  | [amandalchiu](https://github.com/amandalchiu)           |
 | Helen Li    | [lihelennn](https://github.com/lihelennn)      |
 | Samuel Zhang |[CodeSammich](https://github.com/CodeSammich)  |
-| Jeffrey Zou |[JeffreyZou13](https://github.com/JeffreyZou13) | 
+| Jeffrey Zou |[JeffreyZou13](https://github.com/JeffreyZou13) |
 
 ### Plans/Features
 - Serial number, verify the actual book manually previously
@@ -46,10 +46,14 @@ Book marketplace for Stuyvesant High School
 - Turn into Github Projects page
 
 ### Dev-log
+##### 5/25/16
+- Added image to listings
+- Improved visual presentation of pages (and listings) after login
+
 ##### 5/22/16
 - Added login functionality
  - user databases, books database/structure
  - create backend basic search functionality
 ##### 5/19/16
 - Added pages for home, login, signup, sell/buy, master book list
- - middleware integration with html/css
+- middleware integration with html/css
