@@ -275,12 +275,18 @@ def listAll():
         all.append(r)
     return all
 
-#print get_image("calculus book")
+
 # -------------------- Clean Database ---------------------- #
 def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
     
-delete_account( "szhang5" )
+def delete_book( bookName, email ):
+    db = client['books-database']
+    books = db['books']
+    results = books.remove( {'email': email,
+                             'bookName': bookName },
+                            True ) # delete justOne = True
+    
 
