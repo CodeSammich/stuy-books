@@ -281,7 +281,6 @@ def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
-<<<<<<< HEAD
     
 def delete_book( bookName, email ):
     db = client['books-database']
@@ -290,7 +289,3 @@ def delete_book( bookName, email ):
                              'bookName': bookName },
                             True ) # delete justOne = True
     
-=======
->>>>>>> dfd41e83133cd0fba1936434069ad250deb9e8a4
-
-delete_account( "szhang5" )
