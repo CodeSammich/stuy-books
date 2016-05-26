@@ -91,7 +91,7 @@ def updateStatus(email):
     accounts = db['accounts']
     accounts.find_one_and_update(
         {'email': email},
-        {'status': 1}
+        {'$set': {'status': 1}}
     )
     return True
 
@@ -281,6 +281,5 @@ def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
-    
-delete_account( "szhang5" )
 
+delete_account( "szhang5" )

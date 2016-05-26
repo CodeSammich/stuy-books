@@ -29,11 +29,11 @@ def home():
     if request.method == "GET":
         return render_template("index.html")
     else:
-        print "hello"        
+        print "hello"
         search = request.form['searchQuery']
         print search
         return render_template("hello.html",search=search)
-        
+
 
 @app.route("/login", methods=["GET","POST"])
 def login():
@@ -119,12 +119,14 @@ def signup():
         return render_template('signup.html', msg = message)
 
 #TODO
-@app.route('/activate', methods= ['GET', 'POST'])
+@app.route('/activate', methods=['GET', 'POST'])
 def activate():
     if request.method == 'GET':
+        email = request.args['email']
+        if getStatus(email):
+            return redirect(url_for('home'))
+        updateStatus(email)
         return render_template('activate.html')
-    email = session['email']
-    updateStatus(email)
     return redirect(url_for('home'))
 
 @app.route("/userpage", methods=['GET', 'POST'])
