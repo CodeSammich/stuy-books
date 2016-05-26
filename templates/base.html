@@ -23,7 +23,7 @@
     <nav class="navbar navbar-default navbar-fixed-top">
        <div class="test">
          <div class="navbar-header">
-           {% if session["logged"]>0 %} <!--then to userpage-->
+           {% if 'logged' in session and session["logged"]>0 %} <!--then to userpage-->
            <a class="navbar-brand" href="/userpage"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
           <form class="navbar-form" role="search">
             <div class="form-group" style="padding-top:12px;">
