@@ -46,13 +46,12 @@ def login():
         m.update(pword)
         passwordHash = m.hexdigest()
 
-        if authenticate(email, passwordHash) and getStatus(email):
+        if authenticate(email, passwordHash):
             print 'hello sir'
             session['email'] = email
             session['logged'] = 1
             return redirect(url_for("userpage", email=email))
-        elif not getStatus(email):
-                return render_template('login.html', msg = 'Your account has not yet been confirmed. Check your email.')
+
         return render_template('login.html', msg = 'Incorrect email/password combination')
 
 @app.route("/signup", methods=['GET', 'POST'])

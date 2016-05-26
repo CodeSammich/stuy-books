@@ -73,7 +73,12 @@ def getStatus(email):
     '''
     db = client['accounts-database']
     accounts = db['accounts']
-    return accounts.find_one({'email': email})['status'] == 1
+    results = accounts.find_one({'email': email})
+    if results == None:
+        return False
+    if results['status'] == 0:
+        return False
+    return True
 
 def updateStatus(email):
     '''
@@ -105,6 +110,8 @@ def authenticate(email, passwordHash):
     #definitely only 1 acc.
     result = accounts.find_one({'email': email, 'passwordHash': passwordHash})
     if result == None:
+        return False
+    if not getStatus(email):
         return False
     return True
 
