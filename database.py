@@ -19,12 +19,13 @@ def replaceApostrophe(s):
     return s.replace("'", '&#8217')
 
 #------------------------- Setup User -------------------------#
-def addUser(email, passwordHash):
+def addUser(email, passwordHash, status=0):
     '''
     Adds user to the database
     Args:
         email (string)
         passwordHash (string)
+        status (integer) 0 for inactive, 1 for active
     Returns:
         String with errors, or empty string if there aren't any
     '''
@@ -41,6 +42,7 @@ def addUser(email, passwordHash):
         init_account = {
             'email': 'dummy_email@stuy.edu',
             'passwordHash': dummy_pass,
+            'status': 0
         }
         init_id = accounts.insert_one( init_account).inserted_id #dummy account
     print 'after empty test'
@@ -50,8 +52,9 @@ def addUser(email, passwordHash):
         print 'no go'
         return 'An account has already been registered under this email'
     accounts.insert_one({
-        'email': replaceApostrophe(email),
-        'passwordHash': passwordHash
+        'email': replaceApostrophe(email.strip('@stuy.edu')),
+        'passwordHash': passwordHash,
+        'status': 0
         #'first': first,
         #'last': last
     })
@@ -59,6 +62,34 @@ def addUser(email, passwordHash):
 #    user_account = accounts.find_one( {'email': email})
 #    print user_account['email']
     return ''
+
+def getStatus(email):
+    '''
+    Gives the status of an account
+    Args:
+        email (string)
+    Returns:
+        True if active, False otherwise
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    return accounts.find_one({'email': email})['status'] == 1
+
+def updateStatus(email):
+    '''
+    Updates the status of an account
+    Args:
+        email (string)
+    Returns:
+        True
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    accounts.find_one_and_update(
+        {'email': email},
+        {'status': 1}
+    )
+    return True
 
 def authenticate(email, passwordHash):
     '''

@@ -2,8 +2,11 @@ from flask import Flask, render_template, url_for, session, request, redirect
 from database import *
 from functools import wraps
 from hashlib import sha256
-from smtplib import SMTP #TODO
 from uuid import uuid4
+from urllib import urlencode
+from email.mime.multipart import MIMEMultipart
+from email.MIMEText import MIMEText
+import smtplib
 
 app = Flask(__name__)
 
@@ -43,13 +46,14 @@ def login():
         m.update(pword)
         passwordHash = m.hexdigest()
 
-        if authenticate(email, passwordHash):
+        if authenticate(email, passwordHash) and getStatus(email):
             print 'hello sir'
             session['email'] = email
             session['logged'] = 1
             return redirect(url_for("userpage", email=email))
-        else:
-            return render_template('login.html', msg = 'Incorrect email/password combination')
+        elif not getStatus(email):
+                return render_template('login.html', msg = 'Your account has not yet been confirmed. Check your email.')
+        return render_template('login.html', msg = 'Incorrect email/password combination')
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
@@ -72,37 +76,50 @@ def signup():
 
         message = addUser(email, passwordHash)
         if (message == ''):
-            """
-            data = urllib.urlencode({'email': email, 'passwordHash': passwordHash})
+
+            data = urlencode({'email': email, 'passwordHash': passwordHash})
             activateLink = 'localhost:8000/activate?%s' %(data)
 
-            s = SMTP('smpt.gmail.com' 587)
-            s.startls()
+            s = smtplib.SMTP('smtp.gmail.com', 587)
+            s.ehlo()
+            s.starttls()
             s.ehlo()
             s.login(ourEmail, ourPassword)
 
-            messge = '''To: %s
-            From: %s
-            Subject: Getting Started with StuyBooks
+            #Sets up the multipart object
+            message = MIMEMultipart()
+            message['Subject'] = 'Getting started with StuyBooks'
+            message['From'] = ourEmail
+            message['To'] = email + '@stuy.edu'
 
-            Dear %s,
+            text = '''
+            To whom it may concern,
 
             Thanks for signing up with StuyBooks!
             Click on this link to activate your account: %s
             If you did not register for StuyBooks, contact us at %s
 
             Sincerely,
-            Team JASH''' %(email + '@stuy.edu', ourEmail, name, activateLink ,ourEmail)
-            s.sendmail(ourEmail, sellerEmail, message)
+            Team JASH''' %(activateLink , ourEmail)
+            #Attaches the message
+            message.attach(MIMEText(text, 'plain'))
+            print message.as_string()
+
+            s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
             s.close()
 
             return redirect(url_for('home'))
-            """
+
         return render_template('signup.html', msg = message)
 
-@app.route('/activate')
+#TODO
+@app.route('/activate', ['GET', 'POST'])
 def activate():
-    return render_template('activate.html')
+    if request.method == 'GET':
+        return render_template('activate.html')
+    email = session['email']
+    updateStatus(email)
+    return redirect(url_for('home')) 
 
 @app.route("/userpage", methods=['GET', 'POST'])
 def userpage():
