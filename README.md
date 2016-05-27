@@ -48,10 +48,13 @@ Book marketplace for Stuyvesant High School
 ### Dev-log
 ##### 5/27/16
 - Backend search engine function working properly
+- Search engine connected to some of the front end pages
+
 ##### 5/26/16
 - Added remove functionality for backend databases
 - Added auto-email functionality
- - Confirmation link not yet functional/secure
+- Confirmation link not yet functional/secure
+
 ##### 5/25/16
 - Added image to listings
 - Improved visual presentation of pages (and listings) after login
@@ -59,6 +62,7 @@ Book marketplace for Stuyvesant High School
 ##### 5/22/16
 - Added login functionality
  - user databases, books database/structure
+ 
 ##### 5/19/16
 - Added pages for home, login, signup, sell/buy, master book list
 - middleware integration with html/css
