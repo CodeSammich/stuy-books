@@ -46,6 +46,8 @@ Book marketplace for Stuyvesant High School
 - Turn into Github Projects page
 
 ### Dev-log
+##### 5/27/16
+- Backend search engine function working properly
 ##### 5/26/16
 - Added remove functionality for backend databases
 - Added auto-email functionality
@@ -57,7 +59,6 @@ Book marketplace for Stuyvesant High School
 ##### 5/22/16
 - Added login functionality
  - user databases, books database/structure
- - create backend basic search functionality
 ##### 5/19/16
 - Added pages for home, login, signup, sell/buy, master book list
 - middleware integration with html/css
