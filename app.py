@@ -29,12 +29,15 @@ def home():
     if request.method == "GET":
         return render_template("index.html")
     else:
-        print "hello"
+        print "hi123"
         search = request.form['searchQuery']
-        print search
-        results = searchForBook(search)
-        print results
-        return render_template("search.html", info=results)
+        #print search
+        #results = searchForBook(search)
+        #print results
+        #session['results'] = results
+        #return render_template("search.html", info=results)
+        return redirect(url_for('search', query=search))
+
 
 
 @app.route("/login", methods=["GET","POST"])
@@ -137,6 +140,15 @@ def userpage():
         email = session['email']
         info = listBooksForUser(email)
         return render_template("userpage.html", info=info)
+    else:
+        print "hello"
+        search = request.form['searchQuery']
+        #print search
+        #results = searchForBook(search)
+        #print results
+        #session['results'] = results
+        #return render_template("search.html", info=results)
+        return redirect(url_for('search', query=search))
     return redirect(url_for('sell'))
 
 @app.route('/sell', methods=['GET', 'POST'])
@@ -159,15 +171,42 @@ def sell():
 
 @app.route('/buypage')
 def buy():
-    return render_template('buypage.html', info=listAll())
+    if request.method == "GET":
+        return render_template('buypage.html', info=listAll())
+    else:
+        search = request.form['searchQuery']
+        #print search
+        #results = searchForBook(search)
+        #print results
+        #session['results'] = results
+        #return render_template("search.html", info=results)
+        return redirect(url_for('search', query=search))
+
 
 @app.route("/itempage/<email>/<bookName>")
 def itempage(email, bookName):
-    info = listAll()
-    for i in range(len(info)):
-        if email == info[i]['email'] and bookName == info[i]['bookName']:
-            thisBook = info[i]
-            return render_template("itempage.html", thisBook=thisBook)
+    if request.method == "GET":
+        info = listAll()
+        for i in range(len(info)):
+            if email == info[i]['email'] and bookName == info[i]['bookName']:
+                thisBook = info[i]
+                return render_template("itempage.html", thisBook=thisBook)
+    else:
+        search = request.form['searchQuery']
+        #print search
+        #results = searchForBook(search)
+        #print results
+        #session['results'] = results
+        #return render_template("search.html", info=results)
+        return redirect(url_for('search', query=search))
+
+
+@app.route('/search')
+def search():
+    search = request.args.get("query")
+    results = searchForBook(search)
+    return render_template("search.html", info=results)
+    
 
 @app.route('/googleLogin')
 def googleLogin():
