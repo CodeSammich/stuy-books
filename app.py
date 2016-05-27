@@ -33,7 +33,8 @@ def home():
         search = request.form['searchQuery']
         print search
         results = searchForBook(search)
-        return render_template("hello.html",results=results)
+        print results
+        return render_template("search.html", info=results)
 
 
 @app.route("/login", methods=["GET","POST"])
