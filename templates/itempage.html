@@ -8,9 +8,14 @@
   <tr><th colspan="2" style="font-size:30px;">{{thisBook['bookName']}}<br>
     <span style="font-size:20px; font-weight:normal; line-height:1;">By {{thisBook['author']}}</span>
   </th></tr>
-  <tr><td style="width:25%;padding-top:60px;"><img src={{thisBook['image_url']}} style="height:250px;"></td>
-    <td style="text-align:left; padding-left:100px;">{{thisBook['subject']}}<br>
-      {{thisBook['condition']}}<br>
+  <tr>
+    <td style="width:25%;padding-top:60px;" rowspan="2"><img src={{thisBook['image_url']}} style="height:250px;"></td>
+    <td><br><span style="color:#777; letter-spacing:1px;">Item condition:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['condition']}}</b><br><br>
+      This is
+    </td>
+  </tr>
+  <tr><td style="text-align:left; padding-left:100px; background-color:#EEEEEE;">{{thisBook['subject']}}<br>
+      <br>
       {{thisBook['price']}}</td>
   </tr>
   <tr><td>{{thisBook['description']}}</td></tr>

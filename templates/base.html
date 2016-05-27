@@ -25,12 +25,16 @@
          <div class="navbar-header">
            {% if 'logged' in session and session["logged"]>0 %} <!--then to userpage-->
            <a class="navbar-brand" href="/userpage"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
-          <form class="navbar-form" role="search">
-            <div class="form-group" style="padding-top:12px;">
-              <input type="text" class="form-control" placeholder="Search StuyBooks" style="width:250px;">
-              <input class="btn" type="submit" value="Search"></input>
-            </div>
-          </form>
+           <form class="navbar-form" role="search">
+             <div class="form-group" style="padding-top:12px;">
+               <div class="input-group" style="padding-right:15px;">
+                <span class="input-group-btn">
+                 <input type="text" class="form-control" placeholder="Search StuyBooks" style="width:250px;">
+                 <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+               </span>
+               </div>
+             </div>
+           </form>
         </div>
         <!--<div class="navbar-header" style="padding-top:12px; float:right; padding-right:25px;">
           <a class='btn btn-primary btn-lg' href='/buypage' style='width:160px;'>ALL BOOKS</a>&nbsp;&nbsp;&nbsp;
