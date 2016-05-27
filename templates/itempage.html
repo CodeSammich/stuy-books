@@ -5,20 +5,24 @@
 
 <table style="width:100%;">
   <!--get only one item-->
-  <tr><th colspan="2" style="font-size:30px;">{{thisBook['bookName']}}<br>
+  <tr><th colspan="3" style="font-size:30px;">{{thisBook['bookName']}}<br>
     <span style="font-size:20px; font-weight:normal; line-height:1;">By {{thisBook['author']}}</span>
+<hr>
   </th></tr>
   <tr>
     <td style="width:25%;padding-top:60px;" rowspan="2"><img src={{thisBook['image_url']}} style="height:250px;"></td>
-    <td><br><span style="color:#777; letter-spacing:1px;">Item condition:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['condition']}}</b><br><br>
-      This is
+    <td style="padding-left:25px;padding-bottom:30px;"><br><span class="info">Item condition:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['condition']}}</b><br>
+      <span class="info">Subject listed as:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['subject']}}</b>
     </td>
   </tr>
-  <tr><td style="text-align:left; padding-left:100px; background-color:#EEEEEE;">{{thisBook['subject']}}<br>
-      <br>
-      {{thisBook['price']}}</td>
+  <tr><td style="text-align:center; background-color:#EEEEEE; border-radius:10px;">
+      <span style="font-size:20px;">Price:&nbsp;&nbsp;&nbsp;$ {{thisBook['price']}}</span><br><br><br>
+      <button class="btn btn-success">Buy It Now</button>
+    </td>
+      <td style="width:170px;padding:40px;" valign="top">Seller information: *in progress*</td>
   </tr>
-  <tr><td>{{thisBook['description']}}</td></tr>
+  <tr><td colspan="3" style="padding-top:50px;"><span class="info">ISBN #: </span>{{thisBook['isbn']}}<br><br>
+    <span class="info">Additional information/comments: </span> {{thisBook['description']}}</td></tr>
 </table>
 
 

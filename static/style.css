@@ -36,6 +36,10 @@ h3 {
   letter-spacing: .75px;
 }
 
+hr {
+  border-top: 1px solid #8c8b8b;
+}
+
 p {
     margin-top: 0;
     margin-bottom: 10px;
@@ -195,7 +199,6 @@ p {
 
 table, tr, td {
   background-color: white;
-  padding: 10px 20px 0;
   border: .25px solid #828282;
   width: 300px;
 }
@@ -221,6 +224,8 @@ table, tr, td {
   border-bottom: 3px solid #990000;
 }
 
-hr {
-  border-top: 1px solid #8c8b8b;
+/*  ITEMPAGE.HTML  */
+.info {
+  color:#777;
+  letter-spacing:1px;
 }

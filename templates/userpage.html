@@ -4,29 +4,18 @@
 <div class="userpage">
 <h1>Your listings</h1>
 {% if info|length > 0 %}
-<table>
+{% for item in info %}
+<table style="height:150px;width:80% !important;">
+  <tr><td rowspan="3" style="width:150px;"><img src={{item['image_url']}}></td></tr>
   <tr>
-    <th>Title</th>
-    <th>Author</th>
-    <th>ISBN</th>
-    <th>Subject</th>
-    <th>Condition</th>
-    <th>Price</th>
-    <th>Description</th>
+    <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+      <span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+      <p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+    </td>
   </tr>
-  <!--assuming, starting for loop here-->
-  {% for item in info %}
-  <tr>
-    <td>{{item['bookName']}}</td>
-    <td>{{item['author']}}</td>
-    <td>{{item['isbn']}}</td>
-    <td>{{item['subject']}}</td>
-    <td>{{item['condition']}}</td>
-    <td>{{item['price']}}</td>
-    <td>{{item['description']}}</td>
-  </tr>
-  {% endfor %}
-  <!--end for loop-->
+</table>
+<hr>
+{% endfor %}
 </table>
 {% endif %}
 </div>
