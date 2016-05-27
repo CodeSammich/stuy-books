@@ -1,3 +1,6 @@
+from pymongo import MongoClient
+client = MongoClient()
+
 
 def searchForBook(query):
     '''
@@ -9,13 +12,17 @@ def searchForBook(query):
     '''
     db = client['books-database']
     books = db['books']
+    print books.count()
 
     #parse query to find relevant results
     results = []
-    query = query.remove(',')
+    query = query.strip(',')
     query = query.split(' ')
-    for i in range(books.count): #goes through book database
-        for j in range(query.count): #goes through query
+    print query[0]
+    print books[1]['bookName']
+    print query
+    for i in range(books.count()): #goes through book database
+        for j in range(len(query)): #goes through query
             if books[i]['bookName'].find(query[j]) != -1: #if found
                 print 'book found, going to next book'
                 results.append( books[i] )
