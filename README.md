@@ -42,8 +42,15 @@ Book marketplace for Stuyvesant High School
 
 ** Not initial feature, may devolve into irrelevant chat **
 
-### Finalize To-Do
-- Turn into Github Projects page
+### To-Do 
+> To be updated with Client meeting notes
+- OAuth authentication, confirmation emails
+- buy functionality (email sending)
+- Tooltips for signup/forms
+- Database handling "remove", "Schrodinger pending state for books", front-end implementation of pending 
+- Optimizing search engine/picture search
+- Disclaimers + misc. issues
+
 
 ### Dev-log
 ##### 5/27/16
