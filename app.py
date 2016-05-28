@@ -165,9 +165,8 @@ def sell():
         subject = request.form['subject']
         condition = request.form['condition']
         price = request.form['price']
-        description = request.form['comment']
 
-        addBook(email, bookName, author, isbn, subject, condition, price, description)
+        addBook(email, bookName, author, isbn, subject, condition, price)
 
         return redirect(url_for('userpage'))
 

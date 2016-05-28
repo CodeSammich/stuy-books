@@ -152,7 +152,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price, description):
+def addBook(email, bookName, author, isbn, subject, condition, price):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -163,7 +163,6 @@ def addBook(email, bookName, author, isbn, subject, condition, price, descriptio
         subject (string)
         condition (string)
         price (string)
-        description (string)
     Empty string if information doesn't exist
     Email + bookName will never be empty
     Returns:
@@ -179,7 +178,6 @@ def addBook(email, bookName, author, isbn, subject, condition, price, descriptio
                       'subject': subject,
                       'condition': condition,
                       'price': price,
-                      'description': description,
                       'image_url': image_url})
     return True
 
@@ -300,9 +298,6 @@ def delete_book( bookName, email ):
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
-
-
-
 
 # -------------------------Search Function -----------------#
 
