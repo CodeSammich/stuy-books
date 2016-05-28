@@ -90,7 +90,7 @@ def signup():
 
             user = getUser(email)
             data = urlencode({'email': user['email'], '_id': user['_id']})
-            activateLink = 'localhost:8000/activate?%s' %(data)
+            activateLink = 'http://localhost:8000/activate?%s' %(data)
 
             s = smtplib.SMTP('smtp.gmail.com', 587)
             s.ehlo()
