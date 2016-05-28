@@ -182,7 +182,27 @@ def deleteBook(email, bookName):
     books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
 
-# image scraping for Google
+def getSellersForBook(bookName):
+    '''
+    Looks up people who are selling a book
+    Args:
+        bookName (string)
+    Returns:
+        A list of sellers for the book
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find({'bookName', bookName})
+    #return [results[i]['email'] for i in range(results.count)]
+    people = []
+    for r in results:
+        people.append[r]
+    #remove duplicates
+    seen = set()
+    seenmore = seen.add
+    return [x for x in people if not (x in seen or x in seenmore(x))]
+
+# ------------------------ Image Scraping from Google --------------#
 def get_soup(url, header):
     '''
     Helper function for get_image_url
@@ -218,25 +238,7 @@ def get_image_url(query):
     #for second choice, return images[1], etc.
     return images[0]
 
-def getSellersForBook(bookName):
-    '''
-    Looks up people who are selling a book
-    Args:
-        bookName (string)
-    Returns:
-        A list of sellers for the book
-    '''
-    db = client['books-database']
-    books = db['books']
-    results = books.find({'bookName', bookName})
-    #return [results[i]['email'] for i in range(results.count)]
-    people = []
-    for r in results:
-        people.append[r]
-    #remove duplicates
-    seen = set()
-    seenmore = seen.add
-    return [x for x in people if not (x in seen or x in seenmore(x))]
+
 
 #-------------------------- Book list functions --------------------#
 
@@ -279,14 +281,13 @@ def delete_account( email ): #without @stuy.edu
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
     
-def delete_book( bookName, email ):
+def delete_one_book( bookName, email ):
     db = client['books-database']
     books = db['books']
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
     
-
 
 
 # -------------------------Search Function -----------------#
@@ -320,4 +321,3 @@ def searchForBook(query):
         
         return results
 
-#searchForBook( "Calc" )

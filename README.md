@@ -11,7 +11,7 @@ Book marketplace for Stuyvesant High School
 | Samuel Zhang |[CodeSammich](https://github.com/CodeSammich)  |
 | Jeffrey Zou |[JeffreyZou13](https://github.com/JeffreyZou13) |
 
-### Plans/Features
+### Original Plans + Ideas
 - Serial number, verify the actual book manually previously
 - Automated search and verification of a book automatically (current eBay model)
 - Tied to school email account
@@ -38,7 +38,6 @@ Book marketplace for Stuyvesant High School
 - Calculator marketplace, etc.
   - *Suggested Amount*: "Similar items have been sold for __ amount"
 - Notifications on smart device
-
 
 ** Not initial feature, may devolve into irrelevant chat **
 
