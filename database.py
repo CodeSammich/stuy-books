@@ -49,7 +49,7 @@ def addUser(email, passwordHash, status=0):
     if user_account != None:
         return 'An account has already been registered under this email'
     accounts.insert_one({
-        'email': replaceApostrophe(email.strip('@stuy.edu')),
+        'email': replaceApostrophe(email.replace('@stuy.edu', '')),
         'passwordHash': passwordHash,
         'status': 0
         #'first': first,
@@ -59,6 +59,19 @@ def addUser(email, passwordHash, status=0):
 #    user_account = accounts.find_one( {'email': email})
 #    print user_account['email']
     return ''
+
+def getUser(email):
+    '''
+    Gets the document for a user from the db
+    Args:
+        email (string)
+    Returns:
+        Dictionary of data, or None
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    return accounts.find_one({'email': email})
+
 
 def getStatus(email):
     '''
@@ -93,6 +106,8 @@ def updateStatus(email):
         {'email': email},
         {'$set': {'status': 1}}
     )
+    for r in accounts.find({}):
+        print r['email']
     return True
 
 def authenticate(email, passwordHash):
@@ -137,7 +152,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price, description):
+def addBook(email, bookName, author, isbn, subject, condition, price):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -148,7 +163,6 @@ def addBook(email, bookName, author, isbn, subject, condition, price, descriptio
         subject (string)
         condition (string)
         price (string)
-        description (string)
     Empty string if information doesn't exist
     Email + bookName will never be empty
     Returns:
@@ -164,7 +178,6 @@ def addBook(email, bookName, author, isbn, subject, condition, price, descriptio
                       'subject': subject,
                       'condition': condition,
                       'price': price,
-                      'description': description,
                       'image_url': image_url})
     return True
 
@@ -280,15 +293,23 @@ def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
+<<<<<<< HEAD
     
 def delete_one_book( bookName, email ):
+=======
+
+def delete_book( bookName, email ):
+>>>>>>> d4d3b9d819c6fd36be5aac0dd069885c101c0b28
     db = client['books-database']
     books = db['books']
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
+<<<<<<< HEAD
     
 
+=======
+>>>>>>> d4d3b9d819c6fd36be5aac0dd069885c101c0b28
 
 # -------------------------Search Function -----------------#
 
@@ -318,6 +339,6 @@ def searchForBook(query):
             print 'book found, going to next book'
             results.append( b )
             break; #goes to next book
-        
+
         return results
 
