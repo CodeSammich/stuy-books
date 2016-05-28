@@ -56,7 +56,7 @@ Book marketplace for Stuyvesant High School
 ##### 5/27/16
 - Backend search engine function working properly
 - Search engine connected to some of the front end pages
--Confirmation page functional and secure
+* Confirmation page functional and secure
 
 ##### 5/26/16
 - Added remove functionality for backend databases
