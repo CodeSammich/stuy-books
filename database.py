@@ -49,7 +49,7 @@ def addUser(email, passwordHash, status=0):
     if user_account != None:
         return 'An account has already been registered under this email'
     accounts.insert_one({
-        'email': replaceApostrophe(email.strip('@stuy.edu')),
+        'email': replaceApostrophe(email.replace('@stuy.edu', '')),
         'passwordHash': passwordHash,
         'status': 0
         #'first': first,
@@ -59,6 +59,19 @@ def addUser(email, passwordHash, status=0):
 #    user_account = accounts.find_one( {'email': email})
 #    print user_account['email']
     return ''
+
+def getUser(email):
+    '''
+    Gets the document for a user from the db
+    Args:
+        email (string)
+    Returns:
+        Dictionary of data, or None
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    return accounts.find_one({'email': email})
+
 
 def getStatus(email):
     '''
@@ -93,6 +106,8 @@ def updateStatus(email):
         {'email': email},
         {'$set': {'status': 1}}
     )
+    for r in accounts.find({}):
+        print r['email']
     return True
 
 def authenticate(email, passwordHash):
@@ -278,14 +293,14 @@ def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
-    
+
 def delete_book( bookName, email ):
     db = client['books-database']
     books = db['books']
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
-    
+
 
 
 
@@ -317,7 +332,7 @@ def searchForBook(query):
             print 'book found, going to next book'
             results.append( b )
             break; #goes to next book
-        
+
         return results
 
 #searchForBook( "Calc" )

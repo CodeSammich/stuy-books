@@ -88,7 +88,8 @@ def signup():
         message = addUser(email, passwordHash)
         if (message == ''):
 
-            data = urlencode({'email': email, 'passwordHash': passwordHash})
+            user = getUser(email)
+            data = urlencode({'email': user['email'], '_id': user['_id']})
             activateLink = 'localhost:8000/activate?%s' %(data)
 
             s = smtplib.SMTP('smtp.gmail.com', 587)
@@ -131,6 +132,7 @@ def activate():
         if getStatus(email):
             return redirect(url_for('home'))
         updateStatus(email)
+        print getStatus(email)
         return render_template('activate.html')
     return redirect(url_for('home'))
 
@@ -206,7 +208,7 @@ def search():
     search = request.args.get("query")
     results = searchForBook(search)
     return render_template("search.html", info=results)
-    
+
 
 @app.route('/googleLogin')
 def googleLogin():

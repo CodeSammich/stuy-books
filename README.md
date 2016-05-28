@@ -42,12 +42,12 @@ Book marketplace for Stuyvesant High School
 
 ** Not initial feature, may devolve into irrelevant chat **
 
-### To-Do 
+### To-Do
 > To be updated with Client meeting notes
 - OAuth authentication, confirmation emails
 - buy functionality (email sending)
 - Tooltips for signup/forms
-- Database handling "remove", "Schrodinger pending state for books", front-end implementation of pending 
+- Database handling "remove", "Schrodinger pending state for books", front-end implementation of pending
 - Optimizing search engine/picture search
 - Disclaimers + misc. issues
 
@@ -56,6 +56,7 @@ Book marketplace for Stuyvesant High School
 ##### 5/27/16
 - Backend search engine function working properly
 - Search engine connected to some of the front end pages
+-Confirmation page functional and secure
 
 ##### 5/26/16
 - Added remove functionality for backend databases
@@ -69,7 +70,7 @@ Book marketplace for Stuyvesant High School
 ##### 5/22/16
 - Added login functionality
  - user databases, books database/structure
- 
+
 ##### 5/19/16
 - Added pages for home, login, signup, sell/buy, master book list
 - middleware integration with html/css
