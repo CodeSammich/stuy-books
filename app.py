@@ -186,7 +186,7 @@ def sell():
 
         return redirect(url_for('userpage'))
 
-@app.route('/buypage')
+@app.route('/buypage', methods=['GET', 'POST'])
 def buy():
     if request.method == "GET":
         return render_template('buypage.html', info=listAll())
@@ -200,7 +200,7 @@ def buy():
         return redirect(url_for('search', query=search))
 
 
-@app.route("/itempage/<email>/<bookName>")
+@app.route("/itempage/<email>/<bookName>", methods=['GET','POST'])
 def itempage(email, bookName):
     if request.method == "GET":
         info = listAll()
