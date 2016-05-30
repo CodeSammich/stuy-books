@@ -293,23 +293,17 @@ def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
-<<<<<<< HEAD
     
-def delete_one_book( bookName, email ):
-=======
+#def delete_one_book( bookName, email ):
 
 def delete_book( bookName, email ):
->>>>>>> d4d3b9d819c6fd36be5aac0dd069885c101c0b28
     db = client['books-database']
     books = db['books']
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
-<<<<<<< HEAD
     
 
-=======
->>>>>>> d4d3b9d819c6fd36be5aac0dd069885c101c0b28
 
 # -------------------------Search Function -----------------#
 
@@ -341,4 +335,3 @@ def searchForBook(query):
             break; #goes to next book
 
         return results
-

@@ -18,67 +18,81 @@
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}">
     <link rel="stylesheet" type="text/css" href="/static/style.css"/>
-  <body>
-    <div class="top">
-    <nav class="navbar navbar-default navbar-fixed-top">
-       <div class="test">
-         <div class="navbar-header">
-           {% if 'logged' in session and session["logged"]>0 %} <!--then to userpage-->
-           <a class="navbar-brand" href="/buypage"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
-           <form method="POST" class="navbar-form" role="search">
-             <div class="form-group" style="padding-top:12px;">
-               <div class="input-group" style="padding-right:15px;">
-                <span class="input-group-btn">
-                 <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
-                 <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-               </span>
-               </div>
-             </div>
-           </form>
-        </div>
-        <!--<div class="navbar-header" style="padding-top:12px; float:right; padding-right:25px;">
-          <a class='btn btn-primary btn-lg' href='/buypage' style='width:160px;'>ALL BOOKS</a>&nbsp;&nbsp;&nbsp;
-          <a class="btn btn-primary btn-lg" href="/sell" style="width:90px;">SELL</a>&nbsp;&nbsp;&nbsp;-->
-        <ul class="nav navbar-nav navbar-right" style="padding-top:12px;padding-right:50px;">
-          <li class="in"><a href="/buypage">ALL LISTINGS</a></li>
-          <li class="in" style="padding-right:10px;"><a href="/sell">SELL</a></li>
-          <li class="btn-group" style="padding-top:5px;">
-            <button type="button" class="btn btn-default" style="width:150px;height:40px;"><a href="/userpage" style="color:#555;text-decoration:none;">Username</a></button>
-            <button type="button" class="btn btn-default dropdown-toggle" style="height:40px;"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              <span class="caret"></span>
-              <span class="sr-only">Toggle Dropdown</span>
-            </button>
-            <ul class="dropdown-menu" style="width:100%; margin-top:3px;">
-              <li><a href="#">Settings</a></li>
-              <li><a href="#">Something</a></li>
-              <li role="separator" class="divider"></li>
-              <li><a href="/logout">Log out</a></li>
-            </ul>
-          </div>
-    {% else %}
-            <a class="navbar-brand" href="/"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
-          </div>
-         <div class="navbar-header" style="padding-top:12px; float:right; padding-right:15px;">
-           <form method="POST" class="navbar-form navbar-right" role="search">
-             <div class="form-group">
-               <div class="input-group" style="padding-right:15px;">
-                <span class="input-group-btn">
-                 <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
-                 <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-               </span>
-               </div>
-             </div>
-             <a class="btn btn-default" href="/login">Sign In</a>
-             <a class="btn btn-success" href="/signup">Sign Up</a>
-           </form>
-        </div>
-    {% endif %}
-  </div>
-      </nav>
+
+    <meta name="google-signin-client_id" content="546971034348-fflcn8cq3l3g5a9od0dnorlbgckrquuo.apps.googleusercontent.com">
+    
+    <body>
+      <div class="top">
+	<nav class="navbar navbar-default navbar-fixed-top">
+	  <div class="test">
+            <div class="navbar-header">
+              {% if 'logged' in session and session["logged"]>0 %} <!--then to userpage-->
+              <a class="navbar-brand" href="/buypage"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
+              <form method="POST" class="navbar-form" role="search">
+		<div class="form-group" style="padding-top:12px;">
+		  <div class="input-group" style="padding-right:15px;">
+                    <span class="input-group-btn">
+                      <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
+                      <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+		    </span>
+		  </div>
+		</div>
+              </form>
+            </div>
+            <!--<div class="navbar-header" style="padding-top:12px; float:right; padding-right:25px;">
+		<a class='btn btn-primary btn-lg' href='/buypage' style='width:160px;'>ALL BOOKS</a>&nbsp;&nbsp;&nbsp;
+		<a class="btn btn-primary btn-lg" href="/sell" style="width:90px;">SELL</a>&nbsp;&nbsp;&nbsp;-->
+            <ul class="nav navbar-nav navbar-right" style="padding-top:12px;padding-right:50px;">
+              <li class="in"><a href="/buypage">ALL LISTINGS</a></li>
+              <li class="in" style="padding-right:10px;"><a href="/sell">SELL</a></li>
+              <li class="btn-group" style="padding-top:5px;">
+		<button type="button" class="btn btn-default" style="width:150px;height:40px;"><a href="/userpage" style="color:#555;text-decoration:none;">Username</a></button>
+		<button type="button" class="btn btn-default dropdown-toggle" style="height:40px;"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+		  <span class="caret"></span>
+		  <span class="sr-only">Toggle Dropdown</span>
+		</button>
+		<ul class="dropdown-menu" style="width:100%; margin-top:3px;">
+		  <li><a href="#">Settings</a></li>
+		  <li><a href="#">Something</a></li>
+		  <li role="separator" class="divider"></li>
+		  <li>
+		    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+
+		    <a href="/logout" onclick="signOut();">Lign out</a>
+		    <script>
+		      function signOut() {
+		      var auth2 = gapi.auth2.getAuthInstance();
+		      auth2.signOut().then(function () {
+		      console.log('User signed out.');
+		      });
+		      }
+		  </script></li>
+		</ul>
+	  </div>
+	  {% else %}
+	  <a class="navbar-brand" href="/"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
       </div>
-    </div>
-    <div class="container">
-      {% block contents %}{% endblock %}
-    </div>
-  </body>
+      <div class="navbar-header" style="padding-top:12px; float:right; padding-right:15px;">
+        <form method="POST" class="navbar-form navbar-right" role="search">
+          <div class="form-group">
+            <div class="input-group" style="padding-right:15px;">
+              <span class="input-group-btn">
+                <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
+                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+              </span>
+            </div>
+          </div>
+          <a class="btn btn-default" href="/login">Sign In</a>
+          <a class="btn btn-success" href="/signup">Sign Up</a>
+        </form>
+      </div>
+      {% endif %}
+</div>
+</nav>
+</div>
+</div>
+<div class="container">
+  {% block contents %}{% endblock %}
+</div>
+</body>
 </html>
