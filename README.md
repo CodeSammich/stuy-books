@@ -44,12 +44,21 @@ Book marketplace for Stuyvesant High School
 ### To-Do
 > To be updated with Client meeting notes
 - OAuth authentication, confirmation emails
-- buy functionality (email sending)
+- Buy functionality (email sending)
 - Tooltips for signup/forms
 - Database handling "remove", "Schrodinger pending state for books", front-end implementation of pending
-- Optimizing search engine/picture search
+- Optimizing search engine/picture search (have an autocomplete functionality)
 - Disclaimers + misc. issues
-
+- Finding books by ISBN number
+- A flow chart of what the user should see, depending on if he/she is a buyer or seller
+- An email to Mr. Brown about a To-Do List with prioritization
+- A report for buyers/sellers about transactions made this month, their ratings, etc.
+- A list of places to meet
+	- Outside the library
+	- Senior or sophomore bar
+	- Half floor
+	- Outside the theater
+- Message to the users about proper beheavior 
 
 ### Dev-log
 ##### 5/27/16
