@@ -58,7 +58,8 @@ def login():
             session['logged'] = 1
             print session['email']
             print session['logged']
-            return redirect(url_for("userpage"))
+            print url_for( "userpage" )
+            return redirect(url_for("home"))
         else:
             return render_template("login.html")
     else:

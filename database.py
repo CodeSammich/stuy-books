@@ -163,14 +163,27 @@ def addBook(email, bookName, author, isbn, subject, condition, price):
         subject (string)
         condition (string)
         price (string)
-    Empty string if information doesn't exist
+
+    Any field will be empty string if information doesn't exist
+    
     Email + bookName will never be empty
+
     Returns:
         True
     '''
     db = client['books-database']
     books = db['books']
+    
     image_url = get_image_url( bookName + author + isbn )
+    ''' 
+    state: {
+        "available",
+        "pending"
+        "sold"
+    }
+    '''
+    state = "available"
+    
     books.insert_one({'email':email,
                       'bookName': bookName,
                       'author': author,
