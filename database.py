@@ -163,14 +163,10 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='on
         subject (string)
         condition (string)
         price (string)
-<<<<<<< HEAD
 
-    Any field will be empty string if information doesn't exist
-    
-=======
-        status (string) onTheShelf, pending, or sold
+    status (string) onTheShelf, pending, or sold
     Empty string if information doesn't exist
->>>>>>> 5a4faee6fce5d44cdc7cfcf23aff9c02f7c34d51
+
     Email + bookName will never be empty
 
     Returns:
@@ -180,15 +176,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='on
     books = db['books']
     
     image_url = get_image_url( bookName + author + isbn )
-    ''' 
-    state: {
-        "available",
-        "pending"
-        "sold"
-    }
-    '''
-    state = "available"
-    
+
     books.insert_one({'email':email,
                       'bookName': bookName,
                       'author': author,
