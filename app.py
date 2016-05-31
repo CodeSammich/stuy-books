@@ -227,6 +227,20 @@ def search():
     return render_template('search.html')
 
 def autocomplete():
+@app.route('/search', methods=['GET','POST'])
+def search():
+    if request.method=="POST":
+        search = request.form['searchQuery']
+        #print search
+        #results = searchForBook(search)
+        #print results
+        #session['results'] = results
+        #return render_template("search.html", info=results)
+        return redirect(url_for('search', query=search))
+    else:
+        search = request.args.get("query")
+        results = searchForBook(search)
+        return render_template("search.html", info=results)
 
 
 @app.route('/googleLogin')
