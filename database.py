@@ -152,7 +152,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price, status='onTheShelf'):
+def addBook(email, bookName, author, isbn, subject, condition, price, status='onTheShelf', quantity=1):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -180,7 +180,8 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='on
                       'condition': condition,
                       'price': price,
                       'image_url': image_url,
-                      'status': 'onTheShelf'
+                      'status': 'onTheShelf',
+                      'quantity': quantity
                       })
     return True
 
@@ -198,15 +199,33 @@ def deleteBook(email, bookName):
     books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
 
-def getBookStatus(book):
+def getBookStatus(bookName):
     '''
     Gets the status of a book
     Args:
-        book (string)
+        bookName (string)
     Returns:
         Status of the book
     '''
-    #TODO
+    db = client['books-database']
+    books = db['books']
+    results = books.find_one({'bookName': bookName})
+    return results['status']
+    #TODO make a counter for books / no duplicates
+
+def getCount(bookName, email):
+    '''
+    Gets the # of books available for a user
+    Args:
+        bookName (String)
+        email (String)
+    Returns
+        # of books
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find_one({'email':email, 'bookName':bookName})
+    return results['quantity']
 
 def getSellersForBook(bookName):
     '''
