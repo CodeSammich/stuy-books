@@ -227,8 +227,10 @@ def search():
         return render_template("search.html", info=results)
     return render_template('search.html')
 
+'''
 def autocomplete():
 @app.route('/search', methods=['GET','POST'])
+'''
 def search():
     if request.method=="POST":
         search = request.form['searchQuery']
