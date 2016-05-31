@@ -49,7 +49,7 @@ def login():
             print name
             email = request.args.get('email')
             print email
-            
+
             #strip the @stuy.edu part
             #email = email[:-9]
             #
@@ -108,17 +108,17 @@ def signup():
             data = urlencode({'email': user['email'], '_id': user['_id']})
             activateLink = 'http://localhost:8000/activate?%s' %(data)
 
-            #s = smtplib.SMTP('smtp.gmail.com', 587)
-            #s.ehlo()
-            #s.starttls()
-            #s.ehlo()
-            #s.login(ourEmail, ourPassword)
+            s = smtplib.SMTP('smtp.gmail.com', 587)
+            s.ehlo()
+            s.starttls()
+            s.ehlo()
+            s.login(ourEmail, ourPassword)
 
             #Sets up the multipart object
-            #message = MIMEMultipart()
-            #message['Subject'] = 'Getting started with StuyBooks'
-            #message['From'] = ourEmail
-            #message['To'] = email + '@stuy.edu'
+            message = MIMEMultipart()
+            message['Subject'] = 'Getting started with StuyBooks'
+            message['From'] = ourEmail
+            message['To'] = email + '@stuy.edu'
 
             text = '''
             To whom it may concern,
@@ -130,11 +130,11 @@ def signup():
             Sincerely,
             Team JASH''' %(activateLink , ourEmail)
             #Attaches the message
-            #message.attach(MIMEText(text, 'plain'))
-            #print message.as_string()
+            message.attach(MIMEText(text, 'plain'))
+            print message.as_string()
 
-            #s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
-            #s.close()
+            s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
+            s.close()
 
             return redirect(url_for('home'))
 
@@ -242,7 +242,6 @@ def googleLogin():
         return render_template("google.html")
 
 @app.route('/logout')
-#@requireLogin
 def logout():
     del session['email']
     session['logged'] = 0
