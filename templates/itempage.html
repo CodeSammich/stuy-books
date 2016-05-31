@@ -17,7 +17,7 @@
   </tr>
   <tr><td style="text-align:center; background-color:#EEEEEE; border-radius:10px;">
       <span style="font-size:20px;">Price:&nbsp;&nbsp;&nbsp;$ {{thisBook['price']}}</span><br><br><br>
-      <button class="btn btn-success">Buy It Now</button>
+      <button class="btn btn-success" type='submit' formmethod='POST' name='/bought/{{thisBook}}'>Buy It Now</button>
     </td>
       <td style="width:170px;padding:40px;" valign="top">Seller information: *in progress*</td>
   </tr>

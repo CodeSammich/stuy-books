@@ -218,19 +218,9 @@ def itempage(email, bookName):
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
 
-
-@app.route('/search', methods=['GET', 'POST'])
+@app.route('/search')
 def search():
-    if request.method == 'POST':
-        search = request.args.get("query")
-        results = searchForBook(search)
-        return render_template("search.html", info=results)
-    return render_template('search.html')
-
-def autocomplete():
-@app.route('/search', methods=['GET','POST'])
-def search():
-    if request.method=="POST":
+    '''if request.method=="POST":
         search = request.form['searchQuery']
         #print search
         #results = searchForBook(search)
@@ -238,11 +228,28 @@ def search():
         #session['results'] = results
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
-    else:
-        search = request.args.get("query")
-        results = searchForBook(search)
-        return render_template("search.html", info=results)
+    else:'''
+    search = request.args.get("query")
+    results = searchForBook(search)
+    return render_template("search.html", info=results)
 
+@app.route('/bought/<thisBook>', method='POST')
+def bought():
+    print thisBook
+
+    '''
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login(ourEmail, ourPassword)
+
+    #Sets up the multipart object
+    message = MIMEMultipart()
+    message['Subject'] = 'Someone is interested in your book'
+    message['From'] = ourEmail
+    message['To'] = sellerEmail + '@stuy.edu'
+    '''
 
 @app.route('/googleLogin')
 def googleLogin():
