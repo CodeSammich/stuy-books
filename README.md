@@ -61,6 +61,11 @@ Book marketplace for Stuyvesant High School
 - Message to the users about proper beheavior 
 
 ### Dev-log
+##### 5/31/16
+- Google Signin works -- needs to redirect
+- Search engine fixed -- needs to be optimized
+- Flow chart created in class
+
 ##### 5/27/16
 - Backend search engine function working properly
 - Search engine connected to some of the front end pages

@@ -152,7 +152,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price):
+def addBook(email, bookName, author, isbn, subject, condition, price, status='onTheShelf', quantity=1):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -163,9 +163,14 @@ def addBook(email, bookName, author, isbn, subject, condition, price):
         subject (string)
         condition (string)
         price (string)
+<<<<<<< HEAD
 
     Any field will be empty string if information doesn't exist
     
+=======
+        status (string) onTheShelf, pending, or sold
+    Empty string if information doesn't exist
+>>>>>>> 5a4faee6fce5d44cdc7cfcf23aff9c02f7c34d51
     Email + bookName will never be empty
 
     Returns:
@@ -191,7 +196,10 @@ def addBook(email, bookName, author, isbn, subject, condition, price):
                       'subject': subject,
                       'condition': condition,
                       'price': price,
-                      'image_url': image_url})
+                      'image_url': image_url,
+                      'status': 'onTheShelf',
+                      'quantity': quantity
+                      })
     return True
 
 def deleteBook(email, bookName):
@@ -207,6 +215,34 @@ def deleteBook(email, bookName):
     books = db['books']
     books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
+
+def getBookStatus(bookName):
+    '''
+    Gets the status of a book
+    Args:
+        bookName (string)
+    Returns:
+        Status of the book
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find_one({'bookName': bookName})
+    return results['status']
+    #TODO make a counter for books / no duplicates
+
+def getCount(bookName, email):
+    '''
+    Gets the # of books available for a user
+    Args:
+        bookName (String)
+        email (String)
+    Returns
+        # of books
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find_one({'email':email, 'bookName':bookName})
+    return results['quantity']
 
 def getSellersForBook(bookName):
     '''
@@ -306,7 +342,7 @@ def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
-    
+
 #def delete_one_book( bookName, email ):
 
 def delete_book( bookName, email ):
@@ -315,7 +351,7 @@ def delete_book( bookName, email ):
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
-    
+
 
 
 # -------------------------Search Function -----------------#
