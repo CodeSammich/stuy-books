@@ -218,11 +218,15 @@ def itempage(email, bookName):
         return redirect(url_for('search', query=search))
 
 
-@app.route('/search')
+@app.route('/search', methods=['GET', 'POST'])
 def search():
-    search = request.args.get("query")
-    results = searchForBook(search)
-    return render_template("search.html", info=results)
+    if request.method == 'POST':
+        search = request.args.get("query")
+        results = searchForBook(search)
+        return render_template("search.html", info=results)
+    return render_template('search.html')
+
+def autocomplete():
 
 
 @app.route('/googleLogin')

@@ -152,7 +152,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price):
+def addBook(email, bookName, author, isbn, subject, condition, price, status='onTheShelf'):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -163,6 +163,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price):
         subject (string)
         condition (string)
         price (string)
+        status (string) onTheShelf, pending, or sold
     Empty string if information doesn't exist
     Email + bookName will never be empty
     Returns:
@@ -178,7 +179,9 @@ def addBook(email, bookName, author, isbn, subject, condition, price):
                       'subject': subject,
                       'condition': condition,
                       'price': price,
-                      'image_url': image_url})
+                      'image_url': image_url,
+                      'status': 'onTheShelf'
+                      })
     return True
 
 def deleteBook(email, bookName):
@@ -194,6 +197,16 @@ def deleteBook(email, bookName):
     books = db['books']
     books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
+
+def getBookStatus(book):
+    '''
+    Gets the status of a book
+    Args:
+        book (string)
+    Returns:
+        Status of the book
+    '''
+    #TODO
 
 def getSellersForBook(bookName):
     '''
@@ -293,7 +306,7 @@ def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
-    
+
 #def delete_one_book( bookName, email ):
 
 def delete_book( bookName, email ):
@@ -302,7 +315,7 @@ def delete_book( bookName, email ):
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
-    
+
 
 
 # -------------------------Search Function -----------------#
