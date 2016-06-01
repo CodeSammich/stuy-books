@@ -52,19 +52,19 @@ def login():
             print email
 
             #strip the @stuy.edu part
-            #email = email[:-9]
+            email = email[:-9]
             #
 
             session['email'] = email
             session['logged'] = 1
             print session['email']
             print session['logged']
-            print url_for( "userpage" )
-            return redirect(url_for("home"))
+            return redirect(url_for("userpage", email=email))
         else:
             return render_template("login.html")
     else:
         email = request.form['email']
+        print email
         pword = request.form['pword']
 
         if email == '':
@@ -219,9 +219,9 @@ def itempage(email, bookName):
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
 
-@app.route('/search')
+@app.route('/search', methods=["GET","POST"])
 def search():
-    '''if request.method=="POST":
+    if request.method=="POST":
         search = request.form['searchQuery']
         #print search
         #results = searchForBook(search)
@@ -229,10 +229,10 @@ def search():
         #session['results'] = results
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
-    else:'''
-    search = request.args.get("query")
-    results = searchForBook(search)
-    return render_template("search.html", info=results)
+    else:
+        search = request.args.get("query")
+        results = searchForBook(search)
+        return render_template("search.html", info=results)
 
 @app.route('/bought', methods=['GET', 'POST'])
 def bought():
