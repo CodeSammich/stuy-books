@@ -10,14 +10,17 @@
 <hr>
   </th></tr>
   <tr>
-    <td style="width:25%;padding-top:60px;" rowspan="2"><img src={{thisBook['image_url']}} style="height:250px;"></td>
+ <!--    <td style="width:25%;padding-top:60px;" rowspan="2"><img src={{thisBook['image_url']}} style="height:250px;"></td> -->
     <td style="padding-left:25px;padding-bottom:30px;"><br><span class="info">Item condition:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['condition']}}</b><br>
       <span class="info">Subject listed as:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['subject']}}</b>
     </td>
   </tr>
   <tr><td style="text-align:center; background-color:#EEEEEE; border-radius:10px;">
       <span style="font-size:20px;">Price:&nbsp;&nbsp;&nbsp;$ {{thisBook['price']}}</span><br><br><br>
-      <button class="btn btn-success" type='submit' formmethod='POST' name='/bought/{{thisBook}}'>Buy It Now</button>
+      <form action='/bought' method='POST'>
+        <input type="hidden" name="bookData" value='{{thisBook}}' />
+        <button class="btn btn-success" type='submit'>Buy It Now</button>
+      </form>
     </td>
       <td style="width:170px;padding:40px;" valign="top">Seller information: *in progress*</td>
   </tr>
