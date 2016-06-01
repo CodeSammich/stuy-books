@@ -2,7 +2,29 @@
 {% block title %}userpage{% endblock %}
 {% block contents %}
 <div class="userpage">
-<h1>Your listings</h1>
+  <h2> YOUR ACTIVITY </h2>
+  <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#active">ACTIVE LISTINGS</a></li>
+    <li><a data-toggle="tab" href="#pending">PENDING...</a></li>
+    <li><a data-toggle="tab" href="#past">PAST TRANSACTIONS</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="active" class="tab-pane fade in active">
+      <h3>ACTIVE LISTINGS</h3>
+      <p>Your listings currently shown for sale.</p>
+    </div>
+    <div id="pending" class="tab-pane fade">
+      <h3>PENDING</h3>
+      <p>Scheduled meetups for listings you are confirmed to buy or sell.</p>
+    </div>
+    <div id="past" class="tab-pane fade">
+      <h3>PAST TRANSACTIONS</h3>
+      <p>Past items sold or bought.</p>
+    </div>
+  </div>
+  <!--
+  <h1>Your listings</h1>
 {% if info|length > 0 %}
 {% for item in info %}
 <table style="height:150px;width:80% !important;">
@@ -17,6 +39,6 @@
 <hr>
 {% endfor %}
 </table>
-{% endif %}
+{% endif %}-->
 </div>
 {% endblock %}
