@@ -11,7 +11,7 @@
 	- [ ] Prettiness
 
 - Backend:
-	- [ x ] Email both parties after "buy button" + books status in book object,
+	- [x] Email both parties after "buy button" + books status in book object,
 	- [ ] Finish transaction (remove book from database), 
 	- [ ] Edit book information
 
