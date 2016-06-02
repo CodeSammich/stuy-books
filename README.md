@@ -1,21 +1,21 @@
 ### Daily Agenda
 
-##### Agenda for 5/31/16: 
+##### Agenda for 5/31/16:
 
-- Frontend/middle: 
+- Frontend/middle:
 	- Redirection from google sign-in
-	- Start adding buttons for login pages for 
-		- "Transaction complete", 
-		- "remove book from list", 
-	- book status ( Available, Pending, Sold ), 
-	- Prettiness 
+	- Start adding buttons for login pages for
+		- "Transaction complete",
+		- "remove book from list",
+	- book status ( Available, Pending, Sold ),
+	- Prettiness
 
-- Backend: 
-	- Email both parties after "buy button" + books status in book object, 
+- Backend:
+	- ~~Email both parties after "buy button" + books status in book object,  ~~
 	- Finish transaction (remove book from database), 
-	- Edit book information 
+	- Edit book information
 
-- **if possible**: "books bought/sold" database for buyers/sellers 
+- **if possible**: "books bought/sold" database for buyers/sellers
 
 > Remember, each user is both a buyer AND a seller.
 
@@ -81,7 +81,7 @@ Book marketplace for Stuyvesant High School
 	- Senior or sophomore bar
 	- Half floor
 	- Outside the theater
-- Message to the users about proper beheavior 
+- Message to the users about proper beheavior
 
 ### Dev-log
 ##### 5/31/16
@@ -112,4 +112,3 @@ Book marketplace for Stuyvesant High School
 ##### 5/19/16
 - Added pages for home, login, signup, sell/buy, master book list
 - middleware integration with html/css
-
