@@ -7,7 +7,6 @@ from urllib import urlencode
 from email.mime.multipart import MIMEMultipart
 from email.MIMEText import MIMEText
 import smtplib
-import json
 
 app = Flask(__name__)
 
@@ -212,14 +211,6 @@ def itempage(email, bookName):
         #session['results'] = results
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
-
-@app.route('/search', methods=['GET', 'POST'])
-def search():
-    if request.method == 'POST':
-        search = request.args.get("query")
-        results = searchForBook(search)
-        return render_template("search.html", info=results)
-    return render_template('search.html')
 
 '''
 def autocomplete():

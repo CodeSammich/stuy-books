@@ -1,5 +1,5 @@
 # Authors: Samuel Zhang, Jeffrey Zou
-# Description: Deals with the database
+# Description: Deals with the database (if that wasn't obvious)
 
 from pymongo import MongoClient
 import gridfs
@@ -278,7 +278,7 @@ def finish_transaction( bookName, email ): #possibly add "counter", for duplicat
     sold = db['sold-books']
 
     dbnames = client.database_names()
-    
+
     if 'sold-books-database' not in dbnames: #init database and collection
         print 'sold books database initialized'
         init_sold_book = {
