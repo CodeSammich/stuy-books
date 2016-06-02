@@ -223,29 +223,29 @@ def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
     books = db['books']
     #TODO find a way to make this more efficient T.T
     if author.strip() != '': #Returns True if author is not empty
-        books.update(
+        books.find_one_and_update(
             {'email': email, 'bookName': bookName},
-            {'$set' : {'author', author}}
+            {'$set': {'author', author}}
         )
     if isbn.strip() != '':
-        books.update(
+        books.find_one_and_update(
             {'email': email, 'bookName': bookName},
-            {'$set' : {'isbn', isbn}}
+            {'$set': {'isbn', isbn}}
         )
     if subject.strip() != '':
-        books.update(
+        books.find_one_and_update(
             {'email': email, 'bookName': bookName},
-            {'$set' : {'isbn', isbn}}
+            {'$set': {'isbn', isbn}}
         )
     if condition.strip() != '':
-        books.update(
+        books.find_one_and_update(
             {'email': email, 'bookName': bookName},
-            {'$set' : {'condition', condition}}
+            {'$set': {'condition', condition}}
         )
     if price.strip() != '':
-        books.update(
+        books.find_one_and_update(
             {'email': email, 'bookName': bookName},
-            {'$set' : {'price', price}}
+            {'$set': {'price', price}}
         )
     return True
 
@@ -317,9 +317,7 @@ def getSellersForBook(bookName):
 
 def finish_transaction( bookName, email ): #possibly add "counter", for duplicates
     setBookStatus( bookName, email, "sold" )
-    
-    
-    
+
 # ------------------------ Image Scraping from Google --------------#
 def get_soup(url, header):
     '''
