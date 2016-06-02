@@ -205,6 +205,50 @@ def deleteBook(email, bookName):
     books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
 
+def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
+    '''
+    Updates the book in the database for a book owned by a user (note neither the owner nor the title are changed)
+    Args:
+        email (string)
+        bookName (string)
+        author (string)
+        isbn (string)
+        subject (string)
+        condition (string)
+        price (string)
+    Returns:
+        True
+    '''
+    db = client['books-database']
+    books = db['books']
+    #TODO find a way to make this more efficient T.T
+    if author.strip() != '': #Returns True if author is not empty
+        books.update(
+            {'email': email, 'bookName': bookName},
+            {'$set' : {'author', author}}
+        )
+    if isbn.strip() != '':
+        books.update(
+            {'email': email, 'bookName': bookName},
+            {'$set' : {'isbn', isbn}}
+        )
+    if subject.strip() != '':
+        books.update(
+            {'email': email, 'bookName': bookName},
+            {'$set' : {'isbn', isbn}}
+        )
+    if condition.strip() != '':
+        books.update(
+            {'email': email, 'bookName': bookName},
+            {'$set' : {'condition', condition}}
+        )
+    if price.strip() != '':
+        books.update(
+            {'email': email, 'bookName': bookName},
+            {'$set' : {'price', price}}
+        )
+    return True
+
 def getBookStatus(bookName):
     '''
     Gets the status of a book
