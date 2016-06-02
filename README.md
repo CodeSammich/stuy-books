@@ -1,6 +1,6 @@
 ### Daily Agenda
 
-##### Agenda for 5/31/16:
+##### Agenda for 6/2/16:
 
 - Frontend/middle:
 	- [ ] Redirection from google sign-in
@@ -9,11 +9,16 @@
 		- [ ] "remove book from list",
 	- [ ] book status ( Available, Pending, Sold ),
 	- [ ] Prettiness
-
+	- [ ] Tooltip For Signup
+	
+  Middleware
+	- [ ] Username properly display on all pages (instead of "Username")
+	
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
 	- [ ] Finish transaction (remove book from database), 
 	- [ ] Edit book information
+	- [ ] Search Engine Optimization
 
 - **if possible**: "books bought/sold" database for buyers/sellers
 
