@@ -349,6 +349,16 @@ def getSellersForBook(bookName):
     return [x for x in people if not (x in seen or x in seenmore(x))]
 
 def finish_transaction( bookName, email ): #possibly add "counter", for duplicates
+    '''
+    Finishes a transaction from a seller's perspective. 
+    Change the book status to sold and email both parties.
+    Seller chooses the buyer to finish transaction from
+    Input:
+        bookName (string)
+        email (string): seller's email
+    Output:
+        True
+    '''
     setBookStatus( bookName, email, "sold" )
 
 # ------------------------ Image Scraping from Google --------------#
