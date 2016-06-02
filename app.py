@@ -135,7 +135,6 @@ def signup():
 
         return render_template('signup.html', msg = message)
 
-#TODO
 @app.route('/activate', methods=['GET', 'POST'])
 def activate():
     if request.method == 'GET':
@@ -169,6 +168,8 @@ def sell():
     if request.method == 'GET':
         return render_template('sell.html')
     else:
+        #TODO make the form save and add required fields
+        #form = request.form
         email = session['email']
         bookName = request.form['title']
         author = request.form['author']
@@ -211,6 +212,21 @@ def itempage(email, bookName):
         #session['results'] = results
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
+
+@app.route('/edit', methods=['GET', 'POST'])
+def edit():
+    if request.method == 'GET':
+        return render_template('edit.html')
+    email = session['email']
+    bookName = request.form['title']
+    author = request.form['author']
+    isbn = request.form['serial']
+    subject = request.form['subject']
+    condition = request.form['condition']
+    price = request.form['price']
+
+    updateBookInfo(email, bookName, author, isbn, subject, condition, price)
+    return render_template('edit.html')
 
 '''
 def autocomplete():
