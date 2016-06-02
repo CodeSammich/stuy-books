@@ -3,19 +3,19 @@
 ##### Agenda for 5/31/16: 
 
 - Frontend/middle: 
-	- Redirection from google sign-in []
+	- Redirection from google sign-in
 	- Start adding buttons for login pages for 
-		- "Transaction complete", []
-		- "remove book from list", []
-	- book status ( Available, Pending, Sold ), []
-	- Prettiness []
+		- "Transaction complete", 
+		- "remove book from list", 
+	- book status ( Available, Pending, Sold ), 
+	- Prettiness 
 
 - Backend: 
-	- Email both parties after "buy button" + books status in book object, []
-	- Finish transaction (remove book from database), []
-	- Edit book information []
+	- Email both parties after "buy button" + books status in book object, 
+	- Finish transaction (remove book from database), 
+	- Edit book information 
 
-- **if possible**: "books bought/sold" database for buyers/sellers []
+- **if possible**: "books bought/sold" database for buyers/sellers 
 
 > Remember, each user is both a buyer AND a seller.
 
