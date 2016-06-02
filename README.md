@@ -2,23 +2,26 @@
 
 ##### Agenda for 6/2/16:
 
-- Frontend/middle:
+- Frontend/middle: (Everything else is Helen + Sam)
 	- [ ] Redirection from google sign-in
 	- [ ] Start adding buttons for login pages for
 		- [ ] "Transaction complete",
 		- [ ] "remove book from list",
 	- [ ] book status ( Available, Pending, Sold ),
-	- [ ] Prettiness
-	- [ ] Tooltip For Signup
-	
+	- [ ] Prettiness *(Amanda)*
+	- [ ] Tooltip For Signup *(Amanda)*
+	- [ ] When screen is sized down, enabled side scrolling instead *(Amanda)*
+	- [ ] Run properly in Firefox, Chrome, and Safari *(Amanda)*
   Middleware
 	- [ ] Username properly display on all pages (instead of "Username")
 	
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
-	- [ ] Finish transaction (remove book from database), 
+	- [ ] Finish transaction
 	- [ ] Edit book information
 	- [ ] Search Engine Optimization
+
+ - [ ] User frees information
 
 - **if possible**: "books bought/sold" database for buyers/sellers
 
