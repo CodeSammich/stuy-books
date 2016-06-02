@@ -152,7 +152,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price, status='onTheShelf', quantity=1):
+def addBook(email, bookName, author, isbn, subject, condition, price, status='available', quantity=1):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -163,8 +163,9 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='on
         subject (string)
         condition (string)
         price (string)
+        status (string) available, pending, sold
+        quantity (integer)
 
-    status (string) onTheShelf, pending, or sold
     Empty string if information doesn't exist
 
     Email + bookName will never be empty
@@ -174,7 +175,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='on
     '''
     db = client['books-database']
     books = db['books']
-    
+
     image_url = get_image_url( bookName + author + isbn )
 
     books.insert_one({'email':email,
@@ -185,7 +186,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='on
                       'condition': condition,
                       'price': price,
                       'image_url': image_url,
-                      'status': 'onTheShelf',
+                      'status': 'available',
                       'quantity': quantity
                       })
     return True
@@ -217,6 +218,24 @@ def getBookStatus(bookName):
     results = books.find_one({'bookName': bookName})
     return results['status']
     #TODO make a counter for books / no duplicates
+
+def setBookStatus(bookName, email, stat):
+    '''
+    Sets the status of a book
+    Args:
+        bookName (string)
+        email (string)
+        stat (string)
+    Returns:
+        True
+    '''
+    db = client['books-database']
+    books = db['books']
+    books.find_one_and_update(
+        {'bookName': bookName, 'email': email},
+        {'$set': {'status': stat}}
+    )
+    return True
 
 def getCount(bookName, email):
     '''

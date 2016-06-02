@@ -26,7 +26,6 @@ ourPassword = open('password.txt', 'r').read()[:-1]
 @app.route('/index', methods=["GET","POST"])
 @app.route("/home/", methods=["GET","POST"])
 def home():
-    session["logged"]=0
     if request.method == "GET":
         return render_template("index.html")
     else:
@@ -43,7 +42,6 @@ def home():
 
 @app.route("/login", methods=["GET","POST"])
 def login():
-    session['logged'] == 0
     if request.method == "GET":
         if request.args.get('name') != None:
             name = request.args.get('name')
@@ -53,8 +51,6 @@ def login():
 
             #strip the @stuy.edu part
             email = email[:-9]
-            #
-
             session['email'] = email
             session['logged'] = 1
             print session['email']
@@ -64,7 +60,6 @@ def login():
             return render_template("login.html")
     else:
         email = request.form['email']
-        print email
         pword = request.form['pword']
 
         if email == '':
@@ -77,7 +72,6 @@ def login():
         passwordHash = m.hexdigest()
 
         if authenticate(email, passwordHash):
-            print 'hello sir'
             session['email'] = email
             session['logged'] = 1
             return redirect(url_for("userpage", email=email))
@@ -236,12 +230,12 @@ def search():
 
 @app.route('/bought', methods=['GET', 'POST'])
 def bought():
-    """
     print 'HELLO THIS IS IN THE BOUGHT SECTION'
-    book = request.form['bookData']
 
-    sellerEmail = book['email'] + '@stuy.edu'
+    sellerEmail = request.args.get('email') + '@stuy.edu'
     buyerEmail = session['email'] + '@stuy.edu'
+    book = request.args.get('bookName')
+    price = request.args.get('price')
 
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.ehlo()
@@ -258,12 +252,12 @@ def bought():
     textS = '''
     To whom it may concern,
 
-    You have listed %s for sale for %s. We are pleased to say that
-    someone has seen the offer and will gladly meet with you to purchase the book.
+    You have listed the book %s for sale for $%s. We are pleased to say that
+    someone has seen the offer and will gladly meet up with you to purchase the book.
     You can reach the buyer at %s
 
     Yours,
-    Team JASH''' %(book['bookName'], book['price'], buyerEmail)
+    Team JASH''' %(book, price, buyerEmail)
 
     messageS.attach(MIMEText(textS, 'plain'))
     s.sendmail(ourEmail, sellerEmail, messageS.as_string())
@@ -277,17 +271,19 @@ def bought():
     textB = '''
     To whom it may concern,
 
-    You have indicated that you want to buy %s for %s.
+    You have indicated that you want to buy the book %s for $%s.
     You can contact the seller at %s
 
     Yours,
-    Team JASH''' %(book['bookName'], book['price'], sellerEmail)
+    Team JASH''' %(book, price, sellerEmail)
 
     messageB.attach(MIMEText(textB, 'plain'))
     s.sendmail(ourEmail, buyerEmail, messageB.as_string())
 
     s.close()
-"""
+
+    setBookStatus(book, request.args.get('email'), 'pending')
+
     return redirect(url_for('home'))
 
 @app.route('/googleLogin')
@@ -308,7 +304,7 @@ def googleLogin():
 
 @app.route('/logout')
 def logout():
-    del session['email']
+    session.pop('email', None)
     session['logged'] = 0
     return redirect(url_for('home'))
 

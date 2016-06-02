@@ -19,8 +19,7 @@
     <td style="height:300px;"><img src={{thisBook['image_url']}} style="height:100%;"></a></td>
     <td style="text-align:center; background-color:#EEEEEE; border-radius:10px;">
       <span style="font-size:20px;">Price:&nbsp;&nbsp;&nbsp;$ {{thisBook['price']}}</span><br><br><br>
-      <form action='/bought' method='POST'>
-        <input type="hidden" name="bookData" value='{{thisBook}}' />
+      <form action='/bought?bookName={{thisBook['bookName']}}&email={{thisBook['email']}}&price={{thisBook['price']}}' method='POST'>
         <button class="btn btn-success" type='submit'>Buy It Now</button>
       </form>
     </td>
