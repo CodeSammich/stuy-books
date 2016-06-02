@@ -224,6 +224,17 @@ table, tr, td {
   border-bottom: 3px solid #990000;
 }
 
+.tab-pane {
+  text-align: left;
+  padding-top: 50px;
+}
+
+.nav-tabs > li {
+  width:33%;
+  text-align: center;
+  padding-top: 25px;
+}
+
 /*  ITEMPAGE.HTML  */
 .info {
   color:#777;

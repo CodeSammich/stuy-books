@@ -7,6 +7,7 @@ from urllib import urlencode
 from email.mime.multipart import MIMEMultipart
 from email.MIMEText import MIMEText
 import smtplib
+import json
 
 app = Flask(__name__)
 
@@ -51,19 +52,19 @@ def login():
             print email
 
             #strip the @stuy.edu part
-            #email = email[:-9]
+            email = email[:-9]
             #
 
             session['email'] = email
             session['logged'] = 1
             print session['email']
             print session['logged']
-            print url_for( "userpage" )
-            return redirect(url_for("home"))
+            return redirect(url_for("userpage", email=email))
         else:
             return render_template("login.html")
     else:
         email = request.form['email']
+        print email
         pword = request.form['pword']
 
         if email == '':
@@ -132,7 +133,7 @@ def signup():
             Team JASH''' %(activateLink , ourEmail)
             #Attaches the message
             message.attach(MIMEText(text, 'plain'))
-            print message.as_string()
+            #print message.as_string()
 
             s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
             s.close()
@@ -218,7 +219,6 @@ def itempage(email, bookName):
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
 
-
 @app.route('/search', methods=['GET', 'POST'])
 def search():
     if request.method == 'POST':
@@ -231,6 +231,8 @@ def search():
 def autocomplete():
 @app.route('/search', methods=['GET','POST'])
 '''
+
+@app.route('/search', methods=["GET","POST"])
 def search():
     if request.method=="POST":
         search = request.form['searchQuery']
@@ -245,6 +247,61 @@ def search():
         results = searchForBook(search)
         return render_template("search.html", info=results)
 
+@app.route('/bought', methods=['GET', 'POST'])
+def bought():
+    """
+    print 'HELLO THIS IS IN THE BOUGHT SECTION'
+    book = request.form['bookData']
+
+    sellerEmail = book['email'] + '@stuy.edu'
+    buyerEmail = session['email'] + '@stuy.edu'
+
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login(ourEmail, ourPassword)
+
+    #Sending the seller an email
+    messageS = MIMEMultipart()
+    messageS['Subject'] = 'Someone is interested in your book'
+    messageS['From'] = ourEmail
+    messageS['To'] = sellerEmail
+
+    textS = '''
+    To whom it may concern,
+
+    You have listed %s for sale for %s. We are pleased to say that
+    someone has seen the offer and will gladly meet with you to purchase the book.
+    You can reach the buyer at %s
+
+    Yours,
+    Team JASH''' %(book['bookName'], book['price'], buyerEmail)
+
+    messageS.attach(MIMEText(textS, 'plain'))
+    s.sendmail(ourEmail, sellerEmail, messageS.as_string())
+
+    #Sending the buyer an email
+    messageB = MIMEMultipart()
+    messageB['Subject'] = 'You have shown interest for a book'
+    messageB['From'] = ourEmail
+    messageB['To'] = buyerEmail
+
+    textB = '''
+    To whom it may concern,
+
+    You have indicated that you want to buy %s for %s.
+    You can contact the seller at %s
+
+    Yours,
+    Team JASH''' %(book['bookName'], book['price'], sellerEmail)
+
+    messageB.attach(MIMEText(textB, 'plain'))
+    s.sendmail(ourEmail, buyerEmail, messageB.as_string())
+
+    s.close()
+"""
+    return redirect(url_for('home'))
 
 @app.route('/googleLogin')
 def googleLogin():

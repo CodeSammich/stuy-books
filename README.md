@@ -2,19 +2,20 @@
 
 ##### Agenda for 5/31/16: 
 
-Frontend/middle: 
-	Redirection from google sign-in
-	Start adding buttons for login pages for 
-		"Transaction complete", 
-		"remove book from list", 
-	book status ( Available, Pending, Sold ), 
-	Prettiness
+- Frontend/middle: 
+	- Redirection from google sign-in
+	- Start adding buttons for login pages for 
+		- "Transaction complete", 
+		- "remove book from list", 
+	- book status ( Available, Pending, Sold ), 
+	- Prettiness
 
-Backend: 
-	Email both parties after "buy button" + books status in book object,
-	Finish transaction (remove book from database), 
-	Edit book information
-**if possible**: "books bought/sold" database for buyers/sellers
+- Backend: 
+	- Email both parties after "buy button" + books status in book object,
+	- Finish transaction (remove book from database), 
+	- Edit book information
+
+- **if possible**: "books bought/sold" database for buyers/sellers
 
 > Remember, each user is both a buyer AND a seller.
 
@@ -68,7 +69,6 @@ Book marketplace for Stuyvesant High School
 > To be updated with Client meeting notes
 - OAuth authentication, confirmation emails
 - Buy functionality (email sending)
-- Tooltips for signup/forms
 - Database handling "remove", "Schrodinger pending state for books", front-end implementation of pending
 - Optimizing search engine/picture search (have an autocomplete functionality)
 - Disclaimers + misc. issues
@@ -88,6 +88,8 @@ Book marketplace for Stuyvesant High School
 - Google Signin works -- needs to redirect
 - Search engine fixed -- needs to be optimized
 - Flow chart created in class
+- Tooltips for signup/forms
+
 
 ##### 5/27/16
 - Backend search engine function working properly
