@@ -8,14 +8,14 @@
 		- "Transaction complete", 
 		- "remove book from list", 
 	- book status ( Available, Pending, Sold ), 
-	- Prettiness
+	- Prettiness 
 
 - Backend: 
-	- Email both parties after "buy button" + books status in book object,
+	- Email both parties after "buy button" + books status in book object, 
 	- Finish transaction (remove book from database), 
-	- Edit book information
+	- Edit book information 
 
-- **if possible**: "books bought/sold" database for buyers/sellers
+- **if possible**: "books bought/sold" database for buyers/sellers 
 
 > Remember, each user is both a buyer AND a seller.
 

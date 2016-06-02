@@ -271,6 +271,22 @@ def getSellersForBook(bookName):
     seenmore = seen.add
     return [x for x in people if not (x in seen or x in seenmore(x))]
 
+def finish_transaction( bookName, email ): #possibly add "counter", for duplicates
+    db = client['books-database'] #still on market
+    market = db['books']
+    db = client['sold-books-database'] #books already sold
+    sold = db['sold-books']
+
+    dbnames = client.database_names()
+    
+    if 'sold-books-database' not in dbnames: #init database and collection
+        print 'sold books database initialized'
+        init_sold_book = {
+            'bookName': "init_sold_book",
+            'email': ourEmail,
+            'status': 'sold'
+        }
+
 # ------------------------ Image Scraping from Google --------------#
 def get_soup(url, header):
     '''
@@ -358,7 +374,6 @@ def delete_book( bookName, email ):
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
-
 
 
 # -------------------------Search Function -----------------#
