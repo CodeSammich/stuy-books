@@ -217,6 +217,7 @@ def itempage(email, bookName):
 def edit():
     if request.method == 'GET':
         return render_template('edit.html')
+    #TODO check if user is logged in, same thing for sell page
     email = session['email']
     bookName = request.form['title']
     author = request.form['author']
