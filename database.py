@@ -2,7 +2,7 @@
 # Description: Deals with the database (if that wasn't obvious)
 
 from pymongo import MongoClient
-import gridfs
+#import gridfs
 
 # Google Image
 from bs4 import BeautifulSoup
@@ -152,7 +152,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price, status='available', quantity=1):
+def addBook(email, bookName, author, isbn, subject, condition, price, status=['available'], quantity=1):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -161,9 +161,9 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
         author (string)
         isbn (string)
         subject (string)
-        condition (string)
-        price (string)
-        status (string) available, pending, sold
+        condition (list of strings)
+        price (list of strings)
+        status (list of strings) available, pending, sold
         quantity (integer)
 
     Empty string if information doesn't exist
@@ -177,23 +177,33 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
     books = db['books']
 
     image_url = get_image_url( bookName + author + isbn )
-
-    books.insert_one({'email':email,
-                      'bookName': bookName,
-                      'author': author,
-                      'isbn': isbn,
-                      'subject': subject,
-                      'condition': condition,
-                      'price': price,
-                      'image_url': image_url,
-                      'status': 'available',
-                      'quantity': quantity
-                      })
+    results = books.find_one({'email': email, 'bookName':bookName})
+    #If there are no copies of the book -> add it
+    if quantity == 1 and results == None:
+        books.insert_one({'email':email,
+                          'bookName': bookName,
+                          'author': author,
+                          'isbn': isbn,
+                          'subject': subject,
+                          'condition': [condition],
+                          'price': [price],
+                          'image_url': image_url,
+                          'status': ['available'],
+                          'quantity': quantity,
+                          'buyerEmails': []
+                          })
+    #Adds all of the value to a list so that each item is related by the same index
+    else:
+        books.find_one_and_update(
+            {'email': email, 'bookName': bookName},
+            {'$set': {'condition': results['condition'].append(condition), 'price': results['price'].append(price), 'status': results['status'].append(status), 'quantity': quantity}
+            }
+        )
     return True
 
-def deleteBook(email, bookName):
+def deleteAllBooks(email, bookName):
     '''
-    Deletes the first appearance of a book under a seller
+    Deletes all copies of a book under a seller
     Args:
         email (string)
         bookName (string)
@@ -205,6 +215,29 @@ def deleteBook(email, bookName):
     books.find_one_and_delete({'email': email, 'bookName': bookName})
     return True
 
+def deleteSingleBook(email, bookName):
+    '''
+    Deletes only one copy of a book for a seller
+    DO NOT CALL UNLESS YOU ARE SURE THERE IS AT LEAST ONE BOOK
+    Args:
+        email (string)
+        bookName (string)
+    Returns:
+        True
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find_one({'email': email, 'bookName': bookName})
+    if results['quantity'] == 1:
+        books.delete_one({'email': email, 'bookName': bookName})
+    else:
+        books.find_one_and_update(
+            {'email': email, 'bookName': bookName},
+            {'$inc': {'quantity': -1}}
+        )
+    return True
+
+#FIXME we need to fix this to update only one copy of the book (the one being selected)
 def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
     '''
     Updates the book in the database for a book owned by a user (note neither the owner nor the title are changed)
@@ -249,6 +282,7 @@ def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
         )
     return True
 
+#FIXME same problem as the function above
 def getBookStatus(bookName):
     '''
     Gets the status of a book
@@ -261,7 +295,6 @@ def getBookStatus(bookName):
     books = db['books']
     results = books.find_one({'bookName': bookName})
     return results['status']
-    #TODO make a counter for books / no duplicates
 
 def setBookStatus(bookName, email, stat):
     '''
@@ -293,7 +326,7 @@ def getCount(bookName, email):
     db = client['books-database']
     books = db['books']
     results = books.find_one({'email':email, 'bookName':bookName})
-    return results['quantity']
+    return results['quantity'] or 0
 
 def getSellersForBook(bookName):
     '''
@@ -399,8 +432,6 @@ def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
-
-#def delete_one_book( bookName, email ):
 
 def delete_book( bookName, email ):
     db = client['books-database']
