@@ -349,10 +349,7 @@ def getSellersForBook(bookName):
     return [x for x in people if not (x in seen or x in seenmore(x))]
 
 def finish_transaction( bookName, email ): #possibly add "counter", for duplicates
-    db = client['books-database'] #still on market
-    market = db['books']
-
-
+    setBookStatus( bookName, email, "sold" )
 
 # ------------------------ Image Scraping from Google --------------#
 def get_soup(url, header):

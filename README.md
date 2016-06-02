@@ -18,6 +18,9 @@
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
 	- [ ] Finish transaction
+	 - [ ] Array for buyers emails, statuses
+	 - [ ] Go back to buy function and append
+	 - [ ] Edit # of books and copy array + 1 index
 	- [ ] Edit book information
 	- [ ] Search Engine Optimization
 
