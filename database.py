@@ -187,7 +187,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
                       'price': price,
                       'image_url': image_url,
                       'status': 'available',
-                      'quantity': quantity
+                      'quantity': quantity,
                       })
     return True
 
@@ -316,9 +316,8 @@ def getSellersForBook(bookName):
     return [x for x in people if not (x in seen or x in seenmore(x))]
 
 def finish_transaction( bookName, email ): #possibly add "counter", for duplicates
-    db = client['books-database'] #still on market
-    market = db['books']
-
+    setBookStatus( bookName, email, "sold" )
+    
     
     
 # ------------------------ Image Scraping from Google --------------#

@@ -232,6 +232,13 @@ def search():
         results = searchForBook(search)
         return render_template("search.html", info=results)
 
+@app.route('/finish', methods=['GET', 'POST'])
+def finish():
+    print 'Begin email to both parties to indicate finished transaction'
+
+    sellerEmail = session['email'] + '@stuy.edu'
+    
+    
 @app.route('/bought', methods=['GET', 'POST'])
 def bought():
     print 'HELLO THIS IS IN THE BOUGHT SECTION'
@@ -287,8 +294,9 @@ def bought():
     s.close()
 
     setBookStatus(book, request.args.get('email'), 'pending')
-
-    return redirect(url_for('home'))
+    
+    
+    return redirect(url_for('userpage'))
 
 @app.route('/googleLogin')
 def googleLogin():
