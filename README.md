@@ -1,6 +1,6 @@
 ### Daily Agenda
 
-##### Agenda for 5/31/16:
+##### Agenda for 6/1/16:
 
 - Frontend/middle:
 	- [ ] Redirection from google sign-in
