@@ -254,8 +254,11 @@ def finish():
     print 'Begin email to both parties to indicate finished transaction'
 
     sellerEmail = session['email'] + '@stuy.edu'
-    
-    
+    if request.method == 'GET':
+        render_template('userpage.html', message = '')
+    else:
+        
+
 @app.route('/bought', methods=['GET', 'POST'])
 def bought():
     print 'HELLO THIS IS IN THE BOUGHT SECTION'
@@ -310,9 +313,9 @@ def bought():
 
     s.close()
 
+    addBuyerEmail(book, sellerEmail.strip('@stuy.edu'), buyerEmail.strip('@stuy.edu'))
     setBookStatus(book, request.args.get('email'), 'pending')
-    
-    
+
     return redirect(url_for('userpage'))
 
 @app.route('/googleLogin')

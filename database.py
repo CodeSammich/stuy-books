@@ -152,7 +152,7 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
-def addBook(email, bookName, author, isbn, subject, condition, price, status=['available'], quantity=1):
+def addBook(email, bookName, author, isbn, subject, condition, price, status='available', quantity=1):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -161,9 +161,10 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status=['a
         author (string)
         isbn (string)
         subject (string)
-        condition (list of strings)
-        price (list of strings)
-        status (list of strings) available, pending, sold
+        condition (string)
+        price (string)
+        status (string) available, pending, sold
+        buyerEmails (list of strings)
         quantity (integer)
 
     Empty string if information doesn't exist
@@ -185,10 +186,10 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status=['a
                           'author': author,
                           'isbn': isbn,
                           'subject': subject,
-                          'condition': [condition],
-                          'price': [price],
+                          'condition': condition,
+                          'price': price,
                           'image_url': image_url,
-                          'status': ['available'],
+                          'status': status,
                           'quantity': quantity,
                           'buyerEmails': []
                           })
@@ -196,8 +197,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status=['a
     else:
         books.find_one_and_update(
             {'email': email, 'bookName': bookName},
-            {'$set': {'condition': results['condition'].append(condition), 'price': results['price'].append(price), 'status': results['status'].append(status), 'quantity': quantity}
-            }
+            {'$inc': {'quantity': 1}}
         )
     return True
 
@@ -237,8 +237,7 @@ def deleteSingleBook(email, bookName):
         )
     return True
 
-#FIXME we need to fix this to update only one copy of the book (the one being selected)
-def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
+def updateBookInfo(email, bookName, author, isbn, subject, condition, price, quantity):
     '''
     Updates the book in the database for a book owned by a user (note neither the owner nor the title are changed)
     Args:
@@ -249,6 +248,7 @@ def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
         subject (string)
         condition (string)
         price (string)
+        quantity (integer)
     Returns:
         True
     '''
@@ -282,7 +282,6 @@ def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
         )
     return True
 
-#FIXME same problem as the function above
 def getBookStatus(bookName):
     '''
     Gets the status of a book
@@ -311,6 +310,25 @@ def setBookStatus(bookName, email, stat):
     books.find_one_and_update(
         {'bookName': bookName, 'email': email},
         {'$set': {'status': stat}}
+    )
+    return True
+
+def addBuyerEmail(bookName, sellerEmail, buyerEmail):
+    '''
+    Add a buyer to the books
+    Args:
+        bookName (strings)
+        sellerEmail (string)
+        buyerEmail (string)
+    Returns:
+        True
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = find_one({'email': sellerEmail, 'bookName': bookName})
+    books.find_one_and_update(
+        {'email': sellerEmail,'bookName': bookName},
+        {'$set': {'buyerEmails': results['buyerEmails'].append(buyerEmail)}}
     )
     return True
 
@@ -350,7 +368,7 @@ def getSellersForBook(bookName):
 
 def finish_transaction( bookName, email ): #possibly add "counter", for duplicates
     '''
-    Finishes a transaction from a seller's perspective. 
+    Finishes a transaction from a seller's perspective.
     Change the book status to sold and email both parties.
     Seller chooses the buyer to finish transaction from
     Input:
@@ -360,6 +378,7 @@ def finish_transaction( bookName, email ): #possibly add "counter", for duplicat
         True
     '''
     setBookStatus( bookName, email, "sold" )
+    return True
 
 # ------------------------ Image Scraping from Google --------------#
 def get_soup(url, header):
@@ -433,7 +452,6 @@ def listAll():
         all.append(r)
     return all
 
-
 # -------------------- Clean Database ---------------------- #
 def delete_account( email ): #without @stuy.edu
     db = client['accounts-database']
@@ -446,7 +464,6 @@ def delete_book( bookName, email ):
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
-
 
 # -------------------------Search Function -----------------#
 
