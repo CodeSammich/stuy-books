@@ -152,6 +152,11 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
+
+## Assume price/condition doesn't change unless edited, different conditions/prices
+## should be separate entries. (make note in frontend)
+
+## FIXME: When "find_one" for these books, use email, seller, price, condition
 def addBook(email, bookName, author, isbn, subject, condition, price, status=['available'], quantity=1):
     '''
     Updates the books that are being sold and the user that is selling

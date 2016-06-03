@@ -12,7 +12,7 @@
 	- [ ] Tooltip For Signup *(Amanda)*
 	- [ ] When screen is sized down, enabled side scrolling instead *(Amanda)*
 	- [ ] Run properly in Firefox, Chrome, and Safari *(Amanda)*
-  Middleware
+- Middleware
 	- [ ] Username properly display on all pages (instead of "Username")
 	
 - Backend:
