@@ -152,6 +152,8 @@ def updatePassword(email, newPasswordHash):
     return True
 
 #------------------------- Book keeping -------------------------#
+## Assume price/condition doesn't change unless edited, different conditions/prices
+## should be separate entries. (make note in frontend)
 def addBook(email, bookName, author, isbn, subject, condition, price, status='available', quantity=1):
     '''
     Updates the books that are being sold and the user that is selling

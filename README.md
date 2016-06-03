@@ -12,9 +12,10 @@
 	- [ ] Tooltip For Signup *(Amanda)*
 	- [ ] When screen is sized down, enabled side scrolling instead *(Amanda)*
 	- [ ] Run properly in Firefox, Chrome, and Safari *(Amanda)*
-  Middleware
+- Middleware
 	- [ ] Username properly display on all pages (instead of "Username")
-	
+	- [ ] Books should have different prices, conditions but one entry listed after search
+	 - [ ] One buy page per book with name and seller email
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
 	- [ ] Finish transaction

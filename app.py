@@ -43,6 +43,7 @@ def home():
 def login():
     if request.method == "GET":
         if request.args.get('name') != None:
+            #Why does it automatically use Google Sign in without me pressing bttn
             name = request.args.get('name')
             print name
             email = request.args.get('email')
@@ -54,6 +55,7 @@ def login():
             session['logged'] = 1
             print session['email']
             print session['logged']
+            print "boo**********\n"
             return redirect(url_for("userpage", email=email))
         else:
             return render_template("login.html")
@@ -256,8 +258,8 @@ def finish():
     sellerEmail = session['email'] + '@stuy.edu'
     if request.method == 'GET':
         render_template('userpage.html', message = '')
-    else:
-        
+    #else:
+
 
 @app.route('/bought', methods=['GET', 'POST'])
 def bought():
@@ -330,7 +332,8 @@ def googleLogin():
         session['logged'] = 1
         print session['email']
         print session['logged']
-        return redirect(url_for("userpage", email=email))
+        print "boo\n***********"
+        return redirect(url_for('home'))#url_for("userpage", email=email))
     else:
         return render_template("google.html")
 
