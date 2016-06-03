@@ -13,13 +13,16 @@ app = Flask(__name__)
 ourEmail = 'stuybooks.JASH@gmail.com'
 ourPassword = open('password.txt', 'r').read()[:-1]
 
-#def requireLogin(f):
-#    @wraps(f)
-#    def dec(*args):
-#        if 'email' not in session:
-#            return render_template('login.html', msg = 'You must login to view the page')
-#        return f(*args)
-#    return dec
+"""
+def requireLogin(f):
+    @wraps(f)
+    def dec(*args):
+        if session('email') is not None:
+            return f(*args)
+        else:
+            return render_template('login.html', msg = 'You must login to view the page')
+    return dec
+"""
 
 @app.route('/', methods=["GET","POST"])
 @app.route('/index', methods=["GET","POST"])
@@ -45,16 +48,12 @@ def login():
         if request.args.get('name') != None:
             #Why does it automatically use Google Sign in without me pressing bttn
             name = request.args.get('name')
-            print name
             email = request.args.get('email')
-            print email
 
             #strip the @stuy.edu part
             email = email[:-9]
             session['email'] = email
             session['logged'] = 1
-            print session['email']
-            print session['logged']
             print "boo**********\n"
             return redirect(url_for("userpage", email=email))
         else:
@@ -151,7 +150,9 @@ def activate():
 @app.route("/userpage", methods=['GET', 'POST'])
 def userpage():
     if request.method == "GET":
-        email = session['email']
+        email = session.get('email', None)
+        if email == None:
+            return redirect(url_for('login'), msg = 'You must log in first!')
         info = listBooksForUser(email)
         return render_template("userpage.html", info=info)
     else:
@@ -179,14 +180,14 @@ def sell():
         subject = request.form['subject']
         condition = request.form['condition']
         price = request.form['price']
-        
+
         is_new = addBook(email, bookName, author, isbn, subject, condition, price)
 
         if is_new:
             return redirect(url_for('userpage'))
         else:
             return redirect(url_for('sell'), message="Book already exists")
-        
+
 @app.route('/buypage', methods=['GET', 'POST'])
 def buy():
     if request.method == "GET":
@@ -318,7 +319,6 @@ def bought():
 
     s.close()
 
-    addBuyerEmail(book, sellerEmail.strip('@stuy.edu'), buyerEmail.strip('@stuy.edu'))
     setBookStatus(book, request.args.get('email'), 'pending')
 
     return redirect(url_for('userpage'))
