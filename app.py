@@ -257,9 +257,9 @@ def finish():
 
     sellerEmail = session['email'] + '@stuy.edu'
     if request.method == 'GET':
-        render_template('userpage.html', message = '')
-    #else:
-
+        return render_template('userpage.html', message = '')
+    else:
+        return redirect(url_for('userpage'), render=True)
 
 @app.route('/bought', methods=['GET', 'POST'])
 def bought():

@@ -154,7 +154,7 @@ def updatePassword(email, newPasswordHash):
 #------------------------- Book keeping -------------------------#
 ## Assume price/condition doesn't change unless edited, different conditions/prices
 ## should be separate entries. (make note in frontend)
-def addBook(email, bookName, author, isbn, subject, condition, price, status='available', quantity=1):
+def addBook(email, bookName, author, isbn, subject, condition, price, status='available'):
     '''
     Updates the books that are being sold and the user that is selling
     Args:
@@ -166,23 +166,20 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
         condition (string)
         price (string)
         status (string) available, pending, sold
-        buyerEmails (list of strings)
-        quantity (integer)
 
     Empty string if information doesn't exist
 
     Email + bookName will never be empty
 
     Returns:
-        True
+        True if this book does not exist under the user, False if it does
     '''
     db = client['books-database']
     books = db['books']
 
     image_url = get_image_url( bookName + author + isbn )
-    results = books.find_one({'email': email, 'bookName':bookName})
-    #If there are no copies of the book -> add it
-    if quantity == 1 and results == None:
+    results = books.find_one({'email': email, 'bookName':bookName, 'price': price, 'condition': condition})
+    if results == None:
         books.insert_one({'email':email,
                           'bookName': bookName,
                           'author': author,
@@ -192,31 +189,28 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
                           'price': price,
                           'image_url': image_url,
                           'status': status,
-                          'quantity': quantity,
-                          'buyerEmails': []
+                          'buyerEmail': ''
                           })
-    #Adds all of the value to a list so that each item is related by the same index
-    else:
-        books.find_one_and_update(
-            {'email': email, 'bookName': bookName},
-            {'$inc': {'quantity': 1}}
-        )
-    return True
+        return True
+    return False
 
-def deleteAllBooks(email, bookName):
+def deleteAllBooks(email, bookName, price, condition):
     '''
     Deletes all copies of a book under a seller
     Args:
         email (string)
         bookName (string)
+        price (string)
+        condition (string)
     Returns:
         True
     '''
     db = client['books-database']
     books = db['books']
-    books.find_one_and_delete({'email': email, 'bookName': bookName})
+    books.find_one_and_delete({'email': email, 'bookName': bookName, 'price': price, 'condition': condition})
     return True
 
+"""
 def deleteSingleBook(email, bookName):
     '''
     Deletes only one copy of a book for a seller
@@ -238,8 +232,9 @@ def deleteSingleBook(email, bookName):
             {'$inc': {'quantity': -1}}
         )
     return True
+"""
 
-def updateBookInfo(email, bookName, author, isbn, subject, condition, price, quantity):
+def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
     '''
     Updates the book in the database for a book owned by a user (note neither the owner nor the title are changed)
     Args:
@@ -250,7 +245,6 @@ def updateBookInfo(email, bookName, author, isbn, subject, condition, price, qua
         subject (string)
         condition (string)
         price (string)
-        quantity (integer)
     Returns:
         True
     '''
@@ -314,7 +308,7 @@ def setBookStatus(bookName, email, stat):
         {'$set': {'status': stat}}
     )
     return True
-
+"""
 def addBuyerEmail(bookName, sellerEmail, buyerEmail):
     '''
     Add a buyer to the books
@@ -347,6 +341,7 @@ def getCount(bookName, email):
     books = db['books']
     results = books.find_one({'email':email, 'bookName':bookName})
     return results['quantity'] or 0
+"""
 
 def getSellersForBook(bookName):
     '''
