@@ -2,9 +2,11 @@
 {% block title %}userpage{% endblock %}
 {% block contents %}
 <div class="userpage">
+  
   {% if message|length > 0 %}
   <p color='purple'>{{message}}</p>
   {% endif %}
+  
   <h2> YOUR ACTIVITY </h2>
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#active">ACTIVE LISTINGS</a></li>

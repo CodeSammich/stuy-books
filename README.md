@@ -7,6 +7,7 @@
 	- [ ] Start adding buttons for login pages for
 		- [ ] "Transaction complete",
 		- [ ] "remove book from list",
+		- [ ] "Edit book information"
 	- [ ] book status ( Available, Pending, Sold ),
 	- [ ] Prettiness *(Amanda)*
 	- [ ] Tooltip For Signup *(Amanda)*
@@ -19,12 +20,13 @@
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
 	- [ ] Finish transaction
-	 - [ ] Array for buyers emails, statuses
-	 - [ ] Go back to buy function and append
-	 - [ ] Edit # of books and copy array + 1 index
-	- [ ] Edit book information
+	 - [ ] Send email to both client and buyer
+	- [x] NO REPEAT ENTRIES UNLESS PRICE/CONDITION IS DIFFERENT
+	- [x] All database calls should use name, seller, price and condition
+	- [ ] Edit book information 
 	- [ ] Search Engine Optimization
-
+	- [ ] Cancel Transaction (same mechanism as Finish)
+	
  - [ ] User frees information
 
 - **if possible**: "books bought/sold" database for buyers/sellers

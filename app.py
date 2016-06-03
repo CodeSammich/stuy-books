@@ -179,11 +179,14 @@ def sell():
         subject = request.form['subject']
         condition = request.form['condition']
         price = request.form['price']
+        
+        is_new = addBook(email, bookName, author, isbn, subject, condition, price)
 
-        addBook(email, bookName, author, isbn, subject, condition, price)
-
-        return redirect(url_for('userpage'))
-
+        if is_new:
+            return redirect(url_for('userpage'))
+        else:
+            return redirect(url_for('sell'), message="Book already exists")
+        
 @app.route('/buypage', methods=['GET', 'POST'])
 def buy():
     if request.method == "GET":
