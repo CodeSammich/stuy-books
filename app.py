@@ -235,7 +235,20 @@ def userpage():
         #if email == None:
             #return redirect(url_for('login'), msg = 'You must log in first!')
         info = listBooksForUser(email)
-        return render_template("userpage.html", info=info)
+        i = 0
+        available=[]
+        pending=[]
+        sold=[]
+        while i < len(info):
+            if info[i]["status"] == "available":
+                available.append(info[i])
+            elif info[i]["status"] == "pending":
+                pending.append(info[i])
+            else:
+                sold.append(info[i])
+            i+=1
+        print available
+        return render_template("userpage.html", info=info, available=available, pending=pending, sold=sold)
     else:
         print "hello"
         search = request.form['searchQuery']
