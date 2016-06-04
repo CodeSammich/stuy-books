@@ -32,6 +32,7 @@
 	</div>
 	<br>
 	<div class="gmail">
+    <a href='forgot'>Forgot your password?</a>
 	  <p style="font-size: 15px;">Login via Google <a href="login">
 	      Gmail</a></p>
 	</div>
@@ -40,7 +41,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
 	<script>
-	  
+
 	  function onSuccess(googleUser) {
 	  var profile = googleUser.getBasicProfile();
 	  console.log('ID: ' + profile.getId());
@@ -60,7 +61,7 @@
 	  data:{"name":name,"email":email}
 
 	  });
-	  
+
 	  }
 
 	  function onFailure(error) {
@@ -95,7 +96,7 @@
 
 <script>
 
-function login() 
+function login()
 {
   var myParams = {
     'clientid' : "546971034348-fflcn8cq3l3g5a9od0dnorlbgckrquuo.apps.googleusercontent.com", //You need to set client id

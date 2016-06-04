@@ -6,6 +6,7 @@ from uuid import uuid4
 from urllib import urlencode
 from email.mime.multipart import MIMEMultipart
 from email.MIMEText import MIMEText
+from os import urandom
 import smtplib
 
 app = Flask(__name__)
@@ -138,6 +139,82 @@ def signup():
             return redirect(url_for('home'))
 
         return render_template('signup.html', msg = message)
+
+@app.route('/forgot', methods=['GET', 'POST'])
+def forgot():
+    if request.method == 'GET':
+        return render_template('forgot.html')
+    else:
+
+        email = request.form.get('email')
+        if email == None:
+            return render_template('forgot.html', msg = 'You must enter your email!')
+        if getUser(email) == None:
+            return render_template('forgot.html', msg = 'That is an invalid email!')
+
+        randomGen = urandom(64).encode('base-64') #just for something random
+        setReset(email, randomGen)
+
+        data = urlencode(randomGen)
+        link = 'http://localhost:8000/change?reset=%s' %(data)
+
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.ehlo()
+        s.starttls()
+        s.ehlo()
+        s.login(ourEmail, ourPassword)
+
+        #Sending the seller an email
+        message = MIMEMultipart('alternative')
+        message['Subject'] = 'Reset password'
+        message['From'] = ourEmail
+        message['To'] = email
+
+        text = '''Hello,\n\nYou indicated that you have forgotten your password.\nClick on this link to reset your password: %s\n\nYours,\nTeam JASH''' %(email, link)
+        html = '''
+        <html>
+            <body>
+                <p>Hello,<br><br>
+                You indicated that you have forgotten your password.<br>
+                <a href=%s>Click to reset</a> <br><br>
+                Yours,<br>
+                Team JASH
+        ''' %(link)
+
+        textcomp = MIMEText(text, 'plain')
+        htmlcomp = MIMEText(html, 'html')
+        message.attach(textcomp)
+        message.attach(htmlcomp)
+        s.sendmail(ourEmail, email, message.as_string())
+        s.close()
+
+        return redirect(url_for('home'))
+
+@app.route('/change', methods=['GET', 'POST'])
+def change():
+    code = request.args.get('reset')
+    if request.method == 'GET':
+        if code == None:
+            return redirect(url_for('login')) #They are not allowed to access the page directly
+        return render_template('change.html')
+    else:
+        email = getEmailFromReset(code)
+        pword = request.form.get('pword')
+        confirm = request.form.get('confirmpword')
+        if len(pword) < 8:
+            return render_template('change.html', msg='Your password must be at least 8 characters long!', reset=code )
+        if len(confirmpword) < 8:
+            return render_template('change.html', msg2='The confirm password must be at least 8 characters long!', reset=code )
+        if pword != confirmpword:
+            return render_template('change.html', msg='The confirm password must match the password!', reset=code )
+        hasReset(code) #sets to reset code back to ''
+
+        m = sha256()
+        m.update(pword)
+        passwordHash = m.hexdigest()
+
+        updatePassword(email, passwordHash)
+        return redirect(url_for('login'))
 
 @app.route('/activate', methods=['GET', 'POST'])
 def activate():

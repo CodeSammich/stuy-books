@@ -19,13 +19,14 @@ def replaceApostrophe(s):
     return s.replace("'", '&#8217')
 
 #------------------------- Setup User -------------------------#
-def addUser(email, passwordHash, status=0):
+def addUser(email, passwordHash, status=0, reset=''):
     '''
     Adds user to the database
     Args:
         email (string)
         passwordHash (string)
         status (integer) 0 for inactive, 1 for active
+        reset (string) reset code if person forgets password
     Returns:
         String with errors, or empty string if there aren't any
     '''
@@ -51,7 +52,8 @@ def addUser(email, passwordHash, status=0):
     accounts.insert_one({
         'email': replaceApostrophe(email.replace('@stuy.edu', '')),
         'passwordHash': passwordHash,
-        'status': 0
+        'status': 0,
+        'reset': ''
         #'first': first,
         #'last': last
     })
@@ -129,7 +131,6 @@ def authenticate(email, passwordHash):
         #return False
     return True
 
-
 def updatePassword(email, newPasswordHash):
     '''
     Updates the password for the user
@@ -149,6 +150,56 @@ def updatePassword(email, newPasswordHash):
         )
     except: # catch *all* exceptions
         return False
+    return True
+
+def setReset(email, code):
+    '''
+    Sets the reset code for a user
+    Args:
+        email (string)
+        code (string)
+    Returns:
+        True
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    accounts.update_one(
+        {'email': email},
+        {
+            '$set': {'reset': code}
+        }
+    )
+    return True
+
+def getEmailFromReset(code):
+    '''
+    Gets a user's email from reset code (only use when resetting, pretty much impossible elsewhere)
+    Args:
+        code (string)
+    Returns:
+        The email (string) or None  
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    result = accounts.find_one({'reset': code})
+    return result['email'] or None
+
+def hasReset(code):
+    '''
+    Looks for the user with a reset code and sets it back to empty string
+    Args:
+        code (string)
+    Returns:
+        True
+    '''
+    db = client['accounts-database']
+    accounts = client['accounts']
+    accounts.find_one_and_update(
+        {'reset': code},
+        {
+            '$set': {'reset': ''}
+        }
+    )
     return True
 
 #------------------------- Book keeping -------------------------#
