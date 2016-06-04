@@ -30,7 +30,9 @@
 	    <p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
 	  </td>
 	</tr>
-	<tr><a href="/edit/{{item['bookName']}}">Edit</a></tr>
+	<tr><button> <a href="/edit/{{item['bookName']}}">Edit Book Information</a></button><br>
+	<button>Transaction Complete</button><br>
+	<button>Remove Book from List</button></tr>
       </table>
       <hr>
       {% endfor %}
