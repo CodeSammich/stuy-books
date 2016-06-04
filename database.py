@@ -342,6 +342,31 @@ def getBookStatus(bookName):
     results = books.find_one({'bookName': bookName})
     return results['status']
 
+def getBookInfo(bookName):
+    '''
+    Gets the info of a book
+    Args:
+        bookName (string)
+    Returns
+        List containing book info
+        [ bookName (string)
+        author (string)
+        isbn (string)
+        subject (string)
+        condition (string)
+        price (string) ]
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find_one({'bookName': bookName})
+    return {'bookName': results['bookName'], 
+            'author': results['author'], 
+            'isbn': results['isbn'], 
+            'subject': results['subject'], 
+            'condition': results['condition'], 
+            'price': results['price'],
+            }
+
 def setBookStatus(bookName, email, stat):
     '''
     Sets the status of a book

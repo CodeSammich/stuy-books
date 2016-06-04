@@ -316,11 +316,15 @@ def itempage(email, bookName):
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
 
-@app.route('/edit', methods=['GET', 'POST'])
+@app.route('/edit/<bookName>', methods=['GET', 'POST'])
 @requireLogin
-def edit():
+def edit(bookName):
     if request.method == 'GET':
-        return render_template('edit.html')
+        bookName = bookName.replace("%20", " ")
+        print bookName
+        bookInfo = getBookInfo(bookName)
+        print bookInfo
+        return render_template('edit.html', bookInfo=bookInfo)
     #TODO check if user is logged in, same thing for sell page
     email = session['email']
     bookName = request.form['title']
