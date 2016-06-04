@@ -20,9 +20,18 @@ def requireLogin(f):
         if session('email') is not None:
             return f(*args)
         else:
+
             return render_template('login.html', msg = 'You must login to view the page')
     return dec
 """
+
+def requireLogin(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if session.get('email') is None:
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 @app.route('/', methods=["GET","POST"])
 @app.route('/index', methods=["GET","POST"])
@@ -31,7 +40,6 @@ def home():
     if request.method == "GET":
         return render_template("index.html")
     else:
-        print "hi123"
         search = request.form['searchQuery']
         #print search
         #results = searchForBook(search)
@@ -39,8 +47,6 @@ def home():
         #session['results'] = results
         #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
-
-
 
 @app.route("/login", methods=["GET","POST"])
 def login():
@@ -53,7 +59,6 @@ def login():
             #strip the @stuy.edu part
             email = email[:-9]
             session['email'] = email
-            session['logged'] = 1
             print "boo**********\n"
             return redirect(url_for("userpage", email=email))
         else:
@@ -73,14 +78,12 @@ def login():
 
         if authenticate(email, passwordHash):
             session['email'] = email
-            session['logged'] = 1
-            return redirect(url_for("userpage", email=email))
+            return redirect(request.args.get('next', url_for('userpage', email=email)))
 
         return render_template('login.html', msg = 'Incorrect email/password combination')
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    session["logged"]=0
     if request.method == "GET":
         return render_template("signup.html")
     else:
@@ -148,11 +151,12 @@ def activate():
     return redirect(url_for('home'))
 
 @app.route("/userpage", methods=['GET', 'POST'])
+@requireLogin
 def userpage():
     if request.method == "GET":
         email = session.get('email', None)
-        if email == None:
-            return redirect(url_for('login'), msg = 'You must log in first!')
+        #if email == None:
+            #return redirect(url_for('login'), msg = 'You must log in first!')
         info = listBooksForUser(email)
         return render_template("userpage.html", info=info)
     else:
@@ -167,6 +171,7 @@ def userpage():
     return redirect(url_for('sell'))
 
 @app.route('/sell', methods=['GET', 'POST'])
+@requireLogin
 def sell():
     if request.method == 'GET':
         return render_template('sell.html')
@@ -186,9 +191,10 @@ def sell():
         if is_new:
             return redirect(url_for('userpage'))
         else:
-            return redirect(url_for('sell'), message="Book already exists")
+            return render_template('sell.html', msg="Book already exists")
 
 @app.route('/buypage', methods=['GET', 'POST'])
+@requireLogin
 def buy():
     if request.method == "GET":
         return render_template('buypage.html', info=listAll())
@@ -203,6 +209,7 @@ def buy():
 
 
 @app.route("/itempage/<email>/<bookName>", methods=['GET','POST'])
+@requireLogin
 def itempage(email, bookName):
     if request.method == "GET":
         info = listAll()
@@ -220,6 +227,7 @@ def itempage(email, bookName):
         return redirect(url_for('search', query=search))
 
 @app.route('/edit', methods=['GET', 'POST'])
+@requireLogin
 def edit():
     if request.method == 'GET':
         return render_template('edit.html')
@@ -241,6 +249,7 @@ def autocomplete():
 '''
 
 @app.route('/search', methods=["GET","POST"])
+@requireLogin
 def search():
     if request.method=="POST":
         search = request.form['searchQuery']
@@ -256,6 +265,7 @@ def search():
         return render_template("search.html", info=results)
 
 @app.route('/finish', methods=['GET', 'POST'])
+@requireLogin
 def finish():
     print 'Begin email to both parties to indicate finished transaction'
 
@@ -332,9 +342,6 @@ def googleLogin():
         email = request.args.get('email')
         print email
         session['email'] = email
-        session['logged'] = 1
-        print session['email']
-        print session['logged']
         print "boo\n***********"
         return redirect(url_for('home'))#url_for("userpage", email=email))
     else:
@@ -343,7 +350,6 @@ def googleLogin():
 @app.route('/logout')
 def logout():
     session.pop('email', None)
-    session['logged'] = 0
     return redirect(url_for('home'))
 
 if __name__ == "__main__":
