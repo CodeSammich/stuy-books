@@ -18,31 +18,86 @@
     <div id="active" class="tab-pane fade in active">
       <h3>ACTIVE LISTINGS</h3>
       <p>Your listings currently shown for sale.</p>
-    </div>
-    <div id="pending" class="tab-pane fade">
-      <h3>PENDING</h3>
-      <p>Scheduled meetups for listings you are confirmed to buy or sell.</p>
-    </div>
-    <div id="past" class="tab-pane fade">
-      <h3>PAST TRANSACTIONS</h3>
-      <p>Past items sold or bought.</p>
-    </div>
-  </div>
-  <!--
-  <h1>Your listings</h1>
-{% if info|length > 0 %}
-{% for item in info %}
-<table style="height:150px;width:80% !important;">
-  <tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}"> <img src={{item['image_url']}}> </a> </td></tr>
-  <tr>
-    <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
-      <span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
-      <p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
-    </td>
-  </tr>
+
+      {% if available|length > 0 %}
+      {% for item in available %}
+      <table style="height:150px;width:80% !important;">
+	<tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}"> <img src={{item['image_url']}}> </a> </td></tr>
+	<tr>
+	  <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+	    <span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+	    <p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+	  </td>
+	</tr>
+      </table>
+      <hr>
+      {% endfor %}
 </table>
-<hr>
-{% endfor %}
+{% endif %}
+
+</div>
+
+
+<div id="pending" class="tab-pane fade">
+  <h3>PENDING</h3>
+  <p>Scheduled meetups for listings you are confirmed to buy or sell.</p>
+
+  {% if pending|length > 0 %}
+  {% for item in pending %}
+  <table style="height:150px;width:80% !important;">
+    <tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}"> <img src={{item['image_url']}}> </a> </td></tr>
+    <tr>
+      <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+	<span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+	<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+      </td>
+    </tr>
+  </table>
+  <hr>
+  {% endfor %}
+</table>
+{% endif %}
+
+</div>
+
+
+<div id="past" class="tab-pane fade">
+  <h3>PAST TRANSACTIONS</h3>
+  <p>Past items sold or bought.</p>
+
+  {% if sold|length > 0 %}
+  {% for item in sold %}
+  <table style="height:150px;width:80% !important;">
+    <tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}"> <img src={{item['image_url']}}> </a> </td></tr>
+    <tr>
+      <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+	<span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+	<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+      </td>
+    </tr>
+  </table>
+  <hr>
+  {% endfor %}
+</table>
+{% endif %}
+
+</div>
+</div>
+<!--
+    <h1>Your listings</h1>
+    {% if info|length > 0 %}
+    {% for item in info %}
+    <table style="height:150px;width:80% !important;">
+      <tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}"> <img src={{item['image_url']}}> </a> </td></tr>
+      <tr>
+	<td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+	  <span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+	  <p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+	</td>
+      </tr>
+    </table>
+    <hr>
+    {% endfor %}
 </table>
 {% endif %}-->
 </div>
