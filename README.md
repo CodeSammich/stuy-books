@@ -8,7 +8,7 @@
 		- [ ] "Transaction complete",
 		- [ ] "remove book from list",
 		- [ ] "Edit book information"
-	- [ ] book status ( Available, Pending, Sold ),
+	- [x] book status ( Available, Pending, Sold ),
 	- [ ] Prettiness *(Amanda)*
 	- [ ] Tooltip For Signup *(Amanda)*
 	- [ ] When screen is sized down, enabled side scrolling instead *(Amanda)*

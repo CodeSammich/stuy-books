@@ -326,16 +326,19 @@ def edit(bookName):
         print bookInfo
         return render_template('edit.html', bookInfo=bookInfo)
     #TODO check if user is logged in, same thing for sell page
-    email = session['email']
-    bookName = request.form['title']
-    author = request.form['author']
-    isbn = request.form['serial']
-    subject = request.form['subject']
-    condition = request.form['condition']
-    price = request.form['price']
+    else:
+        email = session['email']
+        bookName = request.form['title']
+        author = request.form['author']
+        isbn = request.form['serial']
+        subject = request.form['subject']
+        condition = request.form['condition']
+        price = request.form['price']
 
-    updateBookInfo(email, bookName, author, isbn, subject, condition, price)
-    return render_template('edit.html')
+        updateBookInfo(email, bookName, author, isbn, subject, condition, price)
+        #return render_template('edit.html')
+        return redirect(url_for('userpage'))
+
 
 '''
 def autocomplete():
