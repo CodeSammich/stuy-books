@@ -1,9 +1,9 @@
-# Setup Instructions
+### Setup Instructions
 1. Clone the project
 2. Install and run Mongo
 3. Install and run Flask
 4. Make a file named 'password.txt'
-5. Copy and paste the email that we will send you
+5. Copy and paste the password in the email that we will send you
 
 ### Daily Agenda
 
