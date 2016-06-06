@@ -3,7 +3,7 @@
 ##### Agenda for 6/2/16:
 
 - Frontend/middle: (Everything else is Helen + Sam)
-	- [ ] Redirection from google sign-in
+	- [x] Redirection from google sign-in (update: redirects to "/index")
 	- [ ] Start adding buttons for login pages for
 		- [ ] "Transaction complete",
 		- [ ] "remove book from list",
