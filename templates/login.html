@@ -57,8 +57,9 @@
 	  //console.log(email);
 	  $.ajax({
 	  type: "GET",
-	  url:"/login",
-	  data:{"name":name,"email":email}
+	  url:"/",
+	  data:{"name":name,"email":email},
+	  success: function(){ window.location.href="/"; },
 
 	  });
 

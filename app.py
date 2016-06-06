@@ -39,7 +39,20 @@ def requireLogin(f):
 @app.route("/home/", methods=["GET","POST"])
 def home():
     if request.method == "GET":
-        return render_template("index.html")
+        if request.args.get('name') != None:
+            #Why does it automatically use Google Sign in without me pressing bttn
+            name = request.args.get('name')
+            email = request.args.get('email')
+
+            #strip the @stuy.edu part
+            email = email[:-9]
+            session['email'] = email
+            print "boo**********\n"
+            return render_template("index.html")
+        #elif "email" in session:
+            #return redirect(url_for("userpage"))
+        else:
+            return render_template("index.html")
     else:
         search = request.form['searchQuery']
         #print search
@@ -52,18 +65,7 @@ def home():
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "GET":
-        if request.args.get('name') != None:
-            #Why does it automatically use Google Sign in without me pressing bttn
-            name = request.args.get('name')
-            email = request.args.get('email')
-
-            #strip the @stuy.edu part
-            email = email[:-9]
-            session['email'] = email
-            print "boo**********\n"
-            return redirect(url_for("userpage", email=email))
-        else:
-            return render_template("login.html")
+        return render_template("login.html")
     else:
         email = request.form['email']
         pword = request.form['pword']
