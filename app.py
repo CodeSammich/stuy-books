@@ -497,6 +497,13 @@ def cancel(bookName):
     setBuyerEmail(bookName, session['email'], '')
     return redirect(url_for('userpage'))
 
+@app.route('/remove/<email>/<bookName>/<price>/<condition>')
+def remove(email, bookName, price, condition):
+    bookName = bookName.replace("%20", " ")
+    deleteAllBooks(email,bookName,price,condition)
+    return redirect(url_for('userpage'))
+
+
 @app.route('/googleLogin')
 def googleLogin():
     if request.method=="GET":
