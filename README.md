@@ -1,3 +1,10 @@
+# Setup Instructions
+1. Clone the project
+2. Install and run Mongo
+3. Install and run Flask
+4. Make a file named 'password.txt'
+5. Copy and paste the email that we will send you
+
 ### Daily Agenda
 
 ##### Agenda for 6/2/16:
@@ -23,10 +30,10 @@
 	 - [ ] Send email to both client and buyer
 	- [x] NO REPEAT ENTRIES UNLESS PRICE/CONDITION IS DIFFERENT
 	- [x] All database calls should use name, seller, price and condition
-	- [ ] Edit book information 
+	- [ ] Edit book information
 	- [ ] Search Engine Optimization
 	- [ ] Cancel Transaction (same mechanism as Finish)
-	
+
  - [ ] User frees information
 
 - **if possible**: "books bought/sold" database for buyers/sellers
