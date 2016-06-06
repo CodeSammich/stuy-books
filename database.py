@@ -594,7 +594,8 @@ def searchForBook(query):
         for b in cursor:
             print b['bookName']
             print 'book found, going to next book'
-            results.append( b )
+            if not b in results:
+                results.append( b )
             break; #goes to next book
 
-        return results
+    return results
