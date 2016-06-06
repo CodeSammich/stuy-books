@@ -11,10 +11,11 @@
 
 - Frontend/middle: (Everything else is Helen + Sam)
 	- [x] Redirection from google sign-in (update: redirects to "/index")
-	- [ ] Start adding buttons for login pages for
-		- [ ] "Transaction complete",
-		- [ ] "remove book from list",
-		- [ ] "Edit book information"
+	- [] Start adding buttons for login pages for
+		- [x] "Transaction complete",
+		- [x] "Remove book from list",
+		- [x] "Edit book information"
+		- [ ]Prettiness of the buttons above
 	- [x] book status ( Available, Pending, Sold ),
 	- [ ] Prettiness *(Amanda)*
 	- [ ] Tooltip For Signup *(Amanda)*
