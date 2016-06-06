@@ -2,11 +2,11 @@
 {% block title %}userpage{% endblock %}
 {% block contents %}
 <div class="userpage">
-  
+
   {% if message|length > 0 %}
   <p color='purple'>{{message}}</p>
   {% endif %}
-  
+
   <h2> YOUR ACTIVITY </h2>
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#active">ACTIVE LISTINGS</a></li>
@@ -31,7 +31,7 @@
 	  </td>
 	</tr>
 	<tr><button> <a href="/edit/{{item['bookName']}}">Edit Book Information</a></button><br>
-	<button>Transaction Complete</button><br>
+	<button><a href='/finish/{{item}}'>Transaction Complete</a></button><br>
 	<button>Remove Book from List</button></tr>
       </table>
       <hr>

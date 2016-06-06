@@ -365,16 +365,63 @@ def search():
         results = searchForBook(search)
         return render_template("search.html", info=results)
 
-@app.route('/finish', methods=['GET', 'POST'])
+@app.route('/finish/<item>')
 @requireLogin
-def finish():
+def finish(item):
     print 'Begin email to both parties to indicate finished transaction'
 
     sellerEmail = session['email'] + '@stuy.edu'
-    if request.method == 'GET':
-        return render_template('userpage.html', message = '')
-    else:
-        return redirect(url_for('userpage'), render=True)
+    buyerEmail = item['buyerEmail']
+    bookName = item['bookName']
+    price = item['price']
+
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login(ourEmail, ourPassword)
+
+    messageS = MIMEMultipart()
+    messageS['Subject'] = 'Finished transaction'
+    messageS['From'] = ourEmail
+    messageS['To'] = sellerEmail
+
+    textS = '''
+    Hello,
+
+    You have confirmed that yours transaction for %s has been successful.
+    If you did not confirm this, contact us immediately at %s
+
+    Yours,
+    Team JASH''' %(bookName, ourEmail)
+
+
+    messageS.attach(MIMEText(textS, 'plain'))
+    s.sendmail(ourEmail, sellerEmail, messageS.as_string())
+
+    messageB = MIMEMultipart()
+    messageB['Subject'] = 'Finished transaction'
+    messageB['From'] = ourEmail
+    messageB['To'] = buyerEmail
+
+    textB = '''
+    Hello,
+
+    Our records indicate that you have bought %s for %s. The seller has confirmed that have received the book.
+    If you have not received your book contact us immediately at %s
+
+    Yours,
+    Team JASH''' %(bookName, price, ourEmail)
+
+    messageS.attach(MIMEText(textB, 'plain'))
+    s.sendmail(ourEmail, buyerEmail, messageB.as_string())
+
+    s.close()
+
+    finish_transaction(bookName, sellerEmail)
+
+    return redirect(url_for('userpage'))
+
 
 @app.route('/bought', methods=['GET', 'POST'])
 def bought():
