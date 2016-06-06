@@ -361,7 +361,8 @@ def getBookInfo(bookName, email):
         isbn (string)
         subject (string)
         condition (string)
-        price (string) ]
+        price (string)
+        buyerEmail (string) ]
     '''
     db = client['books-database']
     books = db['books']
@@ -374,7 +375,27 @@ def getBookInfo(bookName, email):
             'subject': results['subject'],
             'condition': results['condition'],
             'price': results['price'],
+            'buyerEmail': results['buyerEmail'],
             }
+
+def setBuyerEmail(bookName, sellerEmail, buyerEmail):
+    '''
+    Sets the email for the buyer for a book
+    Args:
+        bookName (string)
+        sellerEmail (string)
+        buyerEmail (string)
+    Returns:
+        True
+    '''
+    db = client['books-database']
+    books = db['books']
+    books.find_one_and_update(
+        {'bookName': bookName, 'email': sellerEmail},
+        {'$set': {'buyerEmail': buyerEmail}}
+    )
+    return True
+
 
 def setBookStatus(bookName, email, stat):
     '''

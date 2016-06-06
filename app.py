@@ -358,22 +358,25 @@ def search():
         #results = searchForBook(search)
         #print results
         #session['results'] = results
-        #return render_template("search.html", info=results)
+        #return render_template("search.html", info=results)getBookInfogetBookInfo
         return redirect(url_for('search', query=search))
     else:
         search = request.args.get("query")
         results = searchForBook(search)
         return render_template("search.html", info=results)
 
-@app.route('/finish/<item>')
+@app.route('/finish/<bookName>')
 @requireLogin
-def finish(item):
+def finish(bookName):
     print 'Begin email to both parties to indicate finished transaction'
+    bookName = bookName.replace("%20", " ")
+    email = session['email']
+    bookInfo = getBookInfo(bookName, email)
+    print bookInfo
 
-    sellerEmail = session['email'] + '@stuy.edu'
-    buyerEmail = item['buyerEmail']
-    bookName = item['bookName']
-    price = item['price']
+    sellerEmail = email + '@stuy.edu'
+    buyerEmail = bookInfo['buyerEmail'] + '@stuy.edu'
+    price = bookInfo['price']
 
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.ehlo()
@@ -418,7 +421,8 @@ def finish(item):
 
     s.close()
 
-    finish_transaction(bookName, sellerEmail)
+    finish_transaction(bookName, email)
+    setBuyerEmail(bookName, email, '')
 
     return redirect(url_for('userpage'))
 
@@ -478,6 +482,7 @@ def bought():
     s.close()
 
     setBookStatus(book, request.args.get('email'), 'pending')
+    setBuyerEmail(book, request.args.get('email'), session['email'])
 
     return redirect(url_for('userpage'))
 

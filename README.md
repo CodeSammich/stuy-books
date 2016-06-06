@@ -26,11 +26,11 @@
 	 - [ ] One buy page per book with name and seller email
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
-	- [ ] Finish transaction
-	 - [ ] Send email to both client and buyer
+	- [x] Finish transaction
+	 - [x] Send email to both client and buyer
 	- [x] NO REPEAT ENTRIES UNLESS PRICE/CONDITION IS DIFFERENT
 	- [x] All database calls should use name, seller, price and condition
-	- [ ] Edit book information
+	- [x] Edit book information
 	- [ ] Search Engine Optimization
 	- [ ] Cancel Transaction (same mechanism as Finish)
 
