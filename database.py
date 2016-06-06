@@ -177,7 +177,7 @@ def getEmailFromReset(code):
     Args:
         code (string)
     Returns:
-        The email (string) or None  
+        The email (string) or None
     '''
     db = client['accounts-database']
     accounts = db['accounts']
@@ -285,10 +285,11 @@ def deleteSingleBook(email, bookName):
     return True
 """
 
-def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
+def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, price):
     '''
     Updates the book in the database for a book owned by a user (note neither the owner nor the title are changed)
     Args:
+        oldName (string)
         email (string)
         bookName (string)
         author (string)
@@ -302,30 +303,35 @@ def updateBookInfo(email, bookName, author, isbn, subject, condition, price):
     db = client['books-database']
     books = db['books']
     #TODO find a way to make this more efficient T.T
+    if bookName.strip() != '':
+        books.find_one_and_update(
+            {'email': email, 'bookName': oldName},
+            {'$set': {'bookName': bookName}}
+        )
     if author.strip() != '': #Returns True if author is not empty
         books.find_one_and_update(
-            {'email': email, 'bookName': bookName},
-            {'$set': {'author', author}}
+            {'email': email, 'bookName': oldName},
+            {'$set': {'author': author}}
         )
     if isbn.strip() != '':
         books.find_one_and_update(
-            {'email': email, 'bookName': bookName},
-            {'$set': {'isbn', isbn}}
+            {'email': email, 'bookName': oldName},
+            {'$set': {'isbn': isbn}}
         )
     if subject.strip() != '':
         books.find_one_and_update(
-            {'email': email, 'bookName': bookName},
-            {'$set': {'isbn', isbn}}
+            {'email': email, 'bookName': oldName},
+            {'$set': {'subject': subject}}
         )
     if condition.strip() != '':
         books.find_one_and_update(
-            {'email': email, 'bookName': bookName},
-            {'$set': {'condition', condition}}
+            {'email': email, 'bookName': oldName},
+            {'$set': {'condition': condition}}
         )
     if price.strip() != '':
         books.find_one_and_update(
-            {'email': email, 'bookName': bookName},
-            {'$set': {'price', price}}
+            {'email': email, 'bookName': oldName},
+            {'$set': {'price': price}}
         )
     return True
 
@@ -342,11 +348,12 @@ def getBookStatus(bookName):
     results = books.find_one({'bookName': bookName})
     return results['status']
 
-def getBookInfo(bookName):
+def getBookInfo(bookName, email):
     '''
     Gets the info of a book
     Args:
         bookName (string)
+        email (string)
     Returns
         List containing book info
         [ bookName (string)
@@ -358,12 +365,14 @@ def getBookInfo(bookName):
     '''
     db = client['books-database']
     books = db['books']
-    results = books.find_one({'bookName': bookName})
-    return {'bookName': results['bookName'], 
-            'author': results['author'], 
-            'isbn': results['isbn'], 
-            'subject': results['subject'], 
-            'condition': results['condition'], 
+    results = books.find_one({'bookName': bookName, 'email': email})
+    if results == None:
+        return None
+    return {'bookName': results['bookName'],
+            'author': results['author'],
+            'isbn': results['isbn'],
+            'subject': results['subject'],
+            'condition': results['condition'],
             'price': results['price'],
             }
 

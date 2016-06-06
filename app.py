@@ -324,20 +324,22 @@ def edit(bookName):
     if request.method == 'GET':
         bookName = bookName.replace("%20", " ")
         print bookName
-        bookInfo = getBookInfo(bookName)
+        email = session['email']
+        bookInfo = getBookInfo(bookName, email)
         print bookInfo
+        if bookInfo == None:
+            return redirect(url_for('userpage'), msg = 'You can only edit a book that you own.')
         return render_template('edit.html', bookInfo=bookInfo)
-    #TODO check if user is logged in, same thing for sell page
     else:
         email = session['email']
-        bookName = request.form['title']
+        title = request.form['title']
         author = request.form['author']
         isbn = request.form['serial']
         subject = request.form['subject']
         condition = request.form['condition']
         price = request.form['price']
 
-        updateBookInfo(email, bookName, author, isbn, subject, condition, price)
+        updateBookInfo(bookName ,email, title, author, isbn, subject, condition, price)
         #return render_template('edit.html')
         return redirect(url_for('userpage'))
 
