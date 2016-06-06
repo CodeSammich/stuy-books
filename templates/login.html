@@ -53,6 +53,9 @@
 	  console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
 	  name = profile.getName();
 	  email = profile.getEmail();
+    if (email.indexOf('@stuy.edu') == -1)
+      console.log('Error: must use stuy.edu email')
+      //TODO redirect to login page with email error
 	  //console.log(name);
 	  //console.log(email);
 	  $.ajax({
