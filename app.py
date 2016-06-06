@@ -289,7 +289,12 @@ def sell():
 @requireLogin
 def buy():
     if request.method == "GET":
-        return render_template('buypage.html', info=listAll())
+        info = listAll()
+        actualones = []
+        for i in range(len(info)):
+            if info[i].get('status', None) == 'available':
+                actualones.append(info[i])
+        return render_template('buypage.html', info=actualones)
     else:
         search = request.form['searchQuery']
         #print search
@@ -484,6 +489,12 @@ def bought():
     setBookStatus(book, request.args.get('email'), 'pending')
     setBuyerEmail(book, request.args.get('email'), session['email'])
 
+    return redirect(url_for('userpage'))
+
+@app.route('/cancel/<bookName>')
+def cancel(bookName):
+    setBookStatus(bookName, session['email'], 'available')
+    setBuyerEmail(bookName, session['email'], '')
     return redirect(url_for('userpage'))
 
 @app.route('/googleLogin')
