@@ -429,6 +429,7 @@ def finish(email, bookName, author, price, condition):
 
 
 @app.route('/bought/<email>/<bookName>/<author>/<price>/<condition>', methods=['GET', 'POST'])
+@requireLogin
 def bought(email, bookName, author, price, condition):
     print 'HELLO THIS IS IN THE BOUGHT SECTION'
 
@@ -486,14 +487,45 @@ def bought(email, bookName, author, price, condition):
     return redirect(url_for('userpage'))
 
 @app.route('/cancel/<email>/<bookName>/<author>/<price>/<condition>')
+@requireLogin
 def cancel(email, bookName, author, price, condition):
     bookName = bookName.replace('%20', ' ')
     author = author.replace('%20', ' ')
     setBookStatus(bookName, session['email'], author, price, condition, 'available')
     setBuyerEmail(bookName, session['email'], author, price, condition, '')
+
+    #Alert the buyer that the seller has canceled the transaction
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login(ourEmail, ourPassword)
+
+    message = MIMEMultipart()
+    message['Subject'] = 'Transaction canceled'
+    message['From'] = ourEmail
+    message['To'] = session['email'] + '@stuy.edu'
+
+    text = '''
+    To whom it may concern,
+
+    You indicated that you wanted %s for $%s. The seller has canceled this transaction.
+    If this is a mistake you can contact the seller at %s.
+
+    Yours,
+    Team JASH''' %(bookName, price, email + '@stuy.edu')
+
+    message.attach(MIMEText(text, 'plain'))
+    s.sendmail(ourEmail, session['email'] + '@stuy.edu', message.as_string())
+
+    s.close()
+
+    setBookStatus(bookName, email, author, price, condition, 'available')
+    setBuyerEmail(bookName, email, author, price, condition, session['email'])
     return redirect(url_for('userpage'))
 
 @app.route('/remove/<email>/<bookName>/<author>/<price>/<condition>')
+@requireLogin
 def remove(email, bookName, author, price, condition):
     bookName = bookName.replace("%20", " ")
     author = author.replace('%20', ' ')

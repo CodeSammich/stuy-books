@@ -33,7 +33,7 @@
 	- [x] All database calls should use name, seller, price and condition
 	- [x] Edit book information
 	- [ ] Search Engine Optimization
-	- [ ] Cancel Transaction (same mechanism as Finish)
+	- [x] Cancel Transaction (same mechanism as Finish)
 
  - [ ] User frees information
 
