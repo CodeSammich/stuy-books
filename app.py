@@ -450,7 +450,15 @@ def bought(email, bookName, author, price, condition):
 
     You have listed the book %s for sale for $%s. We are pleased to say that
     someone has seen the offer and will gladly meet up with you to purchase the book.
-    You can reach the buyer at %s
+
+    Feel free to reach out to the buyer at %s to set up a convenient meeting location.
+    
+    If you are unsure as to an appropriate meeting spot, here are a few recommendations:
+    The Senior Bar/Atrium (2nd Floor)
+    Bridge Entrance (2nd Floor)
+    The Half-Floor
+    The Guidance Office ( Rm. 236 )
+    The First Floor Atrium
 
     Yours,
     Team JASH''' %(bookName, price, buyerEmail)
@@ -468,7 +476,16 @@ def bought(email, bookName, author, price, condition):
     To whom it may concern,
 
     You have indicated that you want to buy the book %s for $%s.
-    You can contact the seller at %s
+
+    Feel free to reach out to the seller at %s to set up a convenient meeting location.
+    
+    If you are unsure as to an appropriate meeting spot, here are a few recommendations:
+
+    The Senior Bar/Atrium (2nd Floor)
+    Bridge Entrance (2nd Floor)
+    The Half-Floor
+    The Guidance Office ( Rm. 236 )
+    The First Floor Atrium
 
     Yours,
     Team JASH''' %(bookName, price, sellerEmail)
