@@ -15,12 +15,12 @@
 		- [x] "Transaction complete",
 		- [x] "Remove book from list",
 		- [x] "Edit book information"
-		- [ ] Prettiness of the buttons above
+		- [x] Prettiness of the buttons above
 	- [x] book status ( Available, Pending, Sold ),
-	- [ ] Prettiness *(Amanda)*
+	- [x] Prettiness *(Amanda)*
 	- [ ] Tooltip For Signup *(Amanda)*
 	- [ ] When screen is sized down, enabled side scrolling instead *(Amanda)*
-	- [ ] Run properly in Firefox, Chrome, and Safari *(Amanda)*
+	- [x] Run properly in Firefox, Chrome, and Safari *(Amanda)*
 - Middleware
 	- [x] Username properly display on all pages (instead of "Username")
 	- [ ] Books should have different prices, conditions but one entry listed after search
@@ -28,11 +28,11 @@
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
 	- [x] Finish transaction
-	 - [x] Send email to both client and buyer
+	- [x] Send email to both client and buyer
 	- [x] NO REPEAT ENTRIES UNLESS PRICE/CONDITION IS DIFFERENT
 	- [x] All database calls should use name, seller, price and condition
 	- [x] Edit book information
-	- [ ] Search Engine Optimization
+	- [x] Search Engine Optimization
 	- [x] Cancel Transaction (same mechanism as Finish)
 
  - [ ] User frees information

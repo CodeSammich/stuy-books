@@ -603,6 +603,24 @@ def searchForBook(query):
             print 'book found, going to next book'
             if not b in results:
                 results.append( b )
-            break; #goes to next book
+                #break; #goes to next book
+
+        cursor = books.find( {'author':
+                      { '$regex' : '.*' + query[j] + '.*' } } )
+        for b in cursor:
+            print b['bookName']
+            print 'book found, going to next book'
+            if not b in results:
+                results.append( b )
+                #break; #goes to next book
+
+        cursor = books.find( {'isbn':
+                              { '$regex' : '.*' + query[j] + '.*' } } )
+        for b in cursor:
+            print b['bookName']
+            print 'book found, going to next book'
+            if not b in results:
+                results.append( b )
+                #break; #goes to next book
 
     return results
