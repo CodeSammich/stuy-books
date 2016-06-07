@@ -597,7 +597,7 @@ def searchForBook(query):
 
         # goes through database to find books with query[j] in substring value
         cursor = books.find( {'bookName':
-                              { '$regex' : '.*' + query[j] + '.*' } } )
+                              { '$regex' : '(?i).*' + query[j] + '.*' } } )
         for b in cursor:
             print b['bookName']
             print 'book found, going to next book'
@@ -606,7 +606,7 @@ def searchForBook(query):
                 #break; #goes to next book
 
         cursor = books.find( {'author':
-                      { '$regex' : '.*' + query[j] + '.*' } } )
+                      { '$regex' : '(?i).*' + query[j] + '.*' } } )
         for b in cursor:
             print b['bookName']
             print 'book found, going to next book'
