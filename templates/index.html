@@ -16,8 +16,7 @@
 		<dl class="form"><dd><input type="password" name="user[password]" class="form-control form-control-lg input-block s" placeholder="Create a password"></dd><br></dl>
               </div><br>
             </form>-->
-	{% if 'email' in session %}
-	{% else %}
+	{% if 'email' not in session %}
         <a href="/signup" class="btn btn-success btn-block" style="height:50px; font-size:16px; letter-spacing:1.5px; width:500px; margin:auto; line-height:32px;">Sign up for StuyBooks</a>
 	{% endif %}
 
