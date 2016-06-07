@@ -2,8 +2,8 @@
 1. Clone the project
 2. Install and run Mongo
 3. Install and run Flask
-4. Make a file named 'password.txt'
-5. Copy and paste the password in the email that we will send you
+4. Download the "password.txt" file that we will email you, and place it in the root of the repository
+5. Use the Google OAuth Client Key that we will email you in the indicated places in "base.html" and "login.html"
 
 ### Daily Agenda
 
