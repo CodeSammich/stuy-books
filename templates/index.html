@@ -1,26 +1,29 @@
 {% extends "base.html" %}
 {% block title %}Home{% endblock %}
 {% block contents %}
-  <div class="bg">
-    <div class="jumbotron">
-      <div class="container-responsive">
-        <div class="columns index vcenter">
-            <h1 style="font-size:100px; letter-spacing:10px;">StuyBooks</h1><br>
-            <h2 style="font-size:30px;">Buy and sell your old review books<br>to fellow Stuyvesant students.</h2><br><br>
-            <!--<div class="notneeded">* No sign up needed. Use your stuy.edu email ! *</div><br><br>-->
-          <!--<div class="column" style="width:35%;padding-top:10%;">
+<div class="bg">
+  <div class="jumbotron">
+    <div class="container-responsive">
+      <div class="columns index vcenter">
+        <h1 style="font-size:100px; letter-spacing:10px;">StuyBooks</h1><br>
+        <h2 style="font-size:30px;">Buy and sell your old review books<br>to fellow Stuyvesant students.</h2><br><br>
+        <!--<div class="notneeded">* No sign up needed. Use your stuy.edu email ! *</div><br><br>-->
+        <!--<div class="column" style="width:35%;padding-top:10%;">
             <form accept-charset="UTF-8" action="/join" autocomplete="off" method="post">
-            <div class="form-group">
-              <dl class="form"><dd><input type="text" name="user[login]" class="form-control form-control-lg s" placeholder="Pick a username"></dd></dl>
-              <dl class="form"><dd><input type="text" name="user[email]" class="form-control form-control-lg s" placeholder="Your email address"></dd></dl>
-              <dl class="form"><dd><input type="password" name="user[password]" class="form-control form-control-lg input-block s" placeholder="Create a password"></dd><br></dl>
-            </div><br>
+              <div class="form-group">
+		<dl class="form"><dd><input type="text" name="user[login]" class="form-control form-control-lg s" placeholder="Pick a username"></dd></dl>
+		<dl class="form"><dd><input type="text" name="user[email]" class="form-control form-control-lg s" placeholder="Your email address"></dd></dl>
+		<dl class="form"><dd><input type="password" name="user[password]" class="form-control form-control-lg input-block s" placeholder="Create a password"></dd><br></dl>
+              </div><br>
             </form>-->
-            <a href="/signup" class="btn btn-success btn-block" style="height:50px; font-size:16px; letter-spacing:1.5px; width:500px; margin:auto; line-height:32px;">Sign up for StuyBooks</a>
+	{% if 'email' in session %}
+	{% else %}
+        <a href="/signup" class="btn btn-success btn-block" style="height:50px; font-size:16px; letter-spacing:1.5px; width:500px; margin:auto; line-height:32px;">Sign up for StuyBooks</a>
+	{% endif %}
 
-          </div>
-        </div>
       </div>
     </div>
   </div>
+</div>
+</div>
 {% endblock %}

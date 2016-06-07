@@ -81,7 +81,8 @@ def login():
 
         if authenticate(email, passwordHash):
             session['email'] = email
-            return redirect(request.args.get('next', url_for('userpage', email=email)))
+            #return redirect(request.args.get('next', url_for('userpage', email=email)))
+            return redirect(url_for('home'))
 
         return render_template('login.html', msg = 'Incorrect email/password combination')
 

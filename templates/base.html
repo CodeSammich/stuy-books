@@ -26,9 +26,9 @@
       <div class="top">
 	<nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="test">
-      {% if 'email' in session %} <!--then to userpage-->
+	    {% if 'email' in session %} <!--then to userpage-->
             <div class="navbar-header">
-              <a class="navbar-brand" href="/buypage"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
+              <a class="navbar-brand" href="/home"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
               <form method="POST" class="navbar-form" role="search">
 		<div class="form-group" style="padding-top:12px;">
 		  <div class="input-group" style="padding-right:15px;">
@@ -53,9 +53,9 @@
 		  <span class="sr-only">Toggle Dropdown</span>
 		</button>
 		<ul class="dropdown-menu" style="width:100%; margin-top:3px;">
-		  <li><a href="#">Settings</a></li>
-		  <li><a href="#">Something</a></li>
-		  <li role="separator" class="divider"></li>
+		  <!--<li><a href="#">Settings</a></li>-->
+		  <!--<li><a href="#">Something</a></li>-->
+		  <!--<li role="separator" class="divider"></li>-->
 		  <li>
 		    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
@@ -71,17 +71,17 @@
 		</ul>
 	  </div>
 	  {% else %}
-	  <a class="navbar-brand" href="/"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
+	  <a class="navbar-brand" href="/home"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
       </div>
       <div class="navbar-header" style="padding-top:12px; float:right; padding-right:15px;">
         <form method="POST" class="navbar-form navbar-right" role="search">
-      <!--    <div class="form-group">
-            <div class="input-group" style="padding-right:15px;">
-              <span class="input-group-btn">
-                <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
-                <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-              </span>
-            </div>
+	  <!--    <div class="form-group">
+		  <div class="input-group" style="padding-right:15px;">
+		    <span class="input-group-btn">
+                      <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
+                      <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+		    </span>
+		  </div>
           </div> -->
           <a class="btn btn-default" href="/login">Sign In</a>
           <a class="btn btn-success" href="/signup">Sign Up</a>
