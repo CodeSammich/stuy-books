@@ -427,19 +427,6 @@ def finish(email, bookName, author, price, condition):
 
     return redirect(url_for('userpage'))
 
-<<<<<<< HEAD
-    sellerEmail = session['email'] + '@stuy.edu'
-    buyerEmail = "samuelzhang3@gmail.com"
-
-    
-    
-    if request.method == 'GET':
-        return render_template('userpage.html', message = '')
-    else:
-        return redirect(url_for('userpage'), render=True)
-=======
->>>>>>> 93b99c22f469f43a99abe87c09800280bb84b10e
-
 @app.route('/bought/<email>/<bookName>/<author>/<price>/<condition>', methods=['GET', 'POST'])
 @requireLogin
 def bought(email, bookName, author, price, condition):
