@@ -55,7 +55,10 @@
 	<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
       </td>
     </tr>
-    <tr><td><button><a href='/finish/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Transaction Complete</a></button><br></td></tr>
+    <tr>
+      <td><button><a href='/cancel/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Cancel Transaction</a></button>
+      <td><button><a href='/finish/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Transaction Complete</a></button><br></td>
+    </tr>
   </table>
   <hr>
   {% endfor %}
