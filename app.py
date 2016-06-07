@@ -305,13 +305,13 @@ def buy():
         return redirect(url_for('search', query=search))
 
 
-@app.route("/itempage/<email>/<bookName>", methods=['GET','POST'])
+@app.route("/itempage/<email>/<bookName>/<author>/<price>/<condition>", methods=['GET','POST'])
 @requireLogin
-def itempage(email, bookName):
+def itempage(email, bookName, author, price, condition):
     if request.method == "GET":
         info = listAll()
         for i in range(len(info)):
-            if email == info[i]['email'] and bookName == info[i]['bookName']:
+            if email == info[i]['email'] and bookName == info[i]['bookName'] and author == info[i]['author'] and price == info[i]['price'] and condition == info[i]['condition']:
                 thisBook = info[i]
                 return render_template("itempage.html", thisBook=thisBook)
     else:
@@ -370,18 +370,14 @@ def search():
         results = searchForBook(search)
         return render_template("search.html", info=results)
 
-@app.route('/finish/<bookName>')
+@app.route('/finish/<email>/<bookName>/<author>/<price>/<condition>')
 @requireLogin
-def finish(bookName):
+def finish(email, bookName, author, price, condition):
     print 'Begin email to both parties to indicate finished transaction'
     bookName = bookName.replace("%20", " ")
-    email = session['email']
-    bookInfo = getBookInfo(bookName, email)
-    print bookInfo
 
     sellerEmail = email + '@stuy.edu'
-    buyerEmail = bookInfo['buyerEmail'] + '@stuy.edu'
-    price = bookInfo['price']
+    buyerEmail = getBuyerEmail(email, bookName, author, price, condition) + '@stuy.edu'
 
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.ehlo()
@@ -426,20 +422,18 @@ def finish(bookName):
 
     s.close()
 
-    finish_transaction(bookName, email)
-    setBuyerEmail(bookName, email, '')
+    setBookStatus(bookName, email, author, price, condition, 'sold')
+    setBuyerEmail(bookName, email, author, price, condition, '')
 
     return redirect(url_for('userpage'))
 
 
-@app.route('/bought', methods=['GET', 'POST'])
-def bought():
+@app.route('/bought/<email>/<bookName>/<author>/<price>/<condition>', methods=['GET', 'POST'])
+def bought(email, bookName, author, price, condition):
     print 'HELLO THIS IS IN THE BOUGHT SECTION'
 
-    sellerEmail = request.args.get('email') + '@stuy.edu'
+    sellerEmail = email + '@stuy.edu'
     buyerEmail = session['email'] + '@stuy.edu'
-    book = request.args.get('bookName')
-    price = request.args.get('price')
 
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.ehlo()
@@ -461,7 +455,7 @@ def bought():
     You can reach the buyer at %s
 
     Yours,
-    Team JASH''' %(book, price, buyerEmail)
+    Team JASH''' %(bookName, price, buyerEmail)
 
     messageS.attach(MIMEText(textS, 'plain'))
     s.sendmail(ourEmail, sellerEmail, messageS.as_string())
@@ -479,28 +473,31 @@ def bought():
     You can contact the seller at %s
 
     Yours,
-    Team JASH''' %(book, price, sellerEmail)
+    Team JASH''' %(bookName, price, sellerEmail)
 
     messageB.attach(MIMEText(textB, 'plain'))
     s.sendmail(ourEmail, buyerEmail, messageB.as_string())
 
     s.close()
 
-    setBookStatus(book, request.args.get('email'), 'pending')
-    setBuyerEmail(book, request.args.get('email'), session['email'])
+    setBookStatus(bookName, email, author, price, condition, 'pending')
+    setBuyerEmail(bookName, email, author, price, condition, session['email'])
 
     return redirect(url_for('userpage'))
 
-@app.route('/cancel/<bookName>')
-def cancel(bookName):
-    setBookStatus(bookName, session['email'], 'available')
-    setBuyerEmail(bookName, session['email'], '')
+@app.route('/cancel/<email>/<bookName>/<author>/<price>/<condition>')
+def cancel(email, bookName, author, price, condition):
+    bookName = bookName.replace('%20', ' ')
+    author = author.replace('%20', ' ')
+    setBookStatus(bookName, session['email'], author, price, condition, 'available')
+    setBuyerEmail(bookName, session['email'], author, price, condition, '')
     return redirect(url_for('userpage'))
 
-@app.route('/remove/<email>/<bookName>/<price>/<condition>')
-def remove(email, bookName, price, condition):
+@app.route('/remove/<email>/<bookName>/<author>/<price>/<condition>')
+def remove(email, bookName, author, price, condition):
     bookName = bookName.replace("%20", " ")
-    deleteAllBooks(email,bookName,price,condition)
+    author = author.replace('%20', ' ')
+    deleteAllBooks(email, bookName, author, price, condition)
     return redirect(url_for('userpage'))
 
 

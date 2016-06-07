@@ -245,12 +245,13 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
         return True
     return False
 
-def deleteAllBooks(email, bookName, price, condition):
+def deleteAllBooks(email, bookName, author, price, condition):
     '''
     Deletes all copies of a book under a seller
     Args:
         email (string)
         bookName (string)
+        author (string)
         price (string)
         condition (string)
     Returns:
@@ -258,7 +259,7 @@ def deleteAllBooks(email, bookName, price, condition):
     '''
     db = client['books-database']
     books = db['books']
-    books.find_one_and_delete({'email': email, 'bookName': bookName, 'price': price, 'condition': condition})
+    books.find_one_and_delete({'email': email, 'bookName': bookName, 'author': author ,'price': price, 'condition': condition})
     return True
 
 """
@@ -378,12 +379,15 @@ def getBookInfo(bookName, email):
             'buyerEmail': results['buyerEmail'],
             }
 
-def setBuyerEmail(bookName, sellerEmail, buyerEmail):
+def setBuyerEmail(bookName, sellerEmail, author, price, condition, buyerEmail):
     '''
     Sets the email for the buyer for a book
     Args:
         bookName (string)
         sellerEmail (string)
+        author (string)
+        price (string)
+        condition (string)
         buyerEmail (string)
     Returns:
         True
@@ -391,18 +395,36 @@ def setBuyerEmail(bookName, sellerEmail, buyerEmail):
     db = client['books-database']
     books = db['books']
     books.find_one_and_update(
-        {'bookName': bookName, 'email': sellerEmail},
+        {'bookName': bookName, 'email': sellerEmail, 'author': author, 'price': price, 'condition': condition},
         {'$set': {'buyerEmail': buyerEmail}}
     )
     return True
 
+def getBuyerEmail(email, bookName, author, price, condition):
+    '''
+    Gets the buyer email for a book
+    Args:
+        email (string)
+        bookName (string)
+        author (sting)
+        price (string)
+        condition (string)
+    Returns:
+        buyerEmail (string)
+    '''
+    db = client['books-database']
+    books = db['books']
+    return books.find_one({'email': email, 'bookName': bookName, 'author': author, 'price': price, 'condition': condition})['buyerEmail']
 
-def setBookStatus(bookName, email, stat):
+def setBookStatus(bookName, email, author, price, condition, stat):
     '''
     Sets the status of a book
     Args:
         bookName (string)
         email (string)
+        author (string)
+        price (string)
+        condition (string)
         stat (string)
     Returns:
         True
@@ -410,7 +432,7 @@ def setBookStatus(bookName, email, stat):
     db = client['books-database']
     books = db['books']
     books.find_one_and_update(
-        {'bookName': bookName, 'email': email},
+        {'bookName': bookName, 'email': email, 'author': author, 'price': price, 'condition': condition},
         {'$set': {'status': stat}}
     )
     return True
@@ -468,20 +490,6 @@ def getSellersForBook(bookName):
     seen = set()
     seenmore = seen.add
     return [x for x in people if not (x in seen or x in seenmore(x))]
-
-def finish_transaction( bookName, email ): #possibly add "counter", for duplicates
-    '''
-    Finishes a transaction from a seller's perspective.
-    Change the book status to sold and email both parties.
-    Seller chooses the buyer to finish transaction from
-    Input:
-        bookName (string)
-        email (string): seller's email
-    Output:
-        True
-    '''
-    setBookStatus( bookName, email, "sold" )
-    return True
 
 # ------------------------ Image Scraping from Google --------------#
 def get_soup(url, header):

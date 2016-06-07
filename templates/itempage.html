@@ -20,7 +20,7 @@
     <td style="text-align:center; background-color:#EEEEEE; border-radius:10px;">
       <span style="font-size:20px;">Price:&nbsp;&nbsp;&nbsp;$ {{thisBook['price']}}</span><br><br><br>
       {% if thisBook['status'] == 'available' %}
-      <form action='/bought?bookName={{thisBook['bookName']}}&email={{thisBook['email']}}&price={{thisBook['price']}}' method='POST'>
+      <form action='/bought/{{thisBook['email']}}/{{thisBook['bookName']}}/{{thisBook['author']}}/{{thisBook['price']}}/{{thisBook['condition']}}' method='POST'>
         <button class="btn btn-success" type='submit'>Buy It Now</button>
       </form>
       {% else %}
