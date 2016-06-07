@@ -268,20 +268,24 @@ def sell():
     if request.method == 'GET':
         return render_template('sell.html')
     else:
-        email = session['email']
-        bookName = request.form['title']
-        author = request.form['author']
-        isbn = request.form['serial']
-        subject = request.form['subject']
-        condition = request.form['condition']
-        price = request.form['price']
+        if request.form['signup'] == "sell":
+            email = session['email']
+            bookName = request.form['title']
+            author = request.form['author']
+            isbn = request.form['serial']
+            subject = request.form['subject']
+            condition = request.form['condition']
+            price = request.form['price']
 
-        is_new = addBook(email, bookName, author, isbn, subject, condition, price)
+            is_new = addBook(email, bookName, author, isbn, subject, condition, price)
 
-        if is_new:
-            return redirect(url_for('userpage'))
-        else:
-            return render_template('sell.html', msg="Book already exists")
+            if is_new:
+                return redirect(url_for('userpage'))
+            else:
+                return render_template('sell.html', msg="Book already exists")
+        elif request.form['signup'] == "search":
+            search = request.form['searchQuery']
+            return redirect(url_for('search', query=search))
 
 @app.route('/buypage', methods=['GET', 'POST'])
 @requireLogin
