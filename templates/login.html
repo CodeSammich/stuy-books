@@ -5,7 +5,55 @@
     <link href="../static/bootstrap.min.css" rel="stylesheet">
     <link rel="shortcut icon" href="../static/logo.png">
     <link rel="stylesheet" type="text/css" href="../static/style.css"/>
+    <link rel="stylesheet" type="text/css" href="../static/bootstrap-social.css"/>
+
     <meta name="google-signin-client_id" content="546971034348-fflcn8cq3l3g5a9od0dnorlbgckrquuo.apps.googleusercontent.com">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet" type="text/css">
+    <script src="https://apis.google.com/js/api:client.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+    <script>
+      var googleUser = {};
+      var startApp = function() {
+      gapi.load('auth2', function(){
+      // Retrieve the singleton for the GoogleAuth library and set up the client.
+      auth2 = gapi.auth2.init({
+      client_id: "546971034348-fflcn8cq3l3g5a9od0dnorlbgckrquuo.apps.googleusercontent.com",
+      cookiepolicy: 'single_host_origin',
+      // Request scopes in addition to 'profile' and 'email'
+      //scope: 'profile email'
+      });
+      attachSignin(document.getElementById('customBtn'));
+      });
+      };
+
+      function attachSignin(element) {
+      console.log(element.id);
+      auth2.attachClickHandler(element, {},
+      function(googleUser) {
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId());
+      console.log('Full Name: ' + profile.getName());
+      console.log('Given Name: ' + profile.getGivenName());
+      console.log('Family Name: ' + profile.getFamilyName());
+      console.log('Image URL: ' + profile.getImageUrl());
+      console.log('Email: ' + profile.getEmail());
+      console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+      name = profile.getName();
+      email = profile.getEmail();
+      
+      $.ajax({
+      type: "GET",
+      url:"/",
+      data:{"name":name,"email":email},
+      success: function(){ window.location.href="/"; },
+      });
+
+      }
+      )};
+
+    </script>
 
   </head>
 
@@ -31,86 +79,103 @@
 	  </form>
 	</div>
 	<br>
-	<div class="gmail">
-	  <p style="font-size: 15px;">Login via Google <a href="login">
-	      Gmail</a></p>
+
+	<!--<div class="gmail">
+	    <a href='forgot'>Forgot your password?</a>
+	    <p style="font-size: 15px;">Login via Google <a href="login">
+		Gmail</a></p>
+	</div>-->
+	<!--div id="my-signin2" onClick="renderButton()"></div>-->
+	<!--<script>
+
+	    function onSuccess(googleUser) {
+	    var profile = googleUser.getBasicProfile();
+	    console.log('ID: ' + profile.getId());
+	    console.log('Full Name: ' + profile.getName());
+	    console.log('Given Name: ' + profile.getGivenName());
+	    console.log('Family Name: ' + profile.getFamilyName());
+	    console.log('Image URL: ' + profile.getImageUrl());
+	    console.log('Email: ' + profile.getEmail());
+	    console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+	    name = profile.getName();
+	    email = profile.getEmail();
+	    if (email.indexOf('@stuy.edu') == -1)
+	    console.log('Error: must use stuy.edu email')
+	    //TODO redirect to login page with email error
+	    //console.log(name);
+	    //console.log(email);
+	    $.ajax({
+	    type: "GET",
+	    url:"/",
+	    data:{"name":name,"email":email},
+	    success: function(){ window.location.href="/"; },
+
+	    });
+
+	    }
+
+	    function onFailure(error) {
+	    console.log(error);
+	    }
+
+	    function renderButton() {
+	    //if ($("#my-signin2").clicked){
+	    gapi.signin2.render('my-signin2', {
+	    'scope': 'profile email',
+	    'width': 240,
+	    'height': 50,
+	    'longtitle': true,
+	    'theme': 'dark',
+	    'onsuccess': onSuccess,
+	    'onfailure': onFailure
+	    });
+	    //};
+	    }
+
+	    </script>-->
+
+	<!-------------------THIS IS THE WHERE THE GOOGLE SIGN IN CODE BEGINS------------------------------------------------------->
+	<!-- In the callback, you would hide the gSignInWrapper element on a
+	     successful sign in -->
+	<div id="gSignInWrapper">
+	  <div id="customBtn" class="customGPlusSignIn">
+	    <!--<span class="icon"></span>-->
+	    <a class="btn btn-block btn-social btn-odnoklassniki">
+	      <span class="fa-google-plus"></span> Sign in with Google
+	    </a>
+	    <!--<span class="buttonText">Sign in with Google</span>-->
+	  </div>
 	</div>
-	<br>
-	<div id="my-signin2" onClick="renderButton()"></div>
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+	<div id="name"></div>
+	<script>startApp();</script>
+	<!-------------------THIS IS WHERE THE GOOGLE SIGN IN BUTTON CODE ENDS------------------------------------------------------>
 
-	<script>
-	  
-	  function onSuccess(googleUser) {
-	  var profile = googleUser.getBasicProfile();
-	  console.log('ID: ' + profile.getId());
-	  console.log('Full Name: ' + profile.getName());
-	  console.log('Given Name: ' + profile.getGivenName());
-	  console.log('Family Name: ' + profile.getFamilyName());
-	  console.log('Image URL: ' + profile.getImageUrl());
-	  console.log('Email: ' + profile.getEmail());
-	  console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-	  name = profile.getName();
-	  email = profile.getEmail();
-	  //console.log(name);
-	  //console.log(email);
-	  $.ajax({
-	  type: "GET",
-	  url:"/login",
-	  data:{"name":name,"email":email}
+	<!--
+	    <script type="text/javascript">
+	      (function() {
+	      var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+	      po.src = 'https://apis.google.com/js/client.js?onload=onLoadCallback';
+	      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+	      })();
+	    </script>
 
-	  });
-	  
-	  }
+	    <script>
 
-	  function onFailure(error) {
-	  console.log(error);
-	  }
+	      function login()
+	      {
+	      var myParams = {
+	      'clientid' : "546971034348-fflcn8cq3l3g5a9od0dnorlbgckrquuo.apps.googleusercontent.com", //You need to set client id
+	      'cookiepolicy' : 'single_host_origin',
+	      'callback' : 'loginCallback', //callback function
+	      'approvalprompt':'force',
+	      'scope' : 'profile email'
+	      };
+	      gapi.auth.signIn(myParams);
+	      }
+	    </script>
+	    -->
 
-	  function renderButton() {
-	  //if ($("#my-signin2").clicked){
-	  gapi.signin2.render('my-signin2', {
-	  'scope': 'profile email',
-	  'width': 240,
-	  'height': 50,
-	  'longtitle': true,
-	  'theme': 'dark',
-	  'onsuccess': onSuccess,
-	  'onfailure': onFailure
-	  });
-	  //};
-	  }
-
-	</script>
-
-
-<!--
-<script type="text/javascript">
-      (function() {
-       var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-       po.src = 'https://apis.google.com/js/client.js?onload=onLoadCallback';
-       var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-     })();
-</script>
-
-<script>
-
-function login() 
-{
-  var myParams = {
-    'clientid' : "546971034348-fflcn8cq3l3g5a9od0dnorlbgckrquuo.apps.googleusercontent.com", //You need to set client id
-    'cookiepolicy' : 'single_host_origin',
-    'callback' : 'loginCallback', //callback function
-    'approvalprompt':'force',
-    'scope' : 'profile email'
-  };
-  gapi.auth.signIn(myParams);
-}
-</script>
--->
-
-
-	<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
+	<!--<script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>-->
 
       </div>
     </div>

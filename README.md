@@ -1,32 +1,40 @@
+### Setup Instructions
+1. Clone the project
+2. Install and run Mongo
+3. Install and run Flask
+4. Make a file named 'password.txt'
+5. Copy and paste the password in the email that we will send you
+
 ### Daily Agenda
 
 ##### Agenda for 6/2/16:
 
 - Frontend/middle: (Everything else is Helen + Sam)
-	- [ ] Redirection from google sign-in
+	- [x] Redirection from google sign-in (update: redirects to "/index")
 	- [ ] Start adding buttons for login pages for
-		- [ ] "Transaction complete",
-		- [ ] "remove book from list",
-		- [ ] "Edit book information"
-	- [ ] book status ( Available, Pending, Sold ),
+		- [x] "Transaction complete",
+		- [x] "Remove book from list",
+		- [x] "Edit book information"
+		- [ ] Prettiness of the buttons above
+	- [x] book status ( Available, Pending, Sold ),
 	- [ ] Prettiness *(Amanda)*
 	- [ ] Tooltip For Signup *(Amanda)*
 	- [ ] When screen is sized down, enabled side scrolling instead *(Amanda)*
 	- [ ] Run properly in Firefox, Chrome, and Safari *(Amanda)*
 - Middleware
-	- [ ] Username properly display on all pages (instead of "Username")
+	- [x] Username properly display on all pages (instead of "Username")
 	- [ ] Books should have different prices, conditions but one entry listed after search
 	 - [ ] One buy page per book with name and seller email
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
-	- [ ] Finish transaction
-	 - [ ] Send email to both client and buyer
+	- [x] Finish transaction
+	 - [x] Send email to both client and buyer
 	- [x] NO REPEAT ENTRIES UNLESS PRICE/CONDITION IS DIFFERENT
 	- [x] All database calls should use name, seller, price and condition
-	- [ ] Edit book information 
+	- [x] Edit book information
 	- [ ] Search Engine Optimization
-	- [ ] Cancel Transaction (same mechanism as Finish)
-	
+	- [x] Cancel Transaction (same mechanism as Finish)
+
  - [ ] User frees information
 
 - **if possible**: "books bought/sold" database for buyers/sellers

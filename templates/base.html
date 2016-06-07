@@ -25,8 +25,8 @@
       <div class="top">
 	<nav class="navbar navbar-default navbar-fixed-top">
 	  <div class="test">
+      {% if 'email' in session %} <!--then to userpage-->
             <div class="navbar-header">
-              {% if 'logged' in session and session["logged"]>0 %} <!--then to userpage-->
               <a class="navbar-brand" href="/buypage"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
               <form method="POST" class="navbar-form" role="search">
 		<div class="form-group" style="padding-top:12px;">
@@ -46,7 +46,7 @@
               <li class="in"><a href="/buypage">ALL LISTINGS</a></li>
               <li class="in" style="padding-right:10px;"><a href="/sell">SELL</a></li>
               <li class="btn-group" style="padding-top:5px;">
-		<button type="button" class="btn btn-default" style="width:150px;height:40px;"><a href="/userpage" style="color:#555;text-decoration:none;">Username</a></button>
+		<button type="button" class="btn btn-default" style="width:150px;height:40px;"><a href="/userpage" style="color:#555;text-decoration:none;">{{session['email']}}</a></button>
 		<button type="button" class="btn btn-default dropdown-toggle" style="height:40px;"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  <span class="caret"></span>
 		  <span class="sr-only">Toggle Dropdown</span>
@@ -74,14 +74,14 @@
       </div>
       <div class="navbar-header" style="padding-top:12px; float:right; padding-right:15px;">
         <form method="POST" class="navbar-form navbar-right" role="search">
-          <div class="form-group">
+      <!--    <div class="form-group">
             <div class="input-group" style="padding-right:15px;">
               <span class="input-group-btn">
                 <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
                 <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
               </span>
             </div>
-          </div>
+          </div> -->
           <a class="btn btn-default" href="/login">Sign In</a>
           <a class="btn btn-success" href="/signup">Sign Up</a>
         </form>
