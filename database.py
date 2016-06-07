@@ -229,7 +229,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
     books = db['books']
 
     image_url = get_image_url( bookName + author + isbn )
-    results = books.find_one({'email': email, 'bookName':bookName, 'price': price, 'condition': condition})
+    results = books.find_one({'email': email, 'bookName':bookName, 'author': author, 'price': price, 'condition': condition})
     if results == None:
         books.insert_one({'email':email,
                           'bookName': bookName,
@@ -303,7 +303,6 @@ def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, p
     '''
     db = client['books-database']
     books = db['books']
-    #TODO find a way to make this more efficient T.T
     if bookName.strip() != '':
         books.find_one_and_update(
             {'email': email, 'bookName': oldName},

@@ -268,8 +268,6 @@ def sell():
     if request.method == 'GET':
         return render_template('sell.html')
     else:
-        #TODO make the form save and add required fields
-        #form = request.form
         email = session['email']
         bookName = request.form['title']
         author = request.form['author']
