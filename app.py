@@ -259,6 +259,10 @@ def finish():
     print 'Begin email to both parties to indicate finished transaction'
 
     sellerEmail = session['email'] + '@stuy.edu'
+    buyerEmail = "samuelzhang3@gmail.com"
+
+    
+    
     if request.method == 'GET':
         return render_template('userpage.html', message = '')
     else:

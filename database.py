@@ -35,7 +35,7 @@ def addUser(email, passwordHash, status=0):
     accounts = db['accounts']
 
     if 'accounts-database' not in dbnames: #init database and collection
-        print 'database initialized'
+>        print 'database initialized'
         dummy_pass = "dummy_pass" #may need to be more secure
         init_account = {
             'email': 'dummy_email@stuy.edu',
