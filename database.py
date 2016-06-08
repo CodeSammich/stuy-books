@@ -629,4 +629,7 @@ def searchForBook(query):
                 results.append( b )
                 #break; #goes to next book
 
+    for i in results:
+        if i['status'] != 'available':            
+            results.pop( results.index(i) )
     return results

@@ -421,7 +421,7 @@ def finish(email, bookName, author, price, condition):
     Yours,
     Team JASH''' %(bookName, price, ourEmail)
 
-    messageS.attach(MIMEText(textB, 'plain'))
+    messageB.attach(MIMEText(textB, 'plain'))
     s.sendmail(ourEmail, buyerEmail, messageB.as_string())
 
     s.close()
