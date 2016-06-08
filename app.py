@@ -124,7 +124,7 @@ def signup():
             message['To'] = email + '@stuy.edu'
 
             text = '''
-            To whom it may concern,
+            Hello,
 
             Thanks for signing up with StuyBooks!
             Click on this link to activate your account: %s
@@ -349,7 +349,7 @@ def edit(bookName):
         condition = request.form['condition']
         price = request.form['price']
         image_url = get_image_url( title + author + isbn )
-        
+
         updateBookInfo(bookName ,email, title, author, isbn, subject, condition, price, image_url)
         #return render_template('edit.html')
         return redirect(url_for('userpage'))
@@ -417,7 +417,7 @@ def finish(email, bookName, author, price, condition):
     textB = '''
     Hello,
 
-    Our records indicate that you have bought %s for %s. The seller has confirmed that have received the book.
+    Our records indicate that you have bought %s for $%s. The seller has confirmed that you have received the book.
     If you have not received your book contact us immediately at %s
 
     Yours,
@@ -454,13 +454,13 @@ def bought(email, bookName, author, price, condition):
     messageS['To'] = sellerEmail
 
     textS = '''
-    To whom it may concern,
+    Hello,
 
     You have listed the book %s for sale for $%s. We are pleased to say that
     someone has seen the offer and will gladly meet up with you to purchase the book.
 
     Feel free to reach out to the buyer at %s to set up a convenient meeting location.
-    
+
     If you are unsure as to an appropriate meeting spot, here are a few recommendations:
     The Senior Bar/Atrium (2nd Floor)
     Bridge Entrance (2nd Floor)
@@ -481,12 +481,12 @@ def bought(email, bookName, author, price, condition):
     messageB['To'] = buyerEmail
 
     textB = '''
-    To whom it may concern,
+    Hello,
 
     You have indicated that you want to buy the book %s for $%s.
 
     Feel free to reach out to the seller at %s to set up a convenient meeting location.
-    
+
     If you are unsure as to an appropriate meeting spot, here are a few recommendations:
 
     The Senior Bar/Atrium (2nd Floor)
@@ -529,7 +529,7 @@ def cancel(email, bookName, author, price, condition):
     message['To'] = session['email'] + '@stuy.edu'
 
     text = '''
-    To whom it may concern,
+    Hello,
 
     You indicated that you wanted %s for $%s. The seller has canceled this transaction.
     If this is a mistake you can contact the seller at %s.
