@@ -130,6 +130,8 @@ def signup():
             Click on this link to activate your account: %s
             If you did not register for StuyBooks, contact us at %s
 
+            Disclaimer: Stuy-books is a platform to meet and trade with other students. Stuy-books and associates are not liable for any damages, infringements, or other inappropriate usage of our service. Please be respectful of others. Any violation of school regulation can and will be reported to the administration. Thank you.
+
             Sincerely,
             Team JASH''' %(activateLink , ourEmail)
             #Attaches the message
