@@ -286,7 +286,7 @@ def deleteSingleBook(email, bookName):
     return True
 """
 
-def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, price):
+def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, price, image_url):
     '''
     Updates the book in the database for a book owned by a user (note neither the owner nor the title are changed)
     Args:
@@ -298,6 +298,7 @@ def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, p
         subject (string)
         condition (string)
         price (string)
+        image_url (string)
     Returns:
         True
     '''
@@ -332,6 +333,11 @@ def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, p
         books.find_one_and_update(
             {'email': email, 'bookName': oldName},
             {'$set': {'price': price}}
+        )
+    if image_url.strip() != '':
+        books.find_one_and_update(
+            {'email': email, 'bookName': oldName},
+            {'$set': {'image_url': image_url }}
         )
     return True
 

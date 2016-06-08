@@ -346,8 +346,9 @@ def edit(bookName):
         subject = request.form['subject']
         condition = request.form['condition']
         price = request.form['price']
-
-        updateBookInfo(bookName ,email, title, author, isbn, subject, condition, price)
+        image_url = get_image_url( title + author + isbn )
+        
+        updateBookInfo(bookName ,email, title, author, isbn, subject, condition, price, image_url)
         #return render_template('edit.html')
         return redirect(url_for('userpage'))
 
