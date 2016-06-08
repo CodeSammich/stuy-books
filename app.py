@@ -283,7 +283,7 @@ def sell():
             if is_new:
                 return redirect(url_for('userpage'))
             else:
-                return render_template('sell.html', msg="Book already exists")
+                return render_template('sell2.html', bookName=bookName, author=author, isbn=isbn, subject=subject, condition=condition, price=price, msg="Book already exists")
         elif request.form['signup'] == "search":
             search = request.form['searchQuery']
             return redirect(url_for('search', query=search))
