@@ -59,7 +59,7 @@ p {
 
 /*  BASE.HTML  */
 .navbar {
-  height: 75px;
+  min-height: 75px;
 }
 
 .navbar-header {
@@ -204,7 +204,7 @@ table, tr, td {
 
 /*  USERPAGE.HTML  */
 .userpage {
-  margin-top: 75px;
+  margin-top: 40px;
   color:black;
 }
 

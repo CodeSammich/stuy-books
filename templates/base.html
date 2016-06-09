@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     @import url(https://fonts.googleapis.com/css?family=Roboto);
-    
+
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +11,7 @@
     <!-- Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <!-- Bootstrap for select drop-down menus-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
@@ -25,28 +25,37 @@
     <body>
       <div class="top">
 	<nav class="navbar navbar-default navbar-fixed-top">
-	  <div class="test">
+    <div class="container-fluid">
+    <div class="navbar-header">
+
 	    {% if 'email' in session %} <!--then to userpage-->
-            <div class="navbar-header">
-              <a class="navbar-brand" href="/home"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
-              <form method="POST" class="navbar-form" role="search">
-		<div class="form-group" style="padding-top:12px;">
-		  <div class="input-group" style="padding-right:15px;">
-                    <span class="input-group-btn">
-                      <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
-                      <button class="btn btn-default" type="submit" name="signup" value="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
-		    </span>
-		  </div>
-		</div>
-              </form>
-            </div>
-            <!--<div class="navbar-header" style="padding-top:12px; float:right; padding-right:25px;">
-		<a class='btn btn-primary btn-lg' href='/buypage' style='width:160px;'>ALL BOOKS</a>&nbsp;&nbsp;&nbsp;
-		<a class="btn btn-primary btn-lg" href="/sell" style="width:90px;">SELL</a>&nbsp;&nbsp;&nbsp;-->
-            <ul class="nav navbar-nav navbar-right" style="padding-top:12px;padding-right:50px;">
-              <li class="in"><a href="/buypage">ALL LISTINGS</a></li>
-              <li class="in" style="padding-right:10px;"><a href="/sell">SELL</a></li>
-              <li class="btn-group" style="padding-top:5px;">
+      <a class="navbar-brand" href="/home"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
+      <form method="POST" class="navbar-form" role="search" style="position:absolute;left:75px; top:12px;">
+		      <div class="form-group">
+		        <div class="input-group">
+              <span class="input-group-btn">
+                <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
+                <button class="btn btn-default" type="submit" name="signup" value="search"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+              </span>
+		        </div>
+		      </div>
+      </form>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse" style="position:absolute; right:10px; top:12px;">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+    </div>
+    <div class="collapse navbar-collapse" >
+        <ul class="nav navbar-nav navbar-right" style="padding-top:12px; padding-right:20px;">
+          <li class="in"><a href="/buypage">ALL LISTINGS</a></li>
+          <li class="in"><a href="/sell">SELL</a></li>
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="/userpage">{{session['email']}}&nbsp;&nbsp;<span class="caret"></span></a>
+            <ul class="dropdown-menu">
+            <!--<li class="in"><a href="/buypage">ALL LISTINGS</a></li>
+            <li class="in" style="padding-right:10px;"><a href="/sell">SELL</a></li>
+            <li class="btn-group" style="padding-top:5px;">
 		<button type="button" class="btn btn-default" style="width:150px;height:40px;"><a href="/userpage" style="color:#555;text-decoration:none;">{{session['email']}}</a></button>
 		<button type="button" class="btn btn-default dropdown-toggle" style="height:40px;"data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 		  <span class="caret"></span>
@@ -56,10 +65,12 @@
 		  <!--<li><a href="#">Settings</a></li>-->
 		  <!--<li><a href="#">Something</a></li>-->
 		  <!--<li role="separator" class="divider"></li>-->
+      <li style="text-align:center;"><a href="/userpage">MY ACTIVITY</a></li>
+      <li role="separator" class="divider"></li>
 		  <li>
 		    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
-		    <a href="/logout" onclick="signOut();">Sign out</a>
+		    <a href="/logout" onclick="signOut();" style="text-align:center;"><span class="glyphicon glyphicon-log-in">&nbsp;<span style="font-family:'Roboto', sans-serif;">Sign&nbsp;out</a>
 		    <script>
 		      function signOut() {
 		      var auth2 = gapi.auth2.getAuthInstance();
@@ -69,29 +80,29 @@
 		      }
 		  </script></li>
 		</ul>
-	  </div>
+  </div>
+  </div>
+</nav>
 	  {% else %}
-	  <a class="navbar-brand" href="/home"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
+      <a class="navbar-brand" href="/home"><img id="logo" class="smalllogo" src="{{ url_for('static', filename='logo.png') }}" height="45"></a>
       </div>
-      <div class="navbar-header" style="padding-top:12px; float:right; padding-right:15px;">
-        <form method="POST" class="navbar-form navbar-right" role="search">
-	  <!--    <div class="form-group">
+      <div class="nav navbar-nav navbar-right">
+
+	  <!--
+    <form method="POST" class="navbar-form navbar-right" role="search">
+    <div class="form-group">
 		  <div class="input-group" style="padding-right:15px;">
 		    <span class="input-group-btn">
                       <input type="text" class="form-control" name="searchQuery" placeholder="Search StuyBooks" style="width:250px;">
                       <button class="btn btn-default" type="submit"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
 		    </span>
 		  </div>
-          </div> -->
-          <a class="btn btn-default" href="/login">Sign In</a>
-          <a class="btn btn-success" href="/signup">Sign Up</a>
-        </form>
+          </div> </form>-->
+          <a class="btn btn-default" href="/login" style="position:absolute;top:20px;right:110px;">Sign In</a>
+          <a class="btn btn-success" href="/signup" style="position:absolute;top:20px;right:20px;">Sign Up</a>
       </div>
+    </nav>
       {% endif %}
-</div>
-</nav>
-</div>
-</div>
 <div class="container">
   {% block contents %}{% endblock %}
 </div>
