@@ -47,11 +47,11 @@
       </button>
     </div>
     <div class="collapse navbar-collapse" >
-        <ul class="nav navbar-nav navbar-right" style="padding-top:12px;">
+        <ul class="nav navbar-nav navbar-right" style="padding-top:12px; padding-right:20px;">
           <li class="in"><a href="/buypage">ALL LISTINGS</a></li>
           <li class="in"><a href="/sell">SELL</a></li>
           <li class="dropdown">
-            <a class="dropdown-toggle" data-toggle="dropdown" href="/userpage">{{session['email']}}<span class="caret"></span></a>
+            <a class="dropdown-toggle" data-toggle="dropdown" href="/userpage">{{session['email']}}&nbsp;&nbsp;<span class="caret"></span></a>
             <ul class="dropdown-menu">
             <!--<li class="in"><a href="/buypage">ALL LISTINGS</a></li>
             <li class="in" style="padding-right:10px;"><a href="/sell">SELL</a></li>
@@ -65,6 +65,8 @@
 		  <!--<li><a href="#">Settings</a></li>-->
 		  <!--<li><a href="#">Something</a></li>-->
 		  <!--<li role="separator" class="divider"></li>-->
+      <li style="text-align:center;"><a href="/userpage">MY ACTIVITY</a></li>
+      <li role="separator" class="divider"></li>
 		  <li>
 		    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>
 
