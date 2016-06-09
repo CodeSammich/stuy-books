@@ -59,7 +59,7 @@ p {
 
 /*  BASE.HTML  */
 .navbar {
-  height: 75px;
+  min-height: 75px;
 }
 
 .navbar-header {

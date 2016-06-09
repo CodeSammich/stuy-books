@@ -42,7 +42,7 @@
       console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
       name = profile.getName();
       email = profile.getEmail();
-      
+
       $.ajax({
       type: "GET",
       url:"/",
@@ -69,6 +69,7 @@
 	  <!--<button class="btn btn-default" type="button" id="emailLogin">Log in via Gmail</button><br><br>-->
 
 	  <form name="login" method="POST">
+
 	    <p class="alert alert-danger">{{msg}}</p><br>
 	    Email<br><div class="input-group">
               <input name='email' type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon2">
