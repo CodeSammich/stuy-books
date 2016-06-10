@@ -44,13 +44,13 @@ def home():
             name = request.args.get('name')
             email = request.args.get('email')
 
-            #strip the @stuy.edu part
-            email = email[:-9]
-            session['email'] = email
-            print "boo**********\n"
-            return render_template("index.html")
-        #elif "email" in session:
-            #return redirect(url_for("userpage"))
+            if email[-9:] == "@stuy.edu":
+                #strip the @stuy.edu part
+                email = email[:-9]
+                session['email'] = email
+                return render_template("index.html")
+            else:
+                return redirect(url_for('login', msg="Email is not valid. Please use a stuy.edu email."))
         else:
             return render_template("index.html")
     else:
@@ -65,7 +65,11 @@ def home():
 @app.route("/login", methods=["GET","POST"])
 def login():
     if request.method == "GET":
-        return render_template("login.html")
+        if request.args.get("msg") == None:
+            return render_template("login.html")
+        else:
+            msg=request.args.get("msg")
+            return render_template("login.html", msg=msg)
     else:
         email = request.form['email']
         pword = request.form['pword']
@@ -129,6 +133,8 @@ def signup():
             Thanks for signing up with StuyBooks!
             Click on this link to activate your account: %s
             If you did not register for StuyBooks, contact us at %s
+
+            Disclaimer: Stuy-books is a platform to meet and trade with other students. Stuy-books and associates are not liable for any damages, infringements, or other inappropriate usage of our service. Please be respectful of others. Any violation of school regulation can and will be reported to the administration. Thank you.
 
             Sincerely,
             Team JASH''' %(activateLink , ourEmail)

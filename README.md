@@ -5,6 +5,14 @@
 4. Download the "password.txt" file that we will email you, and place it in the root of the repository
 5. Use the Google OAuth Client Key that we will email you in the indicated places in "base.html" (line 23) and "login.html" (line 10 and line 22)
 
+### The Team!
+
+|                                       |   **Member**   |                   **GitHub**                 |            **Role**            |
+|---------------------------------------|:--------------:|:--------------------------------------------:|:------------------------------:|
+| <img src="images/amanda.jpg" width="100" height="100" /> | Amanda Chiu   |[`@amandalchiu`](https://github.com/amandalchiu)        | Frontend |
+| <img src="images/helen.jpg" width="100" height="100" /> | Helen Li   |[`@lihelennn`](https://github.com/lihelennn)        | Middleware / API-Handler  |
+| <img src="images/samuel.jpg" width="100" height="100" /> | Samuel Zhang |[`@CodeSammich`](https://github.com/CodeSammich)    | Middleware/Backend - Leader  |
+| <img src="images/jeff.jpg" width="100" height="100" /> | Jeffrey Zou    |[`@JeffreyZou13`](https://github.com/JeffreyZou13)| Backend |
 
 ### Daily Agenda
 
@@ -12,20 +20,20 @@
 
 - Frontend/middle: (Everything else is Helen + Sam)
 	- [x] Redirection from google sign-in (update: redirects to "/index")
-	- [ ] Start adding buttons for login pages for
+	- [x] Start adding buttons for login pages for
 		- [x] "Transaction complete",
 		- [x] "Remove book from list",
 		- [x] "Edit book information"
 		- [x] Prettiness of the buttons above
 	- [x] book status ( Available, Pending, Sold ),
 	- [x] Prettiness *(Amanda)*
-	- [ ] Tooltip For Signup *(Amanda)*
-	- [ ] When screen is sized down, enabled side scrolling instead *(Amanda)*
+	- [x] Tooltip For Signup *(Amanda)*
+	- [x] When screen is sized down, enabled side scrolling instead *(Amanda)*
 	- [x] Run properly in Firefox, Chrome, and Safari *(Amanda)*
 - Middleware
 	- [x] Username properly display on all pages (instead of "Username")
-	- [ ] Books should have different prices, conditions but one entry listed after search
-	 - [ ] One buy page per book with name and seller email
+	- [x] Books should have different prices, conditions but one entry listed after search
+	 - [x] One buy page per book with name and seller email
 - Backend:
 	- [x] Email both parties after "buy button" + books status in book object,
 	- [x] Finish transaction
@@ -36,9 +44,7 @@
 	- [x] Search Engine Optimization
 	- [x] Cancel Transaction (same mechanism as Finish)
 
- - [ ] User frees information
-
-- **if possible**: "books bought/sold" database for buyers/sellers
+ - [x] User frees information
 
 > Remember, each user is both a buyer AND a seller.
 
@@ -49,14 +55,6 @@
 Book marketplace for Stuyvesant High School
 
 > "I would like to have a marketplace for students to buy and sell books, which I understand students currently do through the 'Facebooks' and the 'tweets'. If I were a student, I would not just like to find a book, but for a book of mine to be recognized."
-
-## Members
-| Name        | Github           |
-| ------------- |:-------------:|
-| Amanda Chiu  | [amandalchiu](https://github.com/amandalchiu)           |
-| Helen Li    | [lihelennn](https://github.com/lihelennn)      |
-| Samuel Zhang |[CodeSammich](https://github.com/CodeSammich)  |
-| Jeffrey Zou |[JeffreyZou13](https://github.com/JeffreyZou13) |
 
 ### Original Plans + Ideas
 - Serial number, verify the actual book manually previously
@@ -107,6 +105,13 @@ Book marketplace for Stuyvesant High School
 - Message to the users about proper beheavior
 
 ### Dev-log
+
+##### 6/09/2016
+- Google signin redirects and only works when button is clicked.
+- Only stuy.edu emails can sign up and log in.
+- Different pages (such as search, remove, edit, etc.) added and prettified.
+- GO TEAM JASH!
+
 ##### 5/31/16
 - Google Signin works -- needs to redirect
 - Search engine fixed -- needs to be optimized

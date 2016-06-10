@@ -43,12 +43,21 @@
       name = profile.getName();
       email = profile.getEmail();
 
+      if (email.substring(email.length-9,email.length) == "@stuy.edu"){
       $.ajax({
       type: "GET",
       url:"/",
       data:{"name":name,"email":email},
       success: function(){ window.location.href="/"; },
       });
+      }else{
+      $.ajax({
+      type: "GET",
+      url:"/login",
+      data:{"msg":"Invalid email address used. Please log in with your stuy.edu email address."},
+      success: function(){ window.location.href="/login?msg=Invalid+email+address+used.+Please+use+a+stuy.edu+email+address."; } ,
+      });
+      }
 
       }
       )};
@@ -61,7 +70,7 @@
     <div class="container-login">
       <div class="login">
 	<div>
-	  <img class="logo" src="{{ url_for('static', filename='logo.png') }}" height="65"><br><br>
+	  <a href="/index"><img class="logo" src="{{ url_for('static', filename='logo.png') }}" height="65"></a><br><br>
 	  <h1>Sign in to StuyBooks</h1>
 	</div>
 	<br>
