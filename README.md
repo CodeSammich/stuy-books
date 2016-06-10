@@ -1,4 +1,4 @@
-### Live Link
+### Live Link Deployed at StuyCS.org
 http://stuybooks.stuycs.org
 
 ### Setup Instructions
