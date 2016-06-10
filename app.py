@@ -93,7 +93,7 @@ def signup():
     else:
         email = request.form['email']
         pword = request.form['pword']
-        
+
         if email == '' or email.find('@') != -1:
             return render_template('signup.html', msg = 'Please enter your stuy.edu email')
         if len(pword) < 8:
@@ -109,7 +109,7 @@ def signup():
 
             user = getUser(email)
             data = urlencode({'email': user['email'], '_id': user['_id']})
-            activateLink = 'http://localhost:8000/activate?%s' %(data)
+            activateLink = 'http://stuybooks.stuycs.org/activate?%s' %(data)
 
             s = smtplib.SMTP('smtp.gmail.com', 587)
             s.ehlo()
@@ -160,7 +160,7 @@ def forgot():
         setReset(email, randomGen)
 
         data = urlencode(randomGen)
-        link = 'http://localhost:8000/change?reset=%s' %(data)
+        link = 'http://stuybooks.stuycs.org/change?reset=%s' %(data)
 
         s = smtplib.SMTP('smtp.gmail.com', 587)
         s.ehlo()
