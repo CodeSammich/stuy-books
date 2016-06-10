@@ -1,3 +1,5 @@
+#This is the main file that runs the app
+
 from flask import Flask, render_template, url_for, session, request, redirect
 from database import *
 from functools import wraps
@@ -6,30 +8,18 @@ from uuid import uuid4
 from urllib import urlencode
 from email.mime.multipart import MIMEMultipart
 from email.MIMEText import MIMEText
-from os import urandom
 import os
 import smtplib
 
 app = Flask(__name__)
 
-# base directory for stuy-books 
+# base directory for stuy-books
 home_dir = os.path.dirname(__file__)
 
 ourEmail = 'stuybooks.JASH@gmail.com'
 ourPassword = open( home_dir + 'password.txt', 'r').read()[:-1]
 
-"""
-def requireLogin(f):
-    @wraps(f)
-    def dec(*args):
-        if session('email') is not None:
-            return f(*args)
-        else:
-
-            return render_template('login.html', msg = 'You must login to view the page')
-    return dec
-"""
-
+#Wrapper function put before routes that require user to log in
 def requireLogin(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
@@ -62,11 +52,6 @@ def home():
             return render_template("index.html")
     else:
         search = request.form['searchQuery']
-        #print search
-        #results = searchForBook(search)
-        #print results
-        #session['results'] = results
-        #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
 
 @app.route("/login", methods=["GET","POST"])
@@ -92,7 +77,6 @@ def login():
 
         if authenticate(email, passwordHash):
             session['email'] = email
-            #return redirect(request.args.get('next', url_for('userpage', email=email)))
             return redirect(url_for('home'))
 
         return render_template('login.html', msg = 'Incorrect email/password combination')
@@ -109,8 +93,6 @@ def signup():
             return render_template('signup.html', msg = 'Please enter your stuy.edu email')
         if len(pword) < 8:
             return render_template('signup.html', msg = 'Please enter a password that is at least 8 characters long')
-        #if pword != confirm:
-            #return render_template('signup.html', msg = 'Password does not match the confirm password')
         m = sha256()
         m.update(pword)
         passwordHash = m.hexdigest()
@@ -147,13 +129,11 @@ def signup():
             Team JASH''' %(activateLink , ourEmail)
             #Attaches the message
             message.attach(MIMEText(text, 'plain'))
-            #print message.as_string()
 
             s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
             s.close()
 
             return render_template('signup.html', msg = "A confirmation email has been sent to " + email + '@stuy.edu')
-#            return redirect(url_for('home'))
 
         return render_template('signup.html', msg = message)
 
@@ -169,7 +149,7 @@ def forgot():
         if getUser(email) == None:
             return render_template('forgot.html', msg = 'That is an invalid email!')
 
-        randomGen = urandom(64).encode('base-64') #just for something random
+        randomGen = os.urandom(64).encode('base-64') #just for something random
         setReset(email, randomGen)
 
         data = urlencode(randomGen)
@@ -240,7 +220,6 @@ def activate():
         if getStatus(email):
             return redirect(url_for('home'))
         updateStatus(email)
-        print getStatus(email)
         return render_template('activate.html')
     return redirect(url_for('home'))
 
@@ -249,8 +228,6 @@ def activate():
 def userpage():
     if request.method == "GET":
         email = session.get('email', None)
-        #if email == None:
-            #return redirect(url_for('login'), msg = 'You must log in first!')
         info = listBooksForUser(email)
         i = 0
         available=[]
@@ -264,16 +241,9 @@ def userpage():
             else:
                 sold.append(info[i])
             i+=1
-        print available
         return render_template("userpage.html", info=info, available=available, pending=pending, sold=sold)
     else:
-        print "hello"
         search = request.form['searchQuery']
-        #print search
-        #results = searchForBook(search)
-        #print results
-        #session['results'] = results
-        #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
     return redirect(url_for('sell'))
 
@@ -314,11 +284,6 @@ def buy():
         return render_template('buypage.html', info=actualones)
     else:
         search = request.form['searchQuery']
-        #print search
-        #results = searchForBook(search)
-        #print results
-        #session['results'] = results
-        #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
 
 
@@ -333,11 +298,6 @@ def itempage(email, bookName, author, price, condition):
                 return render_template("itempage.html", thisBook=thisBook)
     else:
         search = request.form['searchQuery']
-        #print search
-        #results = searchForBook(search)
-        #print results
-        #session['results'] = results
-        #return render_template("search.html", info=results)
         return redirect(url_for('search', query=search))
 
 @app.route('/edit/<bookName>', methods=['GET', 'POST'])
@@ -345,10 +305,8 @@ def itempage(email, bookName, author, price, condition):
 def edit(bookName):
     if request.method == 'GET':
         bookName = bookName.replace("%20", " ")
-        print bookName
         email = session['email']
         bookInfo = getBookInfo(bookName, email)
-        print bookInfo
         if bookInfo == None:
             return redirect(url_for('userpage'), msg = 'You can only edit a book that you own.')
         return render_template('edit.html', bookInfo=bookInfo)
@@ -363,25 +321,13 @@ def edit(bookName):
         image_url = get_image_url( title + author + isbn )
 
         updateBookInfo(bookName ,email, title, author, isbn, subject, condition, price, image_url)
-        #return render_template('edit.html')
         return redirect(url_for('userpage'))
-
-
-'''
-def autocomplete():
-@app.route('/search', methods=['GET','POST'])
-'''
 
 @app.route('/search', methods=["GET","POST"])
 @requireLogin
 def search():
     if request.method=="POST":
         search = request.form['searchQuery']
-        #print search
-        #results = searchForBook(search)
-        #print results
-        #session['results'] = results
-        #return render_template("search.html", info=results)getBookInfogetBookInfo
         return redirect(url_for('search', query=search))
     else:
         search = request.args.get("query")
@@ -391,7 +337,6 @@ def search():
 @app.route('/finish/<email>/<bookName>/<author>/<price>/<condition>')
 @requireLogin
 def finish(email, bookName, author, price, condition):
-    print 'Begin email to both parties to indicate finished transaction'
     bookName = bookName.replace("%20", " ")
 
     sellerEmail = email + '@stuy.edu'
@@ -448,7 +393,6 @@ def finish(email, bookName, author, price, condition):
 @app.route('/bought/<email>/<bookName>/<author>/<price>/<condition>', methods=['GET', 'POST'])
 @requireLogin
 def bought(email, bookName, author, price, condition):
-    print 'HELLO THIS IS IN THE BOUGHT SECTION'
 
     sellerEmail = email + '@stuy.edu'
     buyerEmail = session['email'] + '@stuy.edu'
@@ -573,5 +517,4 @@ def logout():
 
 if __name__ == "__main__":
     app.secret_key = str(uuid4())
-    #    app.debug = True
-    app.run()#'0.0.0.0',port=8000)
+    app.run()

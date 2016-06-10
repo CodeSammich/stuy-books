@@ -2,7 +2,6 @@
 # Description: Deals with the database (if that wasn't obvious)
 
 from pymongo import MongoClient
-#import gridfs
 
 # Google Image
 from bs4 import BeautifulSoup
@@ -14,9 +13,7 @@ client = MongoClient()
 #### Data is stored in databases, under which are collections.
 #### Ex. "accounts-database" is a database, and "accounts" is the collection
 #### "accounts" contains all the "Documents" that have each user's information
-
-def replaceApostrophe(s):
-    return s.replace("'", '&#8217')
+#### Databases: accounts-database, books-database
 
 #------------------------- Setup User -------------------------#
 def addUser(email, passwordHash, status=0, reset=''):
@@ -36,7 +33,6 @@ def addUser(email, passwordHash, status=0, reset=''):
     accounts = db['accounts']
 
     if 'accounts-database' not in dbnames: #init database and collection
-        print 'database initialized'
         dummy_pass = "dummy_pass" #may need to be more secure
         init_account = {
             'email': 'dummy_email@stuy.edu',
@@ -50,16 +46,13 @@ def addUser(email, passwordHash, status=0, reset=''):
     if user_account != None:
         return 'An account has already been registered under this email'
     accounts.insert_one({
-        'email': replaceApostrophe(email.replace('@stuy.edu', '')),
+        'email': email,
         'passwordHash': passwordHash,
         'status': 0,
         'reset': ''
         #'first': first,
         #'last': last
     })
-
-#    user_account = accounts.find_one( {'email': email})
-#    print user_account['email']
     return ''
 
 def getUser(email):
@@ -88,8 +81,6 @@ def getStatus(email):
     results = accounts.find_one({'email': email})
     if results == None:
         return False
-    print "not none"
-    print results
     if results['status'] == 0:
         return False
     return True
@@ -108,8 +99,6 @@ def updateStatus(email):
         {'email': email},
         {'$set': {'status': 1}}
     )
-    for r in accounts.find({}):
-        print r['email']
     return True
 
 def authenticate(email, passwordHash):
@@ -261,30 +250,6 @@ def deleteAllBooks(email, bookName, author, price, condition):
     books = db['books']
     books.find_one_and_delete({'email': email, 'bookName': bookName, 'author': author ,'price': price, 'condition': condition})
     return True
-
-"""
-def deleteSingleBook(email, bookName):
-    '''
-    Deletes only one copy of a book for a seller
-    DO NOT CALL UNLESS YOU ARE SURE THERE IS AT LEAST ONE BOOK
-    Args:
-        email (string)
-        bookName (string)
-    Returns:
-        True
-    '''
-    db = client['books-database']
-    books = db['books']
-    results = books.find_one({'email': email, 'bookName': bookName})
-    if results['quantity'] == 1:
-        books.delete_one({'email': email, 'bookName': bookName})
-    else:
-        books.find_one_and_update(
-            {'email': email, 'bookName': bookName},
-            {'$inc': {'quantity': -1}}
-        )
-    return True
-"""
 
 def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, price, image_url):
     '''
@@ -441,40 +406,6 @@ def setBookStatus(bookName, email, author, price, condition, stat):
         {'$set': {'status': stat}}
     )
     return True
-"""
-def addBuyerEmail(bookName, sellerEmail, buyerEmail):
-    '''
-    Add a buyer to the books
-    Args:
-        bookName (strings)
-        sellerEmail (string)
-        buyerEmail (string)
-    Returns:
-        True
-    '''
-    db = client['books-database']
-    books = db['books']
-    results = find_one({'email': sellerEmail, 'bookName': bookName})
-    books.find_one_and_update(
-        {'email': sellerEmail,'bookName': bookName},
-        {'$set': {'buyerEmails': results['buyerEmails'].append(buyerEmail)}}
-    )
-    return True
-
-def getCount(bookName, email):
-    '''
-    Gets the # of books available for a user
-    Args:
-        bookName (String)
-        email (String)
-    Returns
-        # of books
-    '''
-    db = client['books-database']
-    books = db['books']
-    results = books.find_one({'email':email, 'bookName':bookName})
-    return results['quantity'] or 0
-"""
 
 def getSellersForBook(bookName):
     '''
@@ -519,7 +450,6 @@ def get_image_url(query):
     query = query.split()
     query = '+'.join(query)
     url = "https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch"
-    print url + "\n\n"
     header = {'User-Agent': 'Mozilla/5.0'}
     soup = get_soup(url,header)
 
@@ -598,15 +528,12 @@ def searchForBook(query):
     results = []
     query = query.strip(',')
     query = query.split(' ')
-    print query
     for j in range(len(query)): #goes through query
 
         # goes through database to find books with query[j] in substring value
         cursor = books.find( {'bookName':
                               { '$regex' : '(?i).*' + query[j] + '.*' } } )
         for b in cursor:
-            print b['bookName']
-            print 'book found, going to next book'
             if not b in results:
                 results.append( b )
                 #break; #goes to next book
@@ -614,8 +541,6 @@ def searchForBook(query):
         cursor = books.find( {'author':
                       { '$regex' : '(?i).*' + query[j] + '.*' } } )
         for b in cursor:
-            print b['bookName']
-            print 'book found, going to next book'
             if not b in results:
                 results.append( b )
                 #break; #goes to next book
@@ -623,13 +548,11 @@ def searchForBook(query):
         cursor = books.find( {'isbn':
                               { '$regex' : '.*' + query[j] + '.*' } } )
         for b in cursor:
-            print b['bookName']
-            print 'book found, going to next book'
             if not b in results:
                 results.append( b )
                 #break; #goes to next book
 
     for i in results:
-        if i['status'] != 'available':            
+        if i['status'] != 'available':
             results.pop( results.index(i) )
     return results
