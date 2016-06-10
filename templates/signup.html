@@ -5,12 +5,12 @@
   <h1 style=>Join StuyBooks</h1>
   <br>
   {% if msg|length > 0 %}
-    {% if 'confirmation' in msg %}
-      <p class="alert alert-success">{{msg}}</p><br>
-    {% else %}
-      <p class="alert alert-danger">{{msg}}</p><br>
+   {% if 'confirmation' in msg %}
+     <p class="alert alert-success">{{msg}}</p><br>
+   {% else %}
+     <p class="alert alert-danger">{{msg}}</p><br>
+   {% endif %}
   {% endif %}
-
   <p style="font-size:20px;font-weight:bold;padding-left:10px;">Create an account</p>
       <!--<button type="button" id="emailLogin" class="btn btn-default">Log in via Gmail</button><br><br>-->
       <div style="margin-left:25px;">
