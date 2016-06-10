@@ -12,6 +12,7 @@ import smtplib
 
 app = Flask(__name__)
 
+# base directory for stuy-books
 home_dir = os.path.dirname(__file__)
 
 ourEmail = 'stuybooks.JASH@gmail.com'
