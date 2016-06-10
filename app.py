@@ -554,21 +554,6 @@ def remove(email, bookName, author, price, condition):
     deleteAllBooks(email, bookName, author, price, condition)
     return redirect(url_for('userpage'))
 
-
-@app.route('/googleLogin')
-def googleLogin():
-    if request.method=="GET":
-        print "hello"
-        name = request.args.get('name')
-        print name
-        email = request.args.get('email')
-        print email
-        session['email'] = email
-        print "boo\n***********"
-        return redirect(url_for('home'))#url_for("userpage", email=email))
-    else:
-        return render_template("google.html")
-
 @app.route('/logout')
 def logout():
     session.pop('email', None)
