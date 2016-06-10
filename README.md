@@ -6,7 +6,12 @@ http://stuybooks.stuycs.org
 2. Install and run Mongo
 3. Install and run Flask
 4. Download the "password.txt" file that we will email you, and place it in the root of the repository
-5. Use the Google OAuth Client Key that we will email you in the indicated places in "templates/base.html" (line 23) and "templates/login.html" (line 10 and line 22)
+5. Use the Google OAuth Client Key that we will email you in the indicated places in:
+   - "templates/base.html" 
+     - line 23 at `<!--GOOGLE CLIENT ID-->`
+   - "templates/login.html" 
+     - line 10 at `<!--GOOGLE CLIENT ID -->`
+	 - line 22 at `<!--GOOGLE CLIENT ID -->`
 
 ### The Team!
 
