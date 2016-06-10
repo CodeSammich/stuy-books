@@ -1,3 +1,6 @@
+### Live Link
+http://stuybooks.stuycs.org
+
 ### Setup Instructions
 1. Clone the project
 2. Install and run Mongo
