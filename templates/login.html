@@ -91,17 +91,15 @@
 	    <button class="btn btn-success btn-block" type="submit" id="submit">Submit</button>
 	  </form>
 	</div>
-	<br>
-
-
+	<br><span style="font-size:20px;">- or -</span><br><br>
 	<!-------------------THIS IS THE WHERE THE GOOGLE SIGN IN CODE BEGINS------------------------------------------------------->
 	<!-- In the callback, you would hide the gSignInWrapper element on a
 	     successful sign in -->
 	<div id="gSignInWrapper">
 	  <div id="customBtn" class="customGPlusSignIn">
 	    <!--<span class="icon"></span>-->
-	    <a class="btn btn-block btn-social btn-google">
-	      <span class="fa fa-google-plus"></span> Sign in with Google
+	    <a class="btn btn-block btn-social btn-google" style="text-align:center;height:40px;padding-top:8px;letter-spacing:1.5px;">
+	      <span class="fa fa-google-plus"><img src="{{ url_for('static', filename='google-logo.png') }}" height="100%"></img></span> Sign in with Google
 	    </a>
 	    <!--<span class="buttonText">Sign in with Google</span>-->
 	  </div>

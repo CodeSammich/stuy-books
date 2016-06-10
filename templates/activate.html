@@ -1,8 +1,27 @@
 {% extends "base.html" %}
 {% block title %}Activate Account{% endblock %}
 {% block contents %}
-<div class="activate">
-  <h1 style='color:black'>Your account has been activated</h1>
-  <a class='btn btn-primary btn-lg' href='/home' style='width:150px;'>Take me Home!</a>
+<div class="activate" style="padding-top:15px;">
+  <p class="alert alert-success" style="font-size:20px;">Your account has been activated!</p>
+  <br>
+  <h1 style='color:black'>Welcome to Stuy Books!</h1>
+  <div class="list-group">
+    <a href="/buypage" class="list-group-item">
+      <h4 class="list-group-item-heading">Take me to all the listings!</h4>
+      <p class="list-group-item-text">(Link in the navigation bar on the top right will take you to all the active listings in our database.)</p>
+    </a>
+    <a href="/sell" class="list-group-item">
+      <h4 class="list-group-item-heading">Lemme wanna sell something!</h4>
+      <p class="list-group-item-text">(Link in the navigation bar on the top right will take you to all the selling form so that your book may be listed in the database for all members to see!)</p>
+    </a>
+    <a href="/userpage" class="list-group-item">
+      <h4 class="list-group-item-heading">What books am I buying/selling now? Or bought/sold in the past?</h4>
+      <p class="list-group-item-text">This can be found by clicking on your username on the top right, then selecting "My Activity" in the dropdown</p>
+    </a>
+    <a href="#" class="list-group-item">
+      <h4 class="list-group-item-heading">Log out</h4>
+      <p class="list-group-item-text">To logout, click on your username on the top right, then select "Sign out" in the dropdown.</p>
+    </a>
+  </div>
 </div>
 {% endblock %}

@@ -21,7 +21,7 @@
       <span style="font-size:20px;">Price:&nbsp;&nbsp;&nbsp;$ {{thisBook['price']}}</span><br><br><br>
       {% if thisBook['status'] == 'available' %}
       <form action='/bought/{{thisBook['email']}}/{{thisBook['bookName']}}/{{thisBook['author']}}/{{thisBook['price']}}/{{thisBook['condition']}}' method='POST'>
-        <button class="btn btn-success" type='submit' style="font-size:20px;letter-spacing:1.5px;">Buy It Now</button>
+        <button class="btn btn-success" type='submit' style="width:200px;font-size:20px;letter-spacing:1.5px;">Buy It Now</button>
       </form>
       <br><br>
       * Note: <i>Once you click the "Buy It Now" button above, an email will be sent to your 'stuy.edu' email so that you may communicate with the seller. </i>*
