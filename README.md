@@ -56,14 +56,6 @@ Book marketplace for Stuyvesant High School
 
 > "I would like to have a marketplace for students to buy and sell books, which I understand students currently do through the 'Facebooks' and the 'tweets'. If I were a student, I would not just like to find a book, but for a book of mine to be recognized."
 
-## Members
-| Name        | Github           |
-| ------------- |:-------------:|
-| Amanda Chiu  | [amandalchiu](https://github.com/amandalchiu)           |
-| Helen Li    | [lihelennn](https://github.com/lihelennn)      |
-| Samuel Zhang |[CodeSammich](https://github.com/CodeSammich)  |
-| Jeffrey Zou |[JeffreyZou13](https://github.com/JeffreyZou13) |
-
 ### Original Plans + Ideas
 - Serial number, verify the actual book manually previously
 - Automated search and verification of a book automatically (current eBay model)
