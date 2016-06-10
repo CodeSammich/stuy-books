@@ -7,12 +7,15 @@ from urllib import urlencode
 from email.mime.multipart import MIMEMultipart
 from email.MIMEText import MIMEText
 from os import urandom
+import os
 import smtplib
 
 app = Flask(__name__)
 
+home_dir = os.path.dirname(__file__)
+
 ourEmail = 'stuybooks.JASH@gmail.com'
-ourPassword = open('password.txt', 'r').read()[:-1]
+ourPassword = open( home_dir + 'password.txt', 'r').read()[:-1]
 
 """
 def requireLogin(f):
@@ -48,10 +51,13 @@ def home():
                 #strip the @stuy.edu part
                 email = email[:-9]
                 session['email'] = email
+
                 return render_template("index.html")
             else:
                 return redirect(url_for('login', msg="Email is not valid. Please use a stuy.edu email."))
         else:
+#            path = path.dirname("templates/index.html")
+#            print path
             return render_template("index.html")
     else:
         search = request.form['searchQuery']
