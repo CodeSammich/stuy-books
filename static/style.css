@@ -190,7 +190,7 @@ p {
   height: 100vh;
   padding-top: 75px;
   width:70%;
-  margin: auto;
+  margin-left: 50px;
 }
 
 #signup-form {
