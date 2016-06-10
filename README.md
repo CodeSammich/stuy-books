@@ -105,6 +105,13 @@ Book marketplace for Stuyvesant High School
 - Message to the users about proper beheavior
 
 ### Dev-log
+
+##### 6/09/2016
+- Google signin redirects and only works when button is clicked.
+- Only stuy.edu emails can sign up and log in.
+- Different pages (such as search, remove, edit, etc.) added and prettified.
+- GO TEAM JASH!
+
 ##### 5/31/16
 - Google Signin works -- needs to redirect
 - Search engine fixed -- needs to be optimized
