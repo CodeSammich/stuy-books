@@ -27,7 +27,6 @@
 		- [x] Prettiness of the buttons above
 	- [x] book status ( Available, Pending, Sold ),
 	- [x] Prettiness *(Amanda)*
-	- [x] Tooltip For Signup *(Amanda)*
 	- [x] When screen is sized down, enabled side scrolling instead *(Amanda)*
 	- [x] Run properly in Firefox, Chrome, and Safari *(Amanda)*
 - Middleware
