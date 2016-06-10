@@ -10,18 +10,21 @@
   </th></tr>
   <tr>
  <!--    <td style="width:25%;padding-top:60px;" rowspan="2"><img src={{thisBook['image_url']}} style="height:250px;"></td> -->
-    <td style="padding-left:25px;padding-bottom:30px;"><br><span class="info">Item condition:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['condition']}}</b><br>
+    <td style="padding-left:25px;padding-bottom:30px;" colspan="3"><br><span class="info">Item condition:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['condition']}}</b><br>
       <span class="info">Subject listed as:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['subject']}}</b>
     </td>
   </tr>
   <tr>
-    <td style="height:300px;"><img src={{thisBook['image_url']}} style="height:100%;"></a></td>
-    <td style="text-align:center; background-color:#EEEEEE; border-radius:10px;">
+    <td style="height:300px; width:300px; text-align:center;"><img src={{thisBook['image_url']}} style="height:100%;"></a></td>
+    <td style="width:auto;"></td>
+    <td style="text-align:center; width:450px;background-color:#EEEEEE; border-radius:10px; padding:50px;">
       <span style="font-size:20px;">Price:&nbsp;&nbsp;&nbsp;$ {{thisBook['price']}}</span><br><br><br>
       {% if thisBook['status'] == 'available' %}
       <form action='/bought/{{thisBook['email']}}/{{thisBook['bookName']}}/{{thisBook['author']}}/{{thisBook['price']}}/{{thisBook['condition']}}' method='POST'>
         <button class="btn btn-success" type='submit' style="font-size:20px;letter-spacing:1.5px;">Buy It Now</button>
       </form>
+      <br><br>
+      * Note: <i>Once you click the "Buy It Now" button above, an email will be sent to your 'stuy.edu' email so that you may communicate with the seller. </i>*
       {% else %}
         {% if thisBook['status'] == 'pending' %}
           <span class="label label-warning">Pending...</span>
@@ -30,10 +33,11 @@
         {% endif %}
       {% endif %}
     </td>
-      <td style="width:170px;padding:40px;" valign="top">Seller information: *in progress*</td>
+    <td style="width:auto;"></td>
   </tr>
   <tr><td colspan="3" style="padding-top:50px;"><span class="info">ISBN #: </span>{{thisBook['isbn']}}<br><br>
     <span class="info">Additional information/comments: </span> {{thisBook['description']}}</td></tr>
 </table>
+<br><br>
 </div>
 {% endblock %}
