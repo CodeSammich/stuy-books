@@ -5,6 +5,8 @@
 4. Download the "password.txt" file that we will email you, and place it in the root of the repository
 5. Use the Google OAuth Client Key that we will email you in the indicated places in "base.html" (line 23) and "login.html" (line 10 and line 22)
 
+### The Team!
+
 |                                       |   **Member**   |                   **GitHub**                 |            **Role**            |
 |---------------------------------------|:--------------:|:--------------------------------------------:|:------------------------------:|
 | <img src="images/amanda.jpg" width="100" height="100" /> | Amanda Chiu   |[`@amandalchiu`](https://github.com/amandalchiu)        | Frontend |
