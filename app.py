@@ -93,8 +93,8 @@ def signup():
     else:
         email = request.form['email']
         pword = request.form['pword']
-
-        if email == '':
+        
+        if email == '' or email.find('@') != -1:
             return render_template('signup.html', msg = 'Please enter your stuy.edu email')
         if len(pword) < 8:
             return render_template('signup.html', msg = 'Please enter a password that is at least 8 characters long')
@@ -139,7 +139,8 @@ def signup():
             s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
             s.close()
 
-            return redirect(url_for('home'))
+            return render_template('signup.html', msg = "A confirmation email has been sent to " + email + '@stuy.edu')
+#            return redirect(url_for('home'))
 
         return render_template('signup.html', msg = message)
 
