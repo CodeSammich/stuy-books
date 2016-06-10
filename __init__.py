@@ -573,5 +573,5 @@ def logout():
 
 if __name__ == "__main__":
     app.secret_key = str(uuid4())
-    app.debug = True
-    app.run('0.0.0.0',port=8000)
+    #    app.debug = True
+    app.run()#'0.0.0.0',port=8000)
