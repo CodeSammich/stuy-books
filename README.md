@@ -78,7 +78,7 @@ http://stuybooks.stuycs.org
 - Added pages for home, login, signup, sell/buy, master book list
 - middleware integration with html/css
 
-### Original Plans + Ideas
+## Original Plans + Ideas
 - Serial number, verify the actual book manually previously
 - Automated search and verification of a book automatically (current eBay model)
 - Tied to school email account
