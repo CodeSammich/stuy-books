@@ -24,39 +24,15 @@ http://stuybooks.stuycs.org
 
 ### Daily Agenda
 
-##### Agenda for 6/2/16:
+##### Agenda for 6/10/16:
 
 - Frontend/middle: (Everything else is Helen + Sam)
-	- [x] Redirection from google sign-in (update: redirects to "/index")
-	- [x] Start adding buttons for login pages for
-		- [x] "Transaction complete",
-		- [x] "Remove book from list",
-		- [x] "Edit book information"
-		- [x] Prettiness of the buttons above
-	- [x] book status ( Available, Pending, Sold ),
-	- [x] Prettiness *(Amanda)*
-	- [x] When screen is sized down, enabled side scrolling instead *(Amanda)*
-	- [x] Run properly in Firefox, Chrome, and Safari *(Amanda)*
 - Middleware
-	- [x] Username properly display on all pages (instead of "Username")
-	- [x] Books should have different prices, conditions but one entry listed after search
-	 - [x] One buy page per book with name and seller email
+  - [] Deployment implementation
 - Backend:
-	- [x] Email both parties after "buy button" + books status in book object,
-	- [x] Finish transaction
-	- [x] Send email to both client and buyer
-	- [x] NO REPEAT ENTRIES UNLESS PRICE/CONDITION IS DIFFERENT
-	- [x] All database calls should use name, seller, price and condition
-	- [x] Edit book information
-	- [x] Search Engine Optimization
-	- [x] Cancel Transaction (same mechanism as Finish)
-
- - [x] User frees information
+  - [] Search Engine Optimization
 
 > Remember, each user is both a buyer AND a seller.
-
-
-
 
 # stuy-books
 Book marketplace for Stuyvesant High School
@@ -92,24 +68,6 @@ Book marketplace for Stuyvesant High School
 - Notifications on smart device
 
 ** Not initial feature, may devolve into irrelevant chat **
-
-### To-Do
-> To be updated with Client meeting notes
-- OAuth authentication, confirmation emails
-- Buy functionality (email sending)
-- Database handling "remove", "Schrodinger pending state for books", front-end implementation of pending
-- Optimizing search engine/picture search (have an autocomplete functionality)
-- Disclaimers + misc. issues
-- Finding books by ISBN number
-- A flow chart of what the user should see, depending on if he/she is a buyer or seller
-- An email to Mr. Brown about a To-Do List with prioritization
-- A report for buyers/sellers about transactions made this month, their ratings, etc.
-- A list of places to meet
-	- Outside the library
-	- Senior or sophomore bar
-	- Half floor
-	- Outside the theater
-- Message to the users about proper beheavior
 
 ### Dev-log
 
