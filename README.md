@@ -26,6 +26,8 @@ http://stuybooks.stuycs.org
 
 ##### Agenda for 6/10/16:
 
+> Reminder: Update notes from final client meeting on 6/10/16
+
 - Frontend/middle: (Everything else is Helen + Sam)
 - Middleware
   - [] Deployment implementation
