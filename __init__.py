@@ -43,13 +43,13 @@ def home():
                 email = email[:-9]
                 session['email'] = email
 
-                return render_template("index.html")
+                return render_template( home_dir + "templates/index.html")
             else:
                 return redirect(url_for('login', msg="Email is not valid. Please use a stuy.edu email."))
         else:
 #            path = path.dirname("templates/index.html")
 #            print path
-            return render_template("index.html")
+            return render_template( home_dir + "templates/index.html")
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -58,18 +58,18 @@ def home():
 def login():
     if request.method == "GET":
         if request.args.get("msg") == None:
-            return render_template("login.html")
+            return render_template( home_dir + "templates/login.html")
         else:
             msg=request.args.get("msg")
-            return render_template("login.html", msg=msg)
+            return render_template( home_dir + "templates/login.html", msg=msg)
     else:
         email = request.form['email']
         pword = request.form['pword']
 
         if email == '':
-            return render_template('login.html', msg = 'Please enter your email')
+            return render_template( home_dir + "templates/login.html", msg = 'Please enter your email')
         if pword == '':
-            return render_template('login.html', msg = 'Please enter your password')
+            return render_template( home_dir + "templates/login.html", msg = 'Please enter your password')
 
         m = sha256()
         m.update(pword)
@@ -79,20 +79,20 @@ def login():
             session['email'] = email
             return redirect(url_for('home'))
 
-        return render_template('login.html', msg = 'Incorrect email/password combination')
+        return render_template( home_dir + "templates/login.html", msg = 'Incorrect email/password combination')
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     if request.method == "GET":
-        return render_template("signup.html")
+        return render_template( home_dir + "templates/signup.html")
     else:
         email = request.form['email']
         pword = request.form['pword']
 
         if email == '' or email.find('@') != -1:
-            return render_template('signup.html', msg = 'Please enter your stuy.edu email')
+            return render_template( home_dir + "templates/signup.html", msg = 'Please enter your stuy.edu email')
         if len(pword) < 8:
-            return render_template('signup.html', msg = 'Please enter a password that is at least 8 characters long')
+            return render_template( home_dir + "templates/signup.html", msg = 'Please enter a password that is at least 8 characters long')
         m = sha256()
         m.update(pword)
         passwordHash = m.hexdigest()
@@ -133,21 +133,21 @@ def signup():
             s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
             s.close()
 
-            return render_template('signup.html', msg = "A confirmation email has been sent to " + email + '@stuy.edu')
+            return render_template( home_dir + "templates/signup.html", msg = "A confirmation email has been sent to " + email + '@stuy.edu')
 
-        return render_template('signup.html', msg = message)
+        return render_template( home_dir + "templates/signup.html", msg = message)
 
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     if request.method == 'GET':
-        return render_template('forgot.html')
+        return render_template( home_dir + "templates/forgot.html")
     else:
 
         email = request.form.get('email')
         if email == None:
-            return render_template('forgot.html', msg = 'You must enter your email!')
+            return render_template( home_dir + "templates/forgot.html", msg = 'You must enter your email!')
         if getUser(email) == None:
-            return render_template('forgot.html', msg = 'That is an invalid email!')
+            return render_template( home_dir + "templates/forgot.html", msg = 'That is an invalid email!')
 
         randomGen = os.urandom(64).encode('base-64') #just for something random
         setReset(email, randomGen)
@@ -193,17 +193,17 @@ def change():
     if request.method == 'GET':
         if code == None:
             return redirect(url_for('login')) #They are not allowed to access the page directly
-        return render_template('change.html')
+        return render_template( home_dir + "templates/change.html")
     else:
         email = getEmailFromReset(code)
         pword = request.form.get('pword')
         confirm = request.form.get('confirmpword')
         if len(pword) < 8:
-            return render_template('change.html', msg='Your password must be at least 8 characters long!', reset=code )
+            return render_template( home_dir + "templates/change.html", msg='Your password must be at least 8 characters long!', reset=code )
         if len(confirmpword) < 8:
-            return render_template('change.html', msg2='The confirm password must be at least 8 characters long!', reset=code )
+            return render_template( home_dir + "templates/change.html", msg2='The confirm password must be at least 8 characters long!', reset=code )
         if pword != confirmpword:
-            return render_template('change.html', msg='The confirm password must match the password!', reset=code )
+            return render_template( home_dir + "templates/change.html", msg='The confirm password must match the password!', reset=code )
         hasReset(code) #sets to reset code back to ''
 
         m = sha256()
@@ -220,7 +220,7 @@ def activate():
         if getStatus(email):
             return redirect(url_for('home'))
         updateStatus(email)
-        return render_template('activate.html')
+        return render_template( home_dir + "templates/activate.html")
     return redirect(url_for('home'))
 
 @app.route("/userpage", methods=['GET', 'POST'])
@@ -241,7 +241,7 @@ def userpage():
             else:
                 sold.append(info[i])
             i+=1
-        return render_template("userpage.html", info=info, available=available, pending=pending, sold=sold)
+        return render_template( home_dir + "templates/userpage.html", info=info, available=available, pending=pending, sold=sold)
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -251,7 +251,7 @@ def userpage():
 @requireLogin
 def sell():
     if request.method == 'GET':
-        return render_template('sell.html')
+        return render_template( home_dir + "templates/sell.html")
     else:
         if request.form['signup'] == "sell":
             email = session['email']
@@ -267,7 +267,7 @@ def sell():
             if is_new:
                 return redirect(url_for('userpage'))
             else:
-                return render_template('sell2.html', bookName=bookName, author=author, isbn=isbn, subject=subject, condition=condition, price=price, msg="Book already exists")
+                return render_template( home_dir + "templates/sell2.html", bookName=bookName, author=author, isbn=isbn, subject=subject, condition=condition, price=price, msg="Book already exists")
         elif request.form['signup'] == "search":
             search = request.form['searchQuery']
             return redirect(url_for('search', query=search))
@@ -281,7 +281,7 @@ def buy():
         for i in range(len(info)):
             if info[i].get('status', None) == 'available':
                 actualones.append(info[i])
-        return render_template('buypage.html', info=actualones)
+        return render_template(home_dir + "templates/buypage.html", info=actualones)
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -295,7 +295,7 @@ def itempage(email, bookName, author, price, condition):
         for i in range(len(info)):
             if email == info[i]['email'] and bookName == info[i]['bookName'] and author == info[i]['author'] and price == info[i]['price'] and condition == info[i]['condition']:
                 thisBook = info[i]
-                return render_template("itempage.html", thisBook=thisBook)
+                return render_template( home_dir + "templates/itempage.html", thisBook=thisBook)
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -309,7 +309,7 @@ def edit(bookName):
         bookInfo = getBookInfo(bookName, email)
         if bookInfo == None:
             return redirect(url_for('userpage'), msg = 'You can only edit a book that you own.')
-        return render_template('edit.html', bookInfo=bookInfo)
+        return render_template( home_dir + "templates/edit.html", bookInfo=bookInfo)
     else:
         email = session['email']
         title = request.form['title']
@@ -332,7 +332,7 @@ def search():
     else:
         search = request.args.get("query")
         results = searchForBook(search)
-        return render_template("search.html", info=results)
+        return render_template( home_dir + "templates/search.html", info=results)
 
 @app.route('/finish/<email>/<bookName>/<author>/<price>/<condition>')
 @requireLogin
