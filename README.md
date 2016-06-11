@@ -39,8 +39,6 @@ http://stuybooks.stuycs.org
 - Backend:
   - [] Search Engine Optimization
 
-> Remember, each user is both a buyer AND a seller.
-
 ### Dev-log
 
 ##### 6/09/2016
