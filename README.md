@@ -16,7 +16,7 @@ http://stuybooks.stuycs.org
      - line 23 at `<!--GOOGLE CLIENT ID-->`
    - "templates/login.html" 
      - line 10 at `<!--GOOGLE CLIENT ID -->`
-	 - line 22 at `<!--GOOGLE CLIENT ID -->`
+	 - line 22 at `//GOOGLE CLIENT ID //`
 
 ### The Team!
 
