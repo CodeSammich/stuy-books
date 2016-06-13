@@ -13,10 +13,10 @@ http://stuybooks.stuycs.org
 4. Download the "password.txt" file that we will email you, and place it in the root of the repository
 5. Use the Google OAuth Client Key that we will email you in the indicated places in:
    - "templates/base.html" 
-     - line 23 at `<!--GOOGLE CLIENT ID-->`
+     - line 23 at `<!-----------------------------------GOOGLE CLIENT ID---------------------------------------->`
    - "templates/login.html" 
-     - line 10 at `<!--GOOGLE CLIENT ID -->`
-	 - line 22 at `//GOOGLE CLIENT ID //`
+     - line 10 at `<!-----------------------------------GOOGLE CLIENT ID---------------------------------------->`
+	 - line 22 at `//<!-----------------------------------GOOGLE CLIENT ID---------------------------------------->//`
 
 ### The Team!
 
@@ -33,9 +33,9 @@ http://stuybooks.stuycs.org
 
 - Frontend/middle: (Everything else is Helen + Sam)
 - Middleware
-  - [] Deployment implementation
+  - [ ] Deployment implementation
 - Backend:
-  - [] Search Engine Optimization
+  - [ ] Search Engine Optimization
 
 ### The Future
 [with notes from final client meeting on 6/10/16]
