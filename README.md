@@ -31,13 +31,22 @@ http://stuybooks.stuycs.org
 
 ##### Agenda for 6/10/16:
 
-> Reminder: Update notes from final client meeting on 6/10/16
-
 - Frontend/middle: (Everything else is Helen + Sam)
 - Middleware
   - [] Deployment implementation
 - Backend:
   - [] Search Engine Optimization
+
+### The Future
+[with notes from final client meeting on 6/10/16]
+
+- Waiting queue for pictures 
+(to filter inappropriate listings from showing)
+- Reminder emails if *x* number of days pass and meeting has not been confirmed
+(incorporate time stamps for each listing into database)
+- Historical archive for site managers (oversight of all transactions)
+- (in 'Past Transactions') add the person/user who you had transaction with
+- Rating (stars) system for sellers
 
 ### Dev-log
 
