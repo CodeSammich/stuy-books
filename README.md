@@ -13,7 +13,7 @@ http://stuybooks.stuycs.org
 		git clone git@github.com:CodeSammich/stuy-books.git       // ssh cloning
 
 2. Install MongoDB
-..*
+
 ###### Windows
 > Download MongoDB for Windows here:		
 https://www.mongodb.com/download-center#community
