@@ -14,7 +14,7 @@ http://stuybooks.stuycs.org
 
 2. Install MongoDB
 
-        // Windows
+###### Windows
 		Download MongoDB for Windows here:
 		https://www.mongodb.com/download-center#community
 		
@@ -28,10 +28,12 @@ http://stuybooks.stuycs.org
 		
 		For more information: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 		
-		// Mac OSX
-		brew install mongodb
+###### Mac OSX
 		
-		// Ubuntu 14.04
+		brew install mongodb     // requires Homebrew
+		
+###### Ubuntu 14.04
+
 		sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 		echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
 		sudo apt-get update
@@ -52,11 +54,12 @@ http://stuybooks.stuycs.org
 
 7. Run installed packages:
 
-###### MongoDB
+##### MongoDB
 
-        // Windows
-		// Mac OSX
-		// Ubuntu 14.04
+###### Windows
+###### Mac OSX
+###### Ubuntu 14.04
+	
 		sudo service mongod start                                   //to start MongoDB
 		[initandlisten] waiting for connections on port <port>      //to verify that MongoDB has started successfully
 		
