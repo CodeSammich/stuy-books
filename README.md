@@ -42,6 +42,7 @@ https://www.mongodb.com/download-center#community
 
 
 ###### Mac OSX		
+	    brew update
 		brew install mongodb     // requires Homebrew	
 
 ###### Ubuntu 14.04
@@ -57,7 +58,9 @@ https://www.mongodb.com/download-center#community
 ##### MongoDB
 
 ###### Windows
+> Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#set-up-the-mongodb-environment)
 ###### Mac OSX
+
 ###### Ubuntu 14.04
 	
 		sudo service mongod start                                   //to start MongoDB
