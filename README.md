@@ -107,10 +107,13 @@ Book marketplace for Stuyvesant High School
 ##### Agenda for 6/10/16:
 
 - Frontend/middle
+ - [ ] User profile / Item Page update with user rating
+ - [ ] Buttons for filter system in search engine (sort by rating, price, etc.)
 - Middleware
-  - [ ] Deployment implementation
+ - [ ] Filtering system for search engine
 - Backend:
   - [ ] Search Engine Optimization
+  - [ ] User rating, search engine filtering (user rating, price, etc.)
 
 ---
 ## Future Implementations
