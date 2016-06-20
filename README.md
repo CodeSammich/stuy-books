@@ -106,7 +106,7 @@ As of 12:08PM, 6/20/16, we are live!
 
 ## Daily Agenda
 
-##### Agenda for 6/10/16:
+##### Agenda for 6/20/16:
 
 - Frontend/middle
  - [ ] User profile / Item Page update with user rating
