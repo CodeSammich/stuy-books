@@ -100,7 +100,7 @@ Book marketplace for Stuyvesant High School
 		sudo service mongod restart                                 //to restart MongoDB
 		
 ----
-### Daily Agenda
+## Daily Agenda
 
 ##### Agenda for 6/10/16:
 
@@ -130,7 +130,7 @@ Book marketplace for Stuyvesant High School
     - filter by highest rated, lowest rated, users, etc.
 	
 ---
-### Dev-log
+## Dev-log
 
 ##### 6/20/16
 - Successful launch and host at `http://stuybooks.stuycs.org`!
