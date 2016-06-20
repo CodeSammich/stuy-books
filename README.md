@@ -7,13 +7,14 @@ Book marketplace for Stuyvesant High School
 http://stuybooks.stuycs.org
 
 ### Setup Instructions
-1. Clone `stuy-books`
+
+Clone `stuy-books`
     
 	    git clone https://github.com/CodeSammich/stuy-books.git   // https cloning
 		git clone git@github.com:CodeSammich/stuy-books.git       // ssh cloning
 
-2. Install MongoDB
--
+Install MongoDB
+
 ###### Windows
 > Download MongoDB for Windows here:		
 https://www.mongodb.com/download-center#community
