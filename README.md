@@ -117,6 +117,8 @@ As of 12:08PM, 6/20/16, we are live!
   - [ ] Search Engine Optimization
   - [ ] User rating, search engine filtering (user rating, price, etc.)
 
+###### Known Bugs
+
 ---
 ## Future Implementations
 [with notes from final client meeting on 6/10/16]
