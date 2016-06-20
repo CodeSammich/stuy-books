@@ -14,10 +14,11 @@ import smtplib
 app = Flask(__name__)
 
 # base directory for stuy-books
-home_dir = os.path.dirname(__file__)
+home_dir = os.path.dirname(__file__) + '/'
 
 ourEmail = 'stuybooks.JASH@gmail.com'
 ourPassword = open( home_dir + 'password.txt', 'r').read()[:-1]
+print ourPassword
 
 #Wrapper function put before routes that require user to log in
 def requireLogin(f):

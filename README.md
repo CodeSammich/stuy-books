@@ -7,11 +7,12 @@ Book marketplace for Stuyvesant High School
 http://stuybooks.stuycs.org
 
 ### Setup Instructions
-1. Clone the project
-2. Install and run Mongo
+1. Clone `stuy-books`
+2. Install and run MongoDB 
 3. Install and run Flask
-4. Download the "password.txt" file that we will email you, and place it in the root of the repository
-5. Use the Google OAuth Client Key that we will email you in the indicated places in:
+4. Install pymongo `pip install pymongo`
+5. Download the "password.txt" file that we will email you, and place it in the root of the repository
+6. Use the Google OAuth Client Key that we will email you in the indicated places in:
    - "templates/base.html" 
      - line 23 at `<!-----------------------------------GOOGLE CLIENT ID---------------------------------------->`
    - "templates/login.html" 
