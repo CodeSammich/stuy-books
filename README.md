@@ -3,8 +3,7 @@ Book marketplace for Stuyvesant High School
 
 > "I would like to have a marketplace for students to buy and sell books, which I understand students currently do through the 'Facebooks' and the 'tweets'. If I were a student, I would not just like to find a book, but for a book of mine to be recognized."
 
-### Live Link Deployed at StuyCS.org
-http://stuybooks.stuycs.org
+[Stuy-Books at StuyCS.org ](http://stuybooks.stuycs.org)
 
 ### Setup Instructions
 
@@ -58,7 +57,7 @@ https://www.mongodb.com/download-center#community
 #### Run MongoDB
 
 ###### Windows
-> Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#set-up-the-mongodb-environment)
+> Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#run-mongodb-community-edition)
 
 ###### Mac OSX
 > Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb)
