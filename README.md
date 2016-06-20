@@ -8,12 +8,12 @@ http://stuybooks.stuycs.org
 
 ### Setup Instructions
 
-Clone `stuy-books`
+1. Clone `stuy-books`
     
 	    git clone https://github.com/CodeSammich/stuy-books.git   // https cloning
 		git clone git@github.com:CodeSammich/stuy-books.git       // ssh cloning
 
-Install MongoDB
+2. Install MongoDB
 
 ###### Windows
 > Download MongoDB for Windows here:		
