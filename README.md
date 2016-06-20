@@ -140,7 +140,7 @@ As of 12:08PM, 6/20/16, we are live!
 ## Dev-log
 
 ##### 6/20/16
-- Successful launch and host at `http://stuybooks.stuycs.org` as of 12:08PM! 
+- Successful launch and host at http://stuybooks.stuycs.org as of 12:08PM! 
 - Deployment instructions updated
 
 ##### 6/09/2016
