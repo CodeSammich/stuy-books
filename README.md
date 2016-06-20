@@ -18,7 +18,9 @@ http://stuybooks.stuycs.org
 > Download MongoDB for Windows here:		
 https://www.mongodb.com/download-center#community
 		
-> In Windows Explorer, locate the downloaded MongoDB .msi file, which typically is located in the default Downloads folder. Double-click the .msi file. A set of screens will appear to guide you through the installation process. 
+> In Windows Explorer, locate the downloaded MongoDB .msi file, which typically is located in the default Downloads folder. 
+Double-click the .msi file. 
+A set of screens will appear to guide you through the installation process. 
 You may specify an installation directory if you choose  installation option.  
 __NOTE:__  
 	These instructions assume that you have installed MongoDB to `*C:\mongodb*`.  
