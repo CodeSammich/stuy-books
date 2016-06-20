@@ -98,8 +98,9 @@ Book marketplace for Stuyvesant High School
 		sudo service mongod stop                                    //to stop MongDB
 		
 		sudo service mongod restart                                 //to restart MongoDB
-		
-----
+
+_*For more information, please visit the MongoDB Linux [documentation](https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/#run-mongodb)*_
+
 ## Daily Agenda
 
 ##### Agenda for 6/10/16:
@@ -111,7 +112,7 @@ Book marketplace for Stuyvesant High School
   - [ ] Search Engine Optimization
 
 ---
-### Future Implementations
+## Future Implementations
 [with notes from final client meeting on 6/10/16]
 
 - Waiting queue for pictures 
