@@ -36,7 +36,7 @@ Book marketplace for Stuyvesant High School
    - [MongoDB](https://github.com/CodeSammich/stuy-books/tree/master#run-mongodb)
    
 #### Install MongoDB
-###### Windows
+###### _*Windows*_
 > Download MongoDB for Windows [here](https://www.mongodb.com/download-center#community)
 
 > - In Windows Explorer, locate the downloaded MongoDB .msi file, which typically is located in the default Downloads folder.   
@@ -50,11 +50,12 @@ Book marketplace for Stuyvesant High School
 *_For more information, please [visit our friends at MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)._*
 
 
-###### Mac OSX		
+###### _*Mac OSX*_
+
 	    brew update
 		brew install mongodb     // requires Homebrew	
 
-###### Ubuntu 14.04
+###### _*Ubuntu 14.04*_
 
 		sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
 		echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
@@ -64,19 +65,19 @@ Book marketplace for Stuyvesant High School
 *_For further details and installation guides for other versions and distributions, please [visit our friends at MongoDB](https://docs.mongodb.com/manual/administration/install-on-linux/)._*
 
 #### Install Flask
-###### Windows
+###### _*Windows*_
 > Run Command Prompt as Administrator
 
         pip install Flask
 
-###### Mac OSX and Linux 	 
+###### _*Mac OSX and Linux*_ 	 
 
 		sudo pip install Flask
 
 *_For basic Flask usage and optional python virtual environment installation, please visit [the Flask documentation](http://flask.pocoo.org/docs/0.11/installation/):_* 
 
 #### Install Pymongo
-###### Windows, Mac OSX and Linux
+###### _*Windows, Mac OSX and Linux*_
 
 	    python -m pip install pymongo
 
@@ -84,10 +85,10 @@ Book marketplace for Stuyvesant High School
 
 #### Run MongoDB
 
-###### Windows
+###### _*Windows*_
 > Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#run-mongodb-community-edition)
 
-###### Mac OSX
+###### _*Mac OSX*_
 > Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb)
 
 ###### _*Ubuntu 14.04*_
