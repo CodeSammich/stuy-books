@@ -64,7 +64,13 @@ https://www.mongodb.com/download-center#community
 > For more information and installation guides for other versions and distributions, please [visit](https://docs.mongodb.com/manual/administration/install-on-linux/) our friends at MongoDB:
 
 #### Install Flask
-		
+###### Windows
+> Run Command Prompt as Administrator
+        pip install Flask
+
+###### Mac OSX and Linux 	    
+		sudo pip install Flask
+	
 #### Install Pymongo
 
 
