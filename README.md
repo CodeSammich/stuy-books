@@ -5,6 +5,15 @@ Book marketplace for Stuyvesant High School
 
 ### [Live](http://stuybooks.stuycs.org) at StuyCS.org
 
+### Meet The Team!
+
+|                                       |   **Member**   |                   **GitHub**                 |            **Role**            |
+|---------------------------------------|:--------------:|:--------------------------------------------:|:------------------------------:|
+| <img src="images/amanda.jpg" width="100" height="100" /> | Amanda Chiu   |[`@amandalchiu`](https://github.com/amandalchiu)        | Frontend |
+| <img src="images/helen.jpg" width="100" height="100" /> | Helen Li   |[`@lihelennn`](https://github.com/lihelennn)        | Middleware / API-Handler  |
+| <img src="images/samuel.jpg" width="100" height="100" /> | Samuel Zhang |[`@CodeSammich`](https://github.com/CodeSammich)    | Middleware/Backend - Leader  |
+| <img src="images/jeff.jpg" width="100" height="100" /> | Jeffrey Zou    |[`@JeffreyZou13`](https://github.com/JeffreyZou13)| Backend |
+
 ### Setup Instructions
 
 1. Clone `stuy-books`
@@ -71,15 +80,6 @@ https://www.mongodb.com/download-center#community
 		
 		sudo service mongod restart                                 //to stop MongoDB
 		
-### The Team!
-
-|                                       |   **Member**   |                   **GitHub**                 |            **Role**            |
-|---------------------------------------|:--------------:|:--------------------------------------------:|:------------------------------:|
-| <img src="images/amanda.jpg" width="100" height="100" /> | Amanda Chiu   |[`@amandalchiu`](https://github.com/amandalchiu)        | Frontend |
-| <img src="images/helen.jpg" width="100" height="100" /> | Helen Li   |[`@lihelennn`](https://github.com/lihelennn)        | Middleware / API-Handler  |
-| <img src="images/samuel.jpg" width="100" height="100" /> | Samuel Zhang |[`@CodeSammich`](https://github.com/CodeSammich)    | Middleware/Backend - Leader  |
-| <img src="images/jeff.jpg" width="100" height="100" /> | Jeffrey Zou    |[`@JeffreyZou13`](https://github.com/JeffreyZou13)| Backend |
-
 ### Daily Agenda
 
 ##### Agenda for 6/10/16:
