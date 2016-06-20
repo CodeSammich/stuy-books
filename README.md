@@ -73,17 +73,14 @@ Book marketplace for Stuyvesant High School
 
 		sudo pip install Flask
 
-*_For more information and python virtual environment installation, please visit [the Flask documentation](http://flask.pocoo.org/docs/0.11/installation/):_* 
+*_For basic Flask usage and optional python virtual environment installation, please visit [the Flask documentation](http://flask.pocoo.org/docs/0.11/installation/):_* 
 
 #### Install Pymongo
-###### Windows
-> You may have to use PowerShell or Command Prompt with administrative access
+###### Windows, Mac OSX and Linux
 
 	    python -m pip install pymongo
-		
-###### Mac OSX and Linux
 
-	    python -m pip install pymongo
+> For Windows users, you may have to run Command Prompt as an administrator
 
 #### Run MongoDB
 
