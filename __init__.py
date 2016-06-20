@@ -14,8 +14,8 @@ import smtplib
 app = Flask(__name__)
 
 # base directory for stuy-books
-home_dir = os.path.dirname(__file__) + '/'
-password_dir = os.path.dirname(__file__) 
+home_dir = "" #+ os.path.dirname(__file__) + '/'
+password_dir = os.path.dirname(__file__) + "/templates/"
 
 ourEmail = 'stuybooks.JASH@gmail.com'
 ourPassword = open( password_dir + 'password.txt', 'r').read()[:-1]
