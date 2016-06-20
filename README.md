@@ -90,7 +90,7 @@ Book marketplace for Stuyvesant High School
 ###### Mac OSX
 > Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb)
 
-###### Ubuntu 14.04
+###### *Ubuntu 14.04*
 	
 		sudo service mongod start                                   //to start MongoDB
 		[initandlisten] waiting for connections on port <port>      //to verify successful launch
