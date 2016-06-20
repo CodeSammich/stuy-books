@@ -61,7 +61,7 @@ https://www.mongodb.com/download-center#community
 		sudo apt-get update
 		sudo apt-get install -y mongodb-org
 		
-> For more information and installation guides for other versions and distributions, please [visit](https://docs.mongodb.com/manual/administration/install-on-linux/) our friends at MongoDB:
+*_For more information and installation guides for other versions and distributions, please [visit](https://docs.mongodb.com/manual/administration/install-on-linux/) our friends at MongoDB_*
 
 #### Install Flask
 ###### Windows
