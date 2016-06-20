@@ -5,7 +5,7 @@ Book marketplace for Stuyvesant High School
 
 
 As of 12:08PM, 6/20/16, we are live!
-##### [Live!](http://stuybooks.stuycs.org)
+##### [Stuybooks!](http://stuybooks.stuycs.org)
 
 ### Meet The Team!
 
