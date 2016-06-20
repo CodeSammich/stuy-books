@@ -51,8 +51,8 @@ https://www.mongodb.com/download-center#community
 		sudo apt-get update
 		sudo apt-get install -y mongodb-org
 		
-> For more information and installation guides for other versions and distributions, please visit our friends at MongoDB:
-https://docs.mongodb.com/manual/administration/install-on-linux/		
+> For more information and installation guides for other versions and distributions, please [visit](https://docs.mongodb.com/manual/administration/install-on-linux/) our friends at MongoDB:
+
 		
 ##### MongoDB
 
