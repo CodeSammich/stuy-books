@@ -35,7 +35,7 @@ Book marketplace for Stuyvesant High School
 7. Run installed packages:
    - [MongoDB](https://github.com/CodeSammich/stuy-books/tree/master#run-mongodb)
 
-#### MongoDB
+#### Install MongoDB
 ###### Windows
 > Download MongoDB for Windows here:		
 https://www.mongodb.com/download-center#community
@@ -62,6 +62,8 @@ https://www.mongodb.com/download-center#community
 		
 > For more information and installation guides for other versions and distributions, please [visit](https://docs.mongodb.com/manual/administration/install-on-linux/) our friends at MongoDB:
 
+#### Install Flask
+		
 		
 #### Run MongoDB
 
@@ -79,6 +81,8 @@ https://www.mongodb.com/download-center#community
 		sudo service mongod stop                                    //to stop MongDB
 		
 		sudo service mongod restart                                 //to stop MongoDB
+		
+#### Run Flask
 		
 ### Daily Agenda
 
