@@ -13,7 +13,7 @@ http://stuybooks.stuycs.org
 	    git clone https://github.com/CodeSammich/stuy-books.git   // https cloning
 		git clone git@github.com:CodeSammich/stuy-books.git       // ssh cloning
 		
-2. [Install MongoDB](https://github.com/CodeSammich/stuy-books/tree/master#windows)
+2. [Install MongoDB](https://github.com/CodeSammich/stuy-books/tree/master#mongodb)
 3. Install and run Flask
 4. Install pymongo `pip install pymongo`
 5. Download the "password.txt" file that we will email you, and place it in the root of the repository
