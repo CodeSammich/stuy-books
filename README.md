@@ -13,7 +13,7 @@ http://stuybooks.stuycs.org
 		git clone git@github.com:CodeSammich/stuy-books.git       // ssh cloning
 
 2. Install MongoDB
-
+-
 ###### Windows
 > Download MongoDB for Windows here:		
 https://www.mongodb.com/download-center#community
@@ -26,11 +26,11 @@ https://www.mongodb.com/download-center#community
 >	MongoDB is self-contained and does not have any other system dependencies. You can run MongoDB from any folder you choose. You may install MongoDB in any folder *(e.g. `D:\test\mongodb)`*  
 >  	For more information, please visit: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 
-..*
+-
 ###### Mac OSX		
 		brew install mongodb     // requires Homebrew
 		
-..*		
+-		
 ###### Ubuntu 14.04
 
 		sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
