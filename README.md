@@ -66,6 +66,7 @@ https://www.mongodb.com/download-center#community
 #### Install Flask
 ###### Windows
 > Run Command Prompt as Administrator
+
         pip install Flask
 
 ###### Mac OSX and Linux 	    
