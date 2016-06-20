@@ -25,7 +25,7 @@ https://www.mongodb.com/download-center#community
 __NOTE:__  
 	These instructions assume that you have installed MongoDB to *`C:\mongodb`*.  
 	MongoDB is self-contained and does not have any other system dependencies. You can run MongoDB from any folder you choose. You may install MongoDB in any folder *(e.g. `D:\test\mongodb)`*  
-  	For more information: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+  	For more information, please visit: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
 		
 ###### Mac OSX
 		
@@ -38,8 +38,8 @@ __NOTE:__
 		sudo apt-get update
 		sudo apt-get install -y mongodb-org
 		
-		For more information and version-specific installation, please visit our friends at MongoDB:
-		https://docs.mongodb.com/manual/administration/install-on-linux/		
+> For more information and installation guides for other versions and distributions, please visit our friends at MongoDB:
+https://docs.mongodb.com/manual/administration/install-on-linux/		
 		
 3. Install and run Flask
 4. Install pymongo `pip install pymongo`
