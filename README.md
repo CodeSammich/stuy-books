@@ -8,7 +8,38 @@ http://stuybooks.stuycs.org
 
 ### Setup Instructions
 1. Clone `stuy-books`
-2. Install and run MongoDB 
+    
+	    git clone https://github.com/CodeSammich/stuy-books.git   // https cloning
+		git clone git@github.com:CodeSammich/stuy-books.git       // ssh cloning
+
+2. Install MongoDB
+
+        // Windows
+		Download MongoDB for Windows here:
+		https://www.mongodb.com/download-center#community
+		
+		"In Windows Explorer, locate the downloaded MongoDB .msi file, which typically is located in the default Downloads folder. Double-click the .msi file. A set of screens will appear to guide you through the installation process.
+		
+		You may specify an installation directory if you choose  installation option.
+		
+		NOTE
+		These instructions assume that you have installed MongoDB to C:\mongodb.
+		MongoDB is self-contained and does not have any other system dependencies. You can run MongoDB from any folder you choose. You may install MongoDB in any folder (e.g. D:\test\mongodb).Customthe  "
+		
+		For more information: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+		
+		// Mac OSX
+		brew install mongodb
+		
+		// Ubuntu 14.04
+		sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv 7F0CEB10
+		echo "deb http://repo.mongodb.org/apt/ubuntu trusty/mongodb-org/3.0 multiverse" | sudo tee /etc/apt/sources.list.d/mongodb-org-3.0.list
+		sudo apt-get update
+		sudo apt-get install -y mongodb-org
+		
+		For more information and version-specific installation, please visit our friends at MongoDB:
+		https://docs.mongodb.com/manual/administration/install-on-linux/		
+		
 3. Install and run Flask
 4. Install pymongo `pip install pymongo`
 5. Download the "password.txt" file that we will email you, and place it in the root of the repository
@@ -19,6 +50,20 @@ http://stuybooks.stuycs.org
      - line 10 at `<!-----------------------------------GOOGLE CLIENT ID---------------------------------------->`
 	 - line 22 at `//<!-----------------------------------GOOGLE CLIENT ID---------------------------------------->//`
 
+7. Run installed packages:
+
+###### MongoDB
+
+        // Windows
+		// Mac OSX
+		// Ubuntu 14.04
+		sudo service mongod start                                   //to start MongoDB
+		[initandlisten] waiting for connections on port <port>      //to verify that MongoDB has started successfully
+		
+		sudo service mongod stop                                    //to stop MongDB
+		
+		sudo service mongod restart                                 //to stop MongoDB
+		
 ### The Team!
 
 |                                       |   **Member**   |                   **GitHub**                 |            **Role**            |
@@ -32,7 +77,7 @@ http://stuybooks.stuycs.org
 
 ##### Agenda for 6/10/16:
 
-- Frontend/middle: (Everything else is Helen + Sam)
+- Frontend/middle
 - Middleware
   - [ ] Deployment implementation
 - Backend:
@@ -47,8 +92,15 @@ http://stuybooks.stuycs.org
 (incorporate time stamps for each listing into database)
 - Historical archive for site managers (oversight of all transactions)
 - (in 'Past Transactions') add the person/user who you had transaction with
-- Rating (stars) system for sellers
 
+- Rating (stars) system for sellers
+  - profile pages for users to see other users / rate
+  - link in email to rate the transaction/user
+  - Individual ratings listed on book pages
+  - instanced profile pages for other users (to see another user's transactions, etc.)
+  - search engine for users and books + filters
+    - filter by highest rated, lowest rated, users, etc.
+	
 ### Dev-log
 
 ##### 6/09/2016
