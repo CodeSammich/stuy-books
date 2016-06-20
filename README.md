@@ -59,7 +59,9 @@ https://www.mongodb.com/download-center#community
 
 ###### Windows
 > Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/#set-up-the-mongodb-environment)
+
 ###### Mac OSX
+> Please visit the [MongoDB documentation](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-os-x/#run-mongodb)
 
 ###### Ubuntu 14.04
 	
