@@ -25,7 +25,7 @@ http://stuybooks.stuycs.org
 	 - line 22 at `//<!-----------------------------------GOOGLE CLIENT ID---------------------------------------->//`
 
 7. Run installed packages:
-
+   - [MongoDB](https://github.com/CodeSammich/stuy-books/tree/master#run-mongodb)
 
 #### MongoDB
 ###### Windows
