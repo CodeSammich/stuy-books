@@ -34,7 +34,6 @@ Book marketplace for Stuyvesant High School
 
 7. Run installed packages:
    - [MongoDB](https://github.com/CodeSammich/stuy-books/tree/master#run-mongodb)
-   - [Flask](https://github.com/CodeSammich/stuy-books/tree/master#run-flask)
    
 #### Install MongoDB
 ###### Windows
@@ -48,7 +47,7 @@ Book marketplace for Stuyvesant High School
 >	These instructions assume that you have installed MongoDB to *`C:\mongodb`*.  
 >	MongoDB is self-contained and does not have any other system dependencies. You can run MongoDB from any folder you choose. You may install MongoDB in any folder *(e.g. `D:\test\mongodb)`*  
 
-*_For more information, please [visit](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/) our friends at MongoDB_*
+*_For more information, please [visit our friends at MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)._*
 
 
 ###### Mac OSX		
@@ -62,7 +61,7 @@ Book marketplace for Stuyvesant High School
 		sudo apt-get update
 		sudo apt-get install -y mongodb-org
 		
-*_For more information and installation guides for other versions and distributions, please [visit](https://docs.mongodb.com/manual/administration/install-on-linux/) our friends at MongoDB_*
+*_For further details and installation guides for other versions and distributions, please [visit our friends at MongoDB](https://docs.mongodb.com/manual/administration/install-on-linux/)._*
 
 #### Install Flask
 ###### Windows
@@ -70,13 +69,21 @@ Book marketplace for Stuyvesant High School
 
         pip install Flask
 
-###### Mac OSX and Linux 	    
+###### Mac OSX and Linux 	 
+
 		sudo pip install Flask
 
-*_For more information and python virtual environment installation, please visit the Flask [documentation](http://flask.pocoo.org/docs/0.11/installation/):_* 
+*_For more information and python virtual environment installation, please visit [the Flask documentation](http://flask.pocoo.org/docs/0.11/installation/):_* 
 
 #### Install Pymongo
+###### Windows
+> You may have to use PowerShell or Command Prompt with administrative access
 
+	    python -m pip install pymongo
+		
+###### Mac OSX and Linux
+
+	    python -m pip install pymongo
 
 #### Run MongoDB
 
@@ -95,8 +102,6 @@ Book marketplace for Stuyvesant High School
 		
 		sudo service mongod restart                                 //to stop MongoDB
 		
-#### Run Flask
-	
 ### Daily Agenda
 
 ##### Agenda for 6/10/16:
