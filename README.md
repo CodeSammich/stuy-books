@@ -99,6 +99,7 @@ Book marketplace for Stuyvesant High School
 		
 		sudo service mongod restart                                 //to restart MongoDB
 		
+----
 ### Daily Agenda
 
 ##### Agenda for 6/10/16:
@@ -109,7 +110,8 @@ Book marketplace for Stuyvesant High School
 - Backend:
   - [ ] Search Engine Optimization
 
-### The Future
+---
+### Future Implementations
 [with notes from final client meeting on 6/10/16]
 
 - Waiting queue for pictures 
@@ -127,7 +129,12 @@ Book marketplace for Stuyvesant High School
   - search engine for users and books + filters
     - filter by highest rated, lowest rated, users, etc.
 	
+---
 ### Dev-log
+
+##### 6/20/16
+- Successful launch and host at `http://stuybooks.stuycs.org`!
+- Deployment instructions updated
 
 ##### 6/09/2016
 - Google signin redirects and only works when button is clicked.
@@ -164,7 +171,8 @@ Book marketplace for Stuyvesant High School
 - Added pages for home, login, signup, sell/buy, master book list
 - middleware integration with html/css
 
-## Original Plans + Ideas
+---
+## Original Plans, Ideas, and General Notes
 - Serial number, verify the actual book manually previously
 - Automated search and verification of a book automatically (current eBay model)
 - Tied to school email account
