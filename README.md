@@ -93,11 +93,11 @@ Book marketplace for Stuyvesant High School
 ###### Ubuntu 14.04
 	
 		sudo service mongod start                                   //to start MongoDB
-		[initandlisten] waiting for connections on port <port>      //to verify that MongoDB has started successfully
+		[initandlisten] waiting for connections on port <port>      //to verify successful launch
 		
 		sudo service mongod stop                                    //to stop MongDB
 		
-		sudo service mongod restart                                 //to stop MongoDB
+		sudo service mongod restart                                 //to restart MongoDB
 		
 ### Daily Agenda
 
