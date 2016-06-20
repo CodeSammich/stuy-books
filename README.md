@@ -71,7 +71,9 @@ https://www.mongodb.com/download-center#community
 
 ###### Mac OSX and Linux 	    
 		sudo pip install Flask
-	
+
+*_For more information and python virtual environment installation, please visit the Flask [documentation](http://flask.pocoo.org/docs/0.11/installation/):_* 
+
 #### Install Pymongo
 
 
