@@ -3,6 +3,7 @@ Book marketplace for Stuyvesant High School
 
 > "I would like to have a marketplace for students to buy and sell books, which I understand students currently do through the 'Facebooks' and the 'tweets'. If I were a student, I would not just like to find a book, but for a book of mine to be recognized."
 
+### Deployed at StuyCS.org
 [Stuy-Books at StuyCS.org ](http://stuybooks.stuycs.org)
 
 ### Setup Instructions
