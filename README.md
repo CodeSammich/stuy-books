@@ -25,10 +25,11 @@ https://www.mongodb.com/download-center#community
 >	These instructions assume that you have installed MongoDB to *`C:\mongodb`*.  
 >	MongoDB is self-contained and does not have any other system dependencies. You can run MongoDB from any folder you choose. You may install MongoDB in any folder *(e.g. `D:\test\mongodb)`*  
 >  	For more information, please visit: https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/
+
 ..*
-###### Mac OSX
-		
+###### Mac OSX		
 		brew install mongodb     // requires Homebrew
+		
 ..*		
 ###### Ubuntu 14.04
 
