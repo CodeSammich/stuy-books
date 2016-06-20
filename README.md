@@ -99,7 +99,7 @@ Book marketplace for Stuyvesant High School
 		
 		sudo service mongod restart                                 //to restart MongoDB
 
-_*For more information, please visit the MongoDB Linux [documentation](https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/#run-mongodb)*_
+> For more information, please visit the MongoDB Linux [documentation](https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/#run-mongodb)
 
 ## Daily Agenda
 
