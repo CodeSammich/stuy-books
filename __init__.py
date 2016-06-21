@@ -32,7 +32,7 @@ def requireLogin(f):
 
 @app.route('/', methods=["GET","POST"])
 @app.route('/index', methods=["GET","POST"])
-@app.route("/home/", methods=["GET","POST"])
+@app.route("/home", methods=["GET","POST"])
 def home():
     if request.method == "GET":
         if request.args.get('name') != None:
