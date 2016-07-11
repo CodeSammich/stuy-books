@@ -131,7 +131,7 @@ As of 9:23PM, 7/10/16, we are live!
 ## Dev-log
 
 ##### 7/11/16
-- We are now live at http://stuybooks.me !
+- We are now live at http://www.stuybooks.me !
 
 ##### 7/10/16
 - Due to previously unforseen errors, we have launched a private web server!
