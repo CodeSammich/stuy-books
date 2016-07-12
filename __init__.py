@@ -15,11 +15,14 @@ app = Flask(__name__)
 
 # base directory for stuy-books
 home_dir = "" #+ os.path.dirname(__file__) + '/'
-password_dir = os.path.dirname(__file__)
+password_dir = os.path.dirname(__file__) + '/'
 
 ourEmail = 'stuybooks.JASH@gmail.com'
 ourPassword = open( password_dir + 'password.txt', 'r').read()[:-1]
 #print ourPassword
+
+# hosted at NameCheap from Github Student Pack until 7/10/2017
+website_url = 'http://www.stuybooks.me' # change to official domain name once working (temporary host ip address)
 
 #Wrapper function put before routes that require user to log in
 def requireLogin(f):
@@ -104,7 +107,7 @@ def signup():
 
             user = getUser(email)
             data = urlencode({'email': user['email'], '_id': user['_id']})
-            activateLink = 'http://stuybooks.stuycs.org/activate?%s' %(data)
+            activateLink = website_url + '/activate?%s' %(data)
 
             s = smtplib.SMTP('smtp.gmail.com', 587)
             s.ehlo()
@@ -155,7 +158,7 @@ def forgot():
         setReset(email, randomGen)
 
         data = urlencode(randomGen)
-        link = 'http://stuybooks.stuycs.org/change?reset=%s' %(data)
+        link = website_url + '/change?reset=%s' %(data)
 
         s = smtplib.SMTP('smtp.gmail.com', 587)
         s.ehlo()
@@ -518,6 +521,6 @@ def logout():
     return redirect(url_for('home'))
 
 if __name__ == "__main__":
-    app.debug = True
+    app.debug = False
     app.secret_key = str(uuid4())
     app.run()
