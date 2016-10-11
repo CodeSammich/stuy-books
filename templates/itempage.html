@@ -8,7 +8,13 @@
       <span style="font-size:20px; font-weight:normal; line-height:1;">By {{thisBook['author']}}</span>
       <hr>
     </th>
-    <td style="width:auto;">USER RATING: {{userRating}}</td>
+     <td style="width:auto;">USER RATING: {{userRating}}</td>
+<!--        <a href="{{ url_for('rate', buyerEmail=currUser, sellerEmail=thisBook['email'], bookName=thisBook['bookName'], author=thisBook['author'], price=thisBook['price'], condition=thisBook['condition'], up=true ) }}"><button type="button"> Upvote </button> </a>
+            <a href="{{ url_for('rate', buyerEmail=currUser, sellerEmail=thisBook['email'], bookName=thisBook['bookName'], author=thisBook['author'], price=thisBook['price'], condition=thisBook['condition'], up=false ) }}"><button type="button"> Downvote </button> </a> -->
+<form action="/rate/{{ currUser }}/{{ thisBook['email'] }}/{{ thisBook['bookName']}}/{{ thisBook['author'] }}/{{ thisBook['price'] }}/{{ thisBook['condition'] }}/{{ true }}" method='POST'>
+  <button class="btn btn-success" type="submit"> Upvote </button> </form>
+<form action="/rate/{{ currUser }}/{{ thisBook['email'] }}/{{ thisBook['bookName']}}/{{ thisBook['author'] }}/{{ thisBook['price'] }}/{{ thisBook['condition'] }}/{{ false }}" method='POST'>
+  <button class="btn btn-success" type="submit"> Downvote </button> </form>
   </tr>
   <tr>
  <!--    <td style="width:25%;padding-top:60px;" rowspan="2"><img src={{thisBook['image_url']}} style="height:250px;"></td> -->

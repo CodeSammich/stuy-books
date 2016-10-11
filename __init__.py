@@ -419,7 +419,8 @@ def itempage(email, bookName, author, price, condition):
             if email == info[i]['email'] and bookName == info[i]['bookName'] and author == info[i]['author'] and price == info[i]['price'] and condition == info[i]['condition']:
                 thisBook = info[i]
                 userRating = database.getUserRating(email)
-                return render_template("itempage.html", thisBook=thisBook, userRating=userRating)
+                currUser = session['email']
+                return render_template("itempage.html", thisBook=thisBook, userRating=userRating, currUser=currUser)
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -639,7 +640,7 @@ def remove(email, bookName, author, price, condition):
     database.deleteAllBooks(email, bookName, author, price, condition)
     return redirect(url_for('userpage'))
 
-@app.route('/rate', methods=['GET', 'POST'])
+@app.route('/rate1', methods=['GET', 'POST'])
 def rate1():
     if request.method == 'GET':
         return render_template("rate.html")
@@ -652,32 +653,30 @@ def rate1():
             search = request.form['searchQuery']
             return redirect(url_for('search', query=search))
 
-
-@app.route('/rate/<buyerEmail>/<sellerEmail>/<bookName>/<author>/<price>/<condition>', methods=['GET', 'POST'])
+@app.route('/rate')
+@app.route('/rate/<buyerEmail>/<sellerEmail>/<bookName>/<author>/<price>/<condition>/<up>', methods=['GET', 'POST'])
 @requireLogin
-def rate(buyerEmail, sellerEmail, bookName, author, price, condition):
-    if request.method == 'GET':
+def rate(buyerEmail, sellerEmail, bookName, author, price, condition, up):
+    if request.method == 'POST':
         buyerEmail = session['email']
-        print buyerEmail
-        print "HELLLLLLLLLLLLLLLLLLLLLLLLO"
         if request.args.get("rate")!= None:
-            print "RATTTTED"
             rating = request.args.get("rate")
             print rating
 
-            if rating == 2 or rating == str(2):
+            if up == True or rating == str(2): # upvote
                 print "upvoting"
                 database.upvoteBook(sellerEmail, bookName, author, price, condition)
-            elif rating == 1 or rating == str(1):
+            elif up == False or rating == str(1): # downvote
                 print "downvoting"
                 database.downvoteBook(sellerEmail, bookName, author, price, condition)
 
-            return redirect(url_for("userpage"))
+            return redirect(url_for("itempage"))
         else:
             rated = database.getBookRating(sellerEmail, bookName, author, price, condition)
             if rated == None or rated == 0:
                 print "to be rated"
-                return render_template('rate.html', message="to be rated", buyerEmail=buyerEmail, sellerEmail=sellerEmail, bookName=bookName, author=author, price=price, condition=condition, email=buyerEmail)
+                return redirect(url_for("itempage"))
+#                return render_template('rate.html', message="to be rated", buyerEmail=buyerEmail, sellerEmail=sellerEmail, bookName=bookName, author=author, price=price, condition=condition, email=buyerEmail)
             else:
                 print "already rated"
                 return redirect(url_for("userpage"))
