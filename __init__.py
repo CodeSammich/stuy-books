@@ -663,19 +663,19 @@ def rate(buyerEmail, sellerEmail, bookName, author, price, condition, up):
             rating = request.args.get("rate")
             print rating
 
-            if up == True or rating == str(2): # upvote
+            if up == True: # upvote
                 print "upvoting"
                 database.upvoteBook(sellerEmail, bookName, author, price, condition)
-            elif up == False or rating == str(1): # downvote
+            elif up == False: # downvote
                 print "downvoting"
                 database.downvoteBook(sellerEmail, bookName, author, price, condition)
 
-            return redirect(url_for("itempage"))
+            return redirect(url_for("itempage", email=sellerEmail, bookName=bookName, author=author, price=price, condition=condition))
         else:
             rated = database.getBookRating(sellerEmail, bookName, author, price, condition)
             if rated == None or rated == 0:
                 print "to be rated"
-                return redirect(url_for("itempage"))
+                return redirect(url_for("itempage", email=sellerEmail, bookName=bookName, author=author, price=price, condition=condition))
 #                return render_template('rate.html', message="to be rated", buyerEmail=buyerEmail, sellerEmail=sellerEmail, bookName=bookName, author=author, price=price, condition=condition, email=buyerEmail)
             else:
                 print "already rated"
