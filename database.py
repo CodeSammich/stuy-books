@@ -623,6 +623,7 @@ def upvoteUser( email ):
         {'email': email},
         {'$set': {'vote': user['votes']}}
     )
+    return True
 
 def upvoteBook(email, bookName, author, price, condition):
     '''
@@ -687,7 +688,7 @@ def downvoteUser( email ):
         {'email': email},
         {'$set': {'vote': user['votes']}}
     )
-
+    return True
 
 def downvoteBook(email, bookName, author, price, condition):
     '''
@@ -716,7 +717,7 @@ def downvoteBook(email, bookName, author, price, condition):
         {'email': email, 'bookName': bookName},
         {'$set': {'rating': book['rating']}}
     )
-    
+
     # Downvote seller as well
     downvoteUser( email )
     return True

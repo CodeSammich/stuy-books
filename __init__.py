@@ -137,8 +137,8 @@ def home():
             else:
                 return redirect(url_for('login', msg="Email is not valid. Please use a stuy.edu email."))
         else:
-#            path = path.dirname("index.html")
-#            print path
+            #            path = path.dirname("index.html")
+            #            print path
             return render_template("index.html")
     else:
         search = request.form['searchQuery']
@@ -327,7 +327,7 @@ def userpage():
     if request.method == "GET":
         email = session.get('email', None)
         print email
-#        print email
+        #        print email
         if email != siteAdmin:
             info = database.listBooksForUser(email)
             bought = database.listBoughtForUser(email)
@@ -349,7 +349,7 @@ def userpage():
                     pending.append(info[i])
                 else:
                     sold.append(info[i])
-                i+=1
+                    i+=1
             return render_template("userpage.html", info=info, available=available, pending=pending, sold=sold, bought=bought, admin=False, email=email)
         else:
             return redirect(url_for('admin'))
@@ -659,24 +659,25 @@ def rate1():
 def rate(buyerEmail, sellerEmail, bookName, author, price, condition, up):
     if request.method == 'POST':
         buyerEmail = session['email']
-        if request.args.get("rate")!= None:
-            rating = request.args.get("rate")
-            print rating
+        rating = request.args.get("rate")
+        print "HELLO"
 
-            if up == True: # upvote
-                print "upvoting"
-                database.upvoteBook(sellerEmail, bookName, author, price, condition)
-            elif up == False: # downvote
-                print "downvoting"
-                database.downvoteBook(sellerEmail, bookName, author, price, condition)
+        if up == 'True': # upvote
+            print "upvoting"
+            database.upvoteBook(sellerEmail, bookName, author, price, condition)
+
+            return redirect(url_for("itempage", email=sellerEmail, bookName=bookName, author=author, price=price, condition=condition))
+        elif up == 'False': # downvote
+            print "downvoting"
+            database.downvoteBook(sellerEmail, bookName, author, price, condition)
 
             return redirect(url_for("itempage", email=sellerEmail, bookName=bookName, author=author, price=price, condition=condition))
         else:
             rated = database.getBookRating(sellerEmail, bookName, author, price, condition)
-            if rated == None or rated == 0:
+            if rated == None:
                 print "to be rated"
                 return redirect(url_for("itempage", email=sellerEmail, bookName=bookName, author=author, price=price, condition=condition))
-#                return render_template('rate.html', message="to be rated", buyerEmail=buyerEmail, sellerEmail=sellerEmail, bookName=bookName, author=author, price=price, condition=condition, email=buyerEmail)
+            #                return render_template('rate.html', message="to be rated", buyerEmail=buyerEmail, sellerEmail=sellerEmail, bookName=bookName, author=author, price=price, condition=condition, email=buyerEmail)
             else:
                 print "already rated"
                 return redirect(url_for("userpage"))

@@ -31,7 +31,7 @@ Not to be confused with 'rating', a book also has a 'search_priority' element*
 
 '''
 
-
+import math
 import re
 import database # imports database functions, not variables
 from database import client # client is global variable only to database.py
@@ -88,7 +88,7 @@ def confidence( book ):
     if ups + downs == 0:
         return 0
     else:
-        return wilson_confidence( ups, down )
+        return wilson_score_interval( ups, downs )
 
 def wilson_score_interval( ups, downs ):
     '''
@@ -111,7 +111,7 @@ def wilson_score_interval( ups, downs ):
     p = float(ups) / n
 
     left = p + 1/(2*n)*z*z
-    right = z * sqrt( p*(1-p) / n + z*z/ (4*n*n))
+    right = z * math.sqrt( p*(1-p) / n + z*z/ (4*n*n))
     under = 1+ 1/n *z*z
 
     return (left - right) / under
