@@ -8,16 +8,23 @@
   <!--same as the user page, except it displays ALL listings (we'll worry about filter/organizing later)-->
   {% for item in info %}
   <table style="height:150px;width:80% !important;">
+    </tr>
     <tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}"><img src={{item['image_url']}}></a></td></tr>
     <tr>
       <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
         <span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
         <p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
       </td>
+      <td>
+        Rating for this seller: {{item['rating']}}
+      </td>
+
     </tr>
+    {% endfor %}
+
+
   </table>
   <hr>
-  {% endfor %}
   <!--end for loop-->
 
 {% endif %}

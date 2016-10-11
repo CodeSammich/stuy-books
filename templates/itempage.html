@@ -5,9 +5,11 @@
 
 <table style="width:100%;">
   <tr><th colspan="3" style="font-size:30px;">{{thisBook['bookName']}}<br>
-    <span style="font-size:20px; font-weight:normal; line-height:1;">By {{thisBook['author']}}</span>
-<hr>
-  </th></tr>
+      <span style="font-size:20px; font-weight:normal; line-height:1;">By {{thisBook['author']}}</span>
+      <hr>
+    </th>
+    <td style="width:auto;">USER RATING: {{userRating}}</td>
+  </tr>
   <tr>
  <!--    <td style="width:25%;padding-top:60px;" rowspan="2"><img src={{thisBook['image_url']}} style="height:250px;"></td> -->
     <td style="padding-left:25px;padding-bottom:30px;" colspan="3"><br><span class="info">Item condition:</span>&nbsp;&nbsp;&nbsp;<b>{{thisBook['condition']}}</b><br>
@@ -15,7 +17,7 @@
     </td>
   </tr>
   <tr>
-    <td style="height:300px; width:300px; text-align:center;"><img src={{thisBook['image_url']}} style="height:100%;"></a></td>
+    <td style="height:300px; width:300px; text-align:center;"><img src={{thisBook['image_url']}} style="height:300px; width:400px;"></a></td>
     <td style="width:auto;"></td>
     <td style="text-align:center; width:450px;background-color:#EEEEEE; border-radius:10px; padding:50px;">
       <span style="font-size:20px;">Price:&nbsp;&nbsp;&nbsp;$ {{thisBook['price']}}</span><br><br><br>
@@ -33,7 +35,6 @@
         {% endif %}
       {% endif %}
     </td>
-    <td style="width:auto;"></td>
   </tr>
   <tr><td colspan="3" style="padding-top:50px;"><span class="info">ISBN #: </span>{{thisBook['isbn']}}<br><br>
     <span class="info">Additional information/comments: </span> {{thisBook['description']}}</td></tr>

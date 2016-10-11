@@ -2,7 +2,7 @@
 {% block title %}userpage{% endblock %}
 {% block contents %}
 <div class="userpage">
-
+  {% if not admin %}
   {% if message|length > 0 %}
   <p color='purple'>{{message}}</p>
   {% endif %}
@@ -11,7 +11,16 @@
   <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#active">ACTIVE LISTINGS</a></li>
     <li><a data-toggle="tab" href="#pending">PENDING...</a></li>
-    <li><a data-toggle="tab" href="#past">PAST TRANSACTIONS</a></li>
+    <li role="presentation" class="dropdown">
+      <a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+        PAST TRANSACTIONS <span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu" style="width:100%; text-align:center;">
+        <li><a data-toggle="tab" href="#bought">Items Bought</a></li>
+        <li><a data-toggle="tab" href="#sold">Items Sold</a></li>
+      </ul>
+    </li>
+
 
   </ul>
 
@@ -26,12 +35,12 @@
 	<tr><td rowspan="4" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}"> <img src={{item['image_url']}}> </a> </td></tr>
 	<tr>
 	  <td style="text-align:left; line-height:1.75;" colspan="2"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
-	    <span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+	    <span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}<br>
     </td>
   </tr>
   <tr><td colspan="2"><p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p></td></tr>
-	<tr><td><button> <a href="/edit/{{item['bookName']}}">Edit Book Information</a></button></td>
-	 <td><button><a href="/remove/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}">Remove Book from List</a></button></td></tr>
+  	<tr><td><a class="btn btn-primary" role="button" href="/edit/{{item['bookName']}}">Edit Book Information</a></button></td>
+	 <td><a class="btn btn-primary" role="button" href="/remove/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}">Remove Book from List</a></button></td></tr>
       </table>
       <hr>
       {% endfor %}
@@ -51,13 +60,13 @@
     <tr><td rowspan="4" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}"> <img src={{item['image_url']}}> </a> </td></tr>
     <tr>
       <td style="text-align:left; line-height:1.75;" colspan="2"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
-	<span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
-	<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+	<span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}<br>
+	<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}<br></p>
       </td>
     </tr>
     <tr>
-      <td><button type="button" class="btn"><a href='/cancel/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Cancel Transaction</a></button>
-      <td><button><a href='/finish/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Transaction Complete</a></button><br></td>
+      <td><a class="btn btn-primary" role="button" href='/cancel/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Cancel Transaction</a></button>
+      <td><a class="btn btn-primary" role="button" href='/finish/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Transaction Complete</a></button><br></td>
     </tr>
   </table>
   <hr>
@@ -68,9 +77,36 @@
 </div>
 
 
-<div id="past" class="tab-pane fade">
-  <h3>PAST TRANSACTIONS</h3>
-  <p>Past items sold or bought.</p>
+<div id="bought" class="tab-pane fade">
+  <h3>ITEMS BOUGHT</h3>
+  <p>Past items bought.</p>
+  <br>
+  {% if bought|length > 0 %}
+  {% for item in bought %}
+  <p>Past transactions of items you *bought*.</p>
+  <br>
+  <table style="height:150px;width:80% !important;">
+    <tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}"> <img src={{item['image_url']}}> </a> </td></tr>
+    <tr>
+      <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+	<span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+	<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+      </td>
+      <td><a href="/rate/{{email}}/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}">Rate this transaction</a>
+      </td>
+    </tr>
+  </table>
+  <hr>
+  {% endfor %}
+</table>
+{% endif %}
+
+</div>
+
+
+<div id="sold" class="tab-pane fade">
+  <h3>ITEMS SOLD</h3>
+  <p>Past transactions of items you *sold*.</p>
   <br>
   {% if sold|length > 0 %}
   {% for item in sold %}
@@ -89,6 +125,116 @@
 {% endif %}
 
 </div>
+
 </div>
+</div>
+<br><br><br>
+<!--------------------------- Admin Page --------------------->
+
+{% else %}
+<h2> Administrative Account </h2>
+<ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#unapproved">Unapproved Images</a></li>
+  <li><a data-toggle="tab" href="#reports">Reports</a></li>
+
+</ul>
+
+<div class="tab-content">
+  <div id="active" class="tab-pane fade in active">
+    <h3>Unapproved Images</h3>
+    <p>Listing of the images pending approval.</p>
+    <br>
+    {% if unapproved|length > 0 %}
+    {% for item in unapproved %}
+    <table style="height:150px;width:80% !important;">
+      <tr><td rowspan="4" style="width:150px;"><a href=""> <img src={{item}}> </a> </td></tr>
+      <tr><td><a class="btn btn-success" role="button" href="/approve/{{item}}">Approve</a></button></td>
+ <td><a class="btn btn-danger" role="button" href="/veto/{{item}}">Veto</a></button></td></tr>
+    </table>
+    <hr>
+    {% endfor %}
+</table>
+{% endif %}
+
+</div>
+
+<!--
+<div id="report" class="tab-pane fade">
+<h3>Reports</h3>
+<p>Reports and complaints by students.</p>
+<br>
+{% if reports|length > 0 %}
+{% for item in reports %}
+<table style="height:150px;width:80% !important;">
+  <tr><td rowspan="4" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}"> <img src={{item['image_url']}}> </a> </td></tr>
+  <tr>
+    <td style="text-align:left; line-height:1.75;" colspan="2"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+<span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}<br>
+<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}<br></p>
+    </td>
+  </tr>
+  <tr>
+    <td><a class="btn btn-primary" role="button" href='/cancel/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Cancel Transaction</a></button>
+    <td><a class="btn btn-primary" role="button" href='/finish/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}'>Transaction Complete</a></button><br></td>
+  </tr>
+</table>
+<hr>
+{% endfor %}
+</table>
+{% endif %}
+
+</div>
+
+
+<div id="bought" class="tab-pane fade">
+<h3>ITEMS BOUGHT</h3>
+<p>Past items bought.</p>
+<br>
+{% if bought|length > 0 %}
+{% for item in bought %}
+<p>Past transactions of items you *bought*.</p>
+<br>
+<table style="height:150px;width:80% !important;">
+  <tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}"> <img src={{item['image_url']}}> </a> </td></tr>
+  <tr>
+    <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+<span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+    </td>
+    <td><a href="/rate/{{email}}/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}">Rate this transaction</a>
+    </td>
+  </tr>
+</table>
+<hr>
+{% endfor %}
+</table>
+{% endif %}
+
+</div>
+
+
+<div id="sold" class="tab-pane fade">
+<h3>ITEMS SOLD</h3>
+<p>Past transactions of items you *sold*.</p>
+<br>
+{% if sold|length > 0 %}
+{% for item in sold %}
+<table style="height:150px;width:80% !important;">
+  <tr><td rowspan="3" style="width:150px;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}"> <img src={{item['image_url']}}> </a> </td></tr>
+  <tr>
+    <td style="text-align:left; line-height:1.75;"><a href="/itempage/{{item['email']}}/{{item['bookName']}}/{{item['author']}}/{{item['price']}}/{{item['condition']}}" style="font-size:20px;">{{item['bookName']}}</a>&nbsp;&nbsp;&nbsp;
+<span style="color:#777;font-size:13px;">{{item['condition']}}</span><br>By {{item['author']}}
+<p style="text-align:center; font-size:18px; color:#C0392B; width:100%;">$ {{item['price']}}</p>
+    </td>
+  </tr>
+</table>
+<hr>
+{% endfor %}
+</table>
+{% endif %}
+</div>
+
+{% endif %}
+-->
 </div>
 {% endblock %}

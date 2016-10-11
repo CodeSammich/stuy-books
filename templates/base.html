@@ -15,12 +15,15 @@
     <!-- Bootstrap for select drop-down menus-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"></script>
+    <!-- For: rating system only-->
+    <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='rate.js') }}"></script>
 
 
     <link rel="shortcut icon" href="{{ url_for('static', filename='logo.png') }}">
     <link rel="stylesheet" type="text/css" href="/static/style.css"/>
 
-    <meta name="google-signin-client_id" content="<!-----------------------------------GOOGLE CLIENT ID---------------------------------------->">
+    <meta name="google-signin-client_id" content="<!--------GOOGLE CLIENT----------->">
 
     <body>
       <div class="top">
@@ -65,7 +68,12 @@
 		  <!--<li><a href="#">Settings</a></li>-->
 		  <!--<li><a href="#">Something</a></li>-->
 		  <!--<li role="separator" class="divider"></li>-->
-      <li style="text-align:center;"><a href="/userpage">MY ACTIVITY</a></li>
+		  {% if not admin %}
+		  <li style="text-align:center;"><a href="/userpage">MY ACTIVITY</a></li>
+		  {% endif %}
+		  {% if admin %}
+		  <li style="text-align:center;"><a href="/admin">ADMIN PAGE</a></li>
+		  {% endif %}
       <li role="separator" class="divider"></li>
 		  <li>
 		    <script src="https://apis.google.com/js/platform.js?onload=renderButton" async defer></script>

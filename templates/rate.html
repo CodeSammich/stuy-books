@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}rate{% endblock %}
+{% block contents %}
+
+
+<fieldset class="rating">
+    <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="Poor"></label>
+    <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="Very bad"></label>
+</fieldset>
+<br>
+<!--<button type="submit" name="signup" value="Submit" style="color: black;">Rate</button>-->
+
+<p hidden id="buyerEmail">{{buyerEmail}}</p>
+<p hidden id="sellerEmail">{{sellerEmail}}</p>
+<p hidden id="bookName">{{bookName}}</p>
+<p hidden id="author">{{author}}</p>
+<p hidden id="price">{{price}}</p>
+<p hidden id="condition">{{condition}}</p>
+
+<p id="demo" style="color: black;"></p>
+
+
+<p style="color: black;"></p>
+
+
+{% endblock %}

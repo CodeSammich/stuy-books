@@ -3,9 +3,6 @@ Book marketplace for Stuyvesant High School
 
 > "I would like to have a marketplace for students to buy and sell books, which I understand students currently do through the 'Facebooks' and the 'tweets'. If I were a student, I would not just like to find a book, but for a book of mine to be recognized."
 
-
-~~As of 12:08PM, 6/20/16, we are live!~~
-
 As of 9:23PM, 7/10/16, we are live!
 #### [Stuybooks!](http://stuybooks.me)
 
@@ -24,7 +21,6 @@ As of 9:23PM, 7/10/16, we are live!
     
 	    git clone https://github.com/CodeSammich/stuy-books.git   // https cloning
 		git clone git@github.com:CodeSammich/stuy-books.git       // ssh cloning
-		
 2. [Install MongoDB](https://github.com/CodeSammich/stuy-books/tree/master#install-mongodb)
 3. [Install Flask](https://github.com/CodeSammich/stuy-books/tree/master#install-flask)
 4. [Install pymongo](https://github.com/CodeSammich/stuy-books/tree/master#install-pymongo)
@@ -52,7 +48,6 @@ As of 9:23PM, 7/10/16, we are live!
 >	MongoDB is self-contained and does not have any other system dependencies. You can run MongoDB from any folder you choose. You may install MongoDB in any folder *(e.g. `D:\test\mongodb)`*  
 
 *_For more information, please [visit our friends at MongoDB](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-windows/)._*
-
 
 ###### _*Mac OSX*_
 
@@ -106,8 +101,31 @@ As of 9:23PM, 7/10/16, we are live!
 
 > For more information, please visit the MongoDB Linux [documentation](https://docs.mongodb.com/v3.0/tutorial/install-mongodb-on-ubuntu/#run-mongodb)
 
-###### Known Bugs
- - Login page crashes
+## Daily Agenda
+
+##### Agenda for 6/20/16:
+
+- Frontend/middle
+ - [ ] User profile / Item Page update with user rating
+ - [ ] System Admin Page
+ - [ ] Buttons for filter system in search engine (sort by rating, price, etc.)
+ - [ ] Report buttons
+- Middleware
+ - [ ] Filtering system for search engine
+ - [ ] System administrative options connect with backend
+- Backend:
+  - [ ] User rating
+  - [ ] Search engine ranks automatically by user rating
+  - [ ] Report inappropriate images and send email to administrator
+  - [ ] System administrator can approve auto-generated images
+    - [ ] If image_url exists in "preapproved" database, auto-validate
+	- [ ] If image_url doesn't exist yet, send to admin
+  - [ ] Search engine filtering (user rating, price, etc.)
+  - [ ] Search Engine Optimization
+  
+## Known Bugs
+
+  
 ---
 ## Future Implementations
 [with notes from final client meeting on 6/10/16]
@@ -129,6 +147,26 @@ As of 9:23PM, 7/10/16, we are live!
 	
 ---
 ## Dev-log
+
+##### 7/20/16
+- System administrative options nears beta stage
+   - Approve and veto in progress
+   - System admin console documentation improved
+   - Special "All Listings" edge case bug where said page would crash when sysadmin submitted a book has been fixed
+- Still need to finish beta test for rating options
+   - Front end for rating, upvote and downvote in progress
+       - Adjustments for individual item pages and search results/all listings in progress
+
+##### 7/19/16
+- Greatly improved development and design clarity
+   - Added detailed design notes on each file
+   - Separated database.py into multiple files for easier maintanance
+- Rating mechanic system
+   - Leaves alpha development stage
+     - upvote/downvote system in place
+   - Enter beta bug testing stage
+- System administrative options
+   - Enters alpha development stage
 
 ##### 7/11/16
 - We are now live at http://stuybooks.me !
@@ -154,7 +192,6 @@ As of 9:23PM, 7/10/16, we are live!
 - Flow chart created in class
 - Tooltips for signup/forms
 
-
 ##### 5/27/16
 - Backend search engine function working properly
 - Search engine connected to some of the front end pages
@@ -174,7 +211,7 @@ As of 9:23PM, 7/10/16, we are live!
  - user databases, books database/structure
 
 ##### 5/19/16
-- Added pages for home, login, signup, sell/buy, master book list
+- Added pages for home, login, signup, sell/buy, helen book list
 - middleware integration with html/css
 
 ---
@@ -208,3 +245,4 @@ As of 9:23PM, 7/10/16, we are live!
 
 ** Not initial feature, may devolve into irrelevant chat **
 
+# Stuy-books uses Bootstrap under the [MIT License](http://choosealicense.com/licenses/mit/).

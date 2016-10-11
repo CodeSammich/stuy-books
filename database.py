@@ -1,21 +1,70 @@
-# Authors: Samuel Zhang, Jeffrey Zou
-# Description: Deals with the database (if that wasn't obvious)
+'''
+Authors: Samuel Zhang, Jeffrey Zou
+Description: Deals with accounts, books, and related operations
+
+Requires MongoDB Installation, please refer to README.md
+
+------------------------------------
+DATABASE DESIGN NOTES:
+
+MONGO:
+
+Database Structure:
+Database
+---- Collections
+
+Ex.
+"accounts-database"
+---- "accounts"
+--------- 'email'
+--------- 'passwordHash'
+--------- etc.
+
+
+CURRENT DATABASES:
+
+'accounts-database': Users' accounts, including sysadmin
+--- 'email'
+--- 'passwordHash'
+--- 'status' : 0: unactivated, 1: activated
+--- 'reset' : used only for resetting passwords
+--- 'userRating' : user's public rating *
+--- 'upvotes' : number of upvotes user received **
+--- 'downvotes' : number of downvotes user received **
+--- 'votes' : total number of votes user received
+
+     *  not used for ranking
+     ** 'upvotes', 'downvotes' are total of each book's 'rating' (See below)
+
+'books-database': Book database
+--- 'email' : seller's email
+--- 'bookName'
+--- 'author'
+--- 'isbn'
+--- 'subject'
+--- 'condition' : condition of book (e.g. New, Acceptable, Used)
+--- 'price'
+--- 'image_url' : image used for thumbnail, see 'image.py' for details
+--- 'status': book's availability; 'Available', 'Pending', 'Sold'
+--- 'buyerEmail': potential buyer's email
+--- 'rating' : book's rating (+1, 0, -1) ***
+--- 'search_priority' : used only for search ranking algorithm, no direct access ***
+
+    *** Please see 'ranking.py' for details
+
+'''
+
 
 from pymongo import MongoClient
 
-# Google Image
-from bs4 import BeautifulSoup
-import urllib2
-import re
+#from search import *
+#from image import *
+import image
+
 #------------------------- Establish MongoDB Connection ----------------#
 client = MongoClient()
 
-#### Data is stored in databases, under which are collections.
-#### Ex. "accounts-database" is a database, and "accounts" is the collection
-#### "accounts" contains all the "Documents" that have each user's information
-#### Databases: accounts-database, books-database
-
-#------------------------- Setup User -------------------------#
+#------------------------- Account Management ---------------------------#
 def addUser(email, passwordHash, status=0, reset=''):
     '''
     Adds user to the database
@@ -28,6 +77,7 @@ def addUser(email, passwordHash, status=0, reset=''):
         String with errors, or empty string if there aren't any
     '''
     dbnames = client.database_names()
+#    print dbnames
     db = client['accounts-database']
 
     accounts = db['accounts']
@@ -48,13 +98,55 @@ def addUser(email, passwordHash, status=0, reset=''):
     accounts.insert_one({
         'email': email,
         'passwordHash': passwordHash,
-        'status': 0,
-        'reset': ''
+        'status': status,
+        'reset': '',
+        'userRating': 0, #from 0 to 5
+        'upvotes': 0,
+        'downvotes': 0,
+        'votes': 0
         #'first': first,
         #'last': last
     })
     return ''
 
+def authenticate(email, passwordHash):
+    '''
+    Checks to see if email and password exist in the database
+    args:
+        email (string)
+        passwordHash (string)
+    Returns:
+        True if the password and email exist in the database, False otherwise
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    #definitely only 1 acc.
+    result = accounts.find_one({'email': email, 'passwordHash': passwordHash, 'status': 1})
+    if result == None:
+        return False
+    #if not getStatus(email):
+        #return False
+    return True
+
+def hasReset(code):
+    '''
+    Looks for the user with a reset code and sets it back to empty string
+    Args:
+        code (string)
+    Returns:
+        True
+    '''
+    db = client['accounts-database']
+    accounts = client['accounts']
+    accounts.find_one_and_update(
+        {'reset': code},
+        {
+            '$set': {'reset': ''}
+        }
+    )
+    return True
+
+#---------------------- Get Functions ------------------------#
 def getUser(email):
     '''
     Gets the document for a user from the db
@@ -85,6 +177,183 @@ def getStatus(email):
         return False
     return True
 
+def getEmailFromReset(code):
+    '''
+    Gets a user's email from reset code (only use when resetting, pretty much impossible elsewhere)
+    Args:
+        code (string)
+    Returns:
+        The email (string) or None
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    result = accounts.find_one({'reset': code})
+    return result['email'] or None
+
+def getUserRating(email):
+    '''
+    Gets a user's net rating
+    Args:
+        email (string)
+    Returns:
+        rating (integer)
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    user = accounts.find_one({'email': email})
+#    print user
+    #return user['userRating'] or None
+    try:
+        print "database user rating upvotes: "
+        print user['upvotes']
+        return user['upvotes'] - user['downvotes']
+    except KeyError:
+        return 0
+
+def getUpvotes():
+    '''
+    Gets a user's upvotes
+    Args:
+        email (string)
+    Returns:
+        upvotes (integer)
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    user = accounts.find_one({'email': email})
+    try:
+        return user['upvotes']
+    except KeyError:
+        return 0
+
+def getDownvotes():
+    '''
+    Gets a user's downvotes
+    Args:
+        email (string)
+    Returns:
+        downvotes (integer)
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    user = accounts.find_one({'email': email})
+    try:
+        return user['downvotes']
+    except KeyError:
+        return 0
+
+def getNumberVotes(email):
+    '''
+    Get the number of voters for user
+    Args:
+        email (string)
+    Returns:
+        votes (integer)
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    try:
+        return accounts.find_one({'email': email})['votes']
+    except KeyError:
+        return 0
+
+def getBookStatus(bookName):
+    '''
+    Gets the status of a book
+    Args:
+        bookName (string)
+    Returns:
+        Status of the book
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find_one({'bookName': bookName})
+    return results['status']
+
+def getBookInfo(bookName, email):
+    '''
+    Gets the info of a book
+    Args:
+        bookName (string)
+        email (string)
+    Returns
+        List containing book info
+        [ bookName (string)
+        author (string)
+        isbn (string)
+        subject (string)
+        condition (string)
+        price (string)
+        buyerEmail (string) ]
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find_one({'bookName': bookName, 'email': email})
+    if results == None:
+        return None
+    return {'bookName': results['bookName'],
+            'author': results['author'],
+            'isbn': results['isbn'],
+            'subject': results['subject'],
+            'condition': results['condition'],
+            'price': results['price'],
+            'buyerEmail': results['buyerEmail'],
+            }
+
+def getSellersForBook(bookName):
+    '''
+    Looks up people who are selling a book
+    Args:
+        bookName (string)
+    Returns:
+        A list of sellers for the book
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find({'bookName', bookName})
+    #return [results[i]['email'] for i in range(results.count)]
+    people = []
+    for r in results:
+        people.append[r]
+    #remove duplicates
+    seen = set()
+    seenmore = seen.add
+    return [x for x in people if not (x in seen or x in seenmore(x))]
+
+def getBuyerEmail(email, bookName, author, price, condition):
+    '''
+    Gets the buyer email for a book
+    Args:
+        email (string)
+        bookName (string)
+        author (sting)
+        price (string)
+        condition (string)
+    Returns:
+        buyerEmail (string)
+    '''
+    db = client['books-database']
+    books = db['books']
+    return books.find_one({'email': email, 'bookName': bookName, 'author': author, 'price': price, 'condition': condition})['buyerEmail']
+
+def getBookRating(email, bookName, author, price, condition):
+    '''
+    Gets the rating for a book
+    Args:
+        email (string)
+        bookName (string)
+        author (sting)
+        price (string)
+        condition (string)
+    Returns:
+        rating (None/integer)
+    '''
+    db = client['books-database']
+    books = db['books']
+    return books.find_one({'email': email, 'bookName': bookName, 'author': author, 'price': price, 'condition': condition})['rating']
+
+#---------------------- Set Functions ------------------------#
+
 def updateStatus(email):
     '''
     Updates the status of an account
@@ -99,25 +368,6 @@ def updateStatus(email):
         {'email': email},
         {'$set': {'status': 1}}
     )
-    return True
-
-def authenticate(email, passwordHash):
-    '''
-    Checks to see if email and password exist in the database
-    args:
-        email (string)
-        passwordHash (string)
-    Returns:
-        True if the password and email exist in the database, False otherwise
-    '''
-    db = client['accounts-database']
-    accounts = db['accounts']
-    #definitely only 1 acc.
-    result = accounts.find_one({'email': email, 'passwordHash': passwordHash})
-    if result == None:
-        return False
-    #if not getStatus(email):
-        #return False
     return True
 
 def updatePassword(email, newPasswordHash):
@@ -160,34 +410,23 @@ def setReset(email, code):
     )
     return True
 
-def getEmailFromReset(code):
+def changeUserRating(email, rating):
     '''
-    Gets a user's email from reset code (only use when resetting, pretty much impossible elsewhere)
+    Changes the user rating by averaging it with the new rating
     Args:
-        code (string)
-    Returns:
-        The email (string) or None
-    '''
-    db = client['accounts-database']
-    accounts = db['accounts']
-    result = accounts.find_one({'reset': code})
-    return result['email'] or None
-
-def hasReset(code):
-    '''
-    Looks for the user with a reset code and sets it back to empty string
-    Args:
-        code (string)
+        email (string)
+        new rating (integer)
     Returns:
         True
     '''
     db = client['accounts-database']
     accounts = client['accounts']
+    user = accounts.find_one({'email': email})
+    oldRating = user['rating']
+    raters = user['raters']
     accounts.find_one_and_update(
-        {'reset': code},
-        {
-            '$set': {'reset': ''}
-        }
+        {'email': email},
+        {'$set': {'rating': (oldRating * raters + rating)/(raters + 1), 'raters': raters + 1}}
     )
     return True
 
@@ -205,7 +444,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
         subject (string)
         condition (string)
         price (string)
-        status (string) available, pending, sold
+        status (string) available, pending, sold, inappropriate
 
     Empty string if information doesn't exist
 
@@ -217,7 +456,7 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
     db = client['books-database']
     books = db['books']
 
-    image_url = get_image_url( bookName + author + isbn )
+    image_url = image.get_image_url( bookName + author + isbn )
     results = books.find_one({'email': email, 'bookName':bookName, 'author': author, 'price': price, 'condition': condition})
     if results == None:
         books.insert_one({'email':email,
@@ -229,7 +468,9 @@ def addBook(email, bookName, author, isbn, subject, condition, price, status='av
                           'price': price,
                           'image_url': image_url,
                           'status': status,
-                          'buyerEmail': ''
+                          'buyerEmail': '',
+                          'rating': None,
+                          'search_priority': None #ONLY FOR SEARCH: SEE 'ranking.py'
                           })
         return True
     return False
@@ -251,6 +492,8 @@ def deleteAllBooks(email, bookName, author, price, condition):
     books.find_one_and_delete({'email': email, 'bookName': bookName, 'author': author ,'price': price, 'condition': condition})
     return True
 
+
+#------------------------- Set Functions -------------------------#
 def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, price, image_url):
     '''
     Updates the book in the database for a book owned by a user (note neither the owner nor the title are changed)
@@ -306,48 +549,6 @@ def updateBookInfo(oldName, email, bookName, author, isbn, subject, condition, p
         )
     return True
 
-def getBookStatus(bookName):
-    '''
-    Gets the status of a book
-    Args:
-        bookName (string)
-    Returns:
-        Status of the book
-    '''
-    db = client['books-database']
-    books = db['books']
-    results = books.find_one({'bookName': bookName})
-    return results['status']
-
-def getBookInfo(bookName, email):
-    '''
-    Gets the info of a book
-    Args:
-        bookName (string)
-        email (string)
-    Returns
-        List containing book info
-        [ bookName (string)
-        author (string)
-        isbn (string)
-        subject (string)
-        condition (string)
-        price (string)
-        buyerEmail (string) ]
-    '''
-    db = client['books-database']
-    books = db['books']
-    results = books.find_one({'bookName': bookName, 'email': email})
-    if results == None:
-        return None
-    return {'bookName': results['bookName'],
-            'author': results['author'],
-            'isbn': results['isbn'],
-            'subject': results['subject'],
-            'condition': results['condition'],
-            'price': results['price'],
-            'buyerEmail': results['buyerEmail'],
-            }
 
 def setBuyerEmail(bookName, sellerEmail, author, price, condition, buyerEmail):
     '''
@@ -370,22 +571,6 @@ def setBuyerEmail(bookName, sellerEmail, author, price, condition, buyerEmail):
     )
     return True
 
-def getBuyerEmail(email, bookName, author, price, condition):
-    '''
-    Gets the buyer email for a book
-    Args:
-        email (string)
-        bookName (string)
-        author (sting)
-        price (string)
-        condition (string)
-    Returns:
-        buyerEmail (string)
-    '''
-    db = client['books-database']
-    books = db['books']
-    return books.find_one({'email': email, 'bookName': bookName, 'author': author, 'price': price, 'condition': condition})['buyerEmail']
-
 def setBookStatus(bookName, email, author, price, condition, stat):
     '''
     Sets the status of a book
@@ -407,62 +592,134 @@ def setBookStatus(bookName, email, author, price, condition, stat):
     )
     return True
 
-def getSellersForBook(bookName):
+def upvoteUser( email ):
     '''
-    Looks up people who are selling a book
+    Upvotes a particular user
+    '''
+    db = client['accounts-database']
+    accounts = db['accounts']
+    user = accounts.find_one( {'email': email} )
+
+    if user['upvotes'] == None:
+        print "user upvote to 1"
+        user['upvotes'] = 1
+    else:
+        print "user vote incremented"
+        user['upvotes'] += 1
+        print user['upvotes']
+
+    if user['votes'] == None:
+        print "user vote to 1"
+        user['votes'] = 1
+    else:
+        user['votes'] += 1 # total number of votes
+
+    accounts.find_one_and_update(
+        {'email': email},
+        {'$set': {'upvotes': user['upvotes']}}
+    )
+
+    accounts.find_one_and_update(
+        {'email': email},
+        {'$set': {'vote': user['votes']}}
+    )
+
+def upvoteBook(email, bookName, author, price, condition):
+    '''
+    Upvotes a book's rating and seller
+    For more info on book rating vs. user rating, check 'ranking.py'
     Args:
+        email (string)
         bookName (string)
+        author (sting)
+        price (string)
+        condition (string)
     Returns:
-        A list of sellers for the book
+        True
     '''
     db = client['books-database']
     books = db['books']
-    results = books.find({'bookName', bookName})
-    #return [results[i]['email'] for i in range(results.count)]
-    people = []
-    for r in results:
-        people.append[r]
-    #remove duplicates
-    seen = set()
-    seenmore = seen.add
-    return [x for x in people if not (x in seen or x in seenmore(x))]
+    book = books.find_one({'email': email, 'bookName': bookName, 'author': author, 'price': price, 'condition': condition})
 
-# ------------------------ Image Scraping from Google --------------#
-def get_soup(url, header):
+    current_rating = book['rating']
+    if current_rating == None:
+        book['rating'] = 1
+        current_rating = 1
+    else:
+        book['rating'] = current_rating + 1
+        current_rating += 1
+
+    books.find_one_and_update(
+        {'email': email, 'bookName': bookName},
+        {'$set': {'rating': current_rating}}
+    )
+
+    # Upvote user as well
+    upvoteUser( email )
+    return True
+
+def downvoteUser( email ):
     '''
-    Helper function for get_image_url
-    Input:
-        url (string)
-        header (string)
-    Output:
-        Blaaah
+    Downvotes a particular user
     '''
-    return BeautifulSoup( urllib2.urlopen(urllib2.Request(url,headers=header)), "html.parser" )
+    db = client['accounts-database']
+    accounts = db['accounts']
+    user = accounts.find_one( {'email': email} )
 
-def get_image_url(query):
+    if user['downvotes'] == None:
+        user['downvotes'] = 1
+    else:
+        user['downvotes'] += 1
+        print user['downvotes']
+
+    if user['votes'] == None:
+        print "user vote to 1"
+        user['votes'] = -1
+    else:
+        user['votes'] -= 1 # total number of votes
+
+    accounts.find_one_and_update(
+        {'email': email},
+        {'$set': {'downvotes': user['downvotes']}}
+    )
+
+    accounts.find_one_and_update(
+        {'email': email},
+        {'$set': {'vote': user['votes']}}
+    )
+
+
+def downvoteBook(email, bookName, author, price, condition):
     '''
-    Returns the url of the first google image with found using query
-    Input:
-        query (string)
-    Output:
-        url (string)
+    Downvotes a book's rating and seller
+    For more info on book rating vs. user rating, check 'ranking.py'
+    Args:
+        email (string)
+        bookName (string)
+        author (sting)
+        price (string)
+        condition (string)
+    Returns:
+        True
     '''
-    query = query.split()
-    query = '+'.join(query)
-    url = "https://www.google.co.in/search?q="+query+"&source=lnms&tbm=isch"
-    header = {'User-Agent': 'Mozilla/5.0'}
-    soup = get_soup(url,header)
+    db = client['books-database']
+    books = db['books']
+    book = books.find_one({'email': email, 'bookName': bookName, 'author': author, 'price': price, 'condition': condition})
 
+    current_rating = book['rating']
+    if current_rating == None:
+        book['rating'] = -1
+    else:
+        book['rating'] -= 1
 
-    images = [a['src'] for a in soup.find_all("img", {"src": re.compile("gstatic.com")})]
-
-    for i in images:
-        i = str(") + i + str(")
-
-    #for second choice, return images[1], etc.
-    return images[0]
-
-
+    books.find_one_and_update(
+        {'email': email, 'bookName': bookName},
+        {'$set': {'rating': book['rating']}}
+    )
+    
+    # Downvote seller as well
+    downvoteUser( email )
+    return True
 
 #-------------------------- Book list functions --------------------#
 
@@ -477,6 +734,22 @@ def listBooksForUser(email):
     db = client['books-database']
     books = db['books']
     results = books.find({'email': email})
+    docs = []
+    for r in results:
+        docs.append(r)
+    return docs
+
+def listBoughtForUser(email):
+    '''
+    Looks for books that have been bought by a user
+    Args:
+        email (string)
+    Returns:
+        A list of documents for which buyerEmail is the email
+    '''
+    db = client['books-database']
+    books = db['books']
+    results = books.find({'buyerEmail': email, 'status': 'sold'})
     docs = []
     for r in results:
         docs.append(r)
@@ -499,60 +772,18 @@ def listAll():
     return all
 
 # -------------------- Clean Database ---------------------- #
-def delete_account( email ): #without @stuy.edu
+def deleteAccount( email ): #without @stuy.edu
     db = client['accounts-database']
     accounts = db['accounts']
     accounts.find_one_and_delete( {'email': email })
 
-def delete_book( bookName, email ):
+def deleteBook( bookName, email ):
     db = client['books-database']
     books = db['books']
     results = books.remove( {'email': email,
                              'bookName': bookName },
                             True ) # delete justOne = True
 
-# -------------------------Search Function -----------------#
+#------------------------- Admin Functions ----------------#
 
-def searchForBook(query):
-    '''
-    Looks up a list book given a simple search query (no logical operators)
-    Args:
-        query (string)
-    Returns:
-        A list of books with that name/author
-    '''
-    db = client['books-database']
-    books = db['books'] #collection
-
-    #parse query to find relevant results
-    results = []
-    query = query.strip(',')
-    query = query.split(' ')
-    for j in range(len(query)): #goes through query
-
-        # goes through database to find books with query[j] in substring value
-        cursor = books.find( {'bookName':
-                              { '$regex' : '(?i).*' + query[j] + '.*' } } )
-        for b in cursor:
-            if not b in results:
-                results.append( b )
-                #break; #goes to next book
-
-        cursor = books.find( {'author':
-                      { '$regex' : '(?i).*' + query[j] + '.*' } } )
-        for b in cursor:
-            if not b in results:
-                results.append( b )
-                #break; #goes to next book
-
-        cursor = books.find( {'isbn':
-                              { '$regex' : '.*' + query[j] + '.*' } } )
-        for b in cursor:
-            if not b in results:
-                results.append( b )
-                #break; #goes to next book
-
-    for i in results:
-        if i['status'] != 'available':
-            results.pop( results.index(i) )
-    return results
+''' Work in Progress '''

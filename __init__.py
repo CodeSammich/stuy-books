@@ -1,7 +1,28 @@
-#This is the main file that runs the app
+'''
+Authors: Amanda Chiu, Helen Li, Samuel Zhang, Jeffrey Zou
+Description: Middleware Flask Application with Gmail SMTP integration
+
+------------------------------------
+Standard flask application, no specific design notes needed.
+
+------------------------------------
+For database design notes, please see 'database.py'
+For ranking design notes, please see 'ranking.py'
+For image design notes, please see 'image.py'
+
+------------------------------------
+
+Please note: In documentation:
+   - All variable names are denoted with single apostrophes ( ' )
+   - All string values are denoted with double apostrophes ( " )
+   - All relevant information under a particularly heading are denoted with ( - )
+   - All important caveats are denoted with ( NOTE )
+
+*** -----  SYSTEM ADMINISTRATORS PLEASE SEE BELOW  ------- ***
+
+'''
 
 from flask import Flask, render_template, url_for, session, request, redirect
-from database import *
 from functools import wraps
 from hashlib import sha256
 from uuid import uuid4
@@ -10,19 +31,74 @@ from email.mime.multipart import MIMEMultipart
 from email.MIMEText import MIMEText
 import os
 import smtplib
+from raven.contrib.flask import Sentry
+# sentry = Sentry(app, dsn='YOUR_DSN_HERE')
+
+
+# integrate other files
+import database
+import ranking
+import image
 
 app = Flask(__name__)
 
+''' ------------------- SYSTEM ADMIN AREA BEGIN --------------------- '''
+
+'''
+SYSTEM MANAGEMENT ADMINISTRATION VARIABLES: VARIES DEPENDING ON DEPLOYMENT
+
+Change 'website_url' if using new domain / I.P. Address
+
+Change 'home_dir' to either '' or '' + os.path.dirname(__file) + '/'
+    - Whichever works is fine, may vary depending on deployment distro
+
+Change 'password_dir' to os.path.dirname(__file__) with or without " + '/' "
+    - Certain Apache2 servers require the trailing forward slash
+    - Check Apache2 error logs for reference
+
+Change 'ourEmail' in case company / devteam email changes
+    - NOTE: Only guaranteed to work with Gmail servers
+    - Use other email addresses at your own risk
+
+Change 'ourPassword' ONLY if:
+  - Directory for 'password.txt' changes as a last resort
+  - Directory should be able to change by just editing 'password_dir'; see above
+    - NOTE: This is a private file and is NOT pushed on Github
+    - Required in order to run "stuy-books" web application
+
+  NOTE: Change 'password.txt' ONLY if 'ourEmail' changes
+    - 'ourPassword' is the password to 'ourEmail'
+    - Password must be stored in a file named 'password.txt'
+        - NOTE: 'password.txt' MUST have a trailing '\n' or new line character in file
+
+Change 'siteAdmin' and 'siteAdminEmailService' if:
+    - Admin email changes
+
+NOTE: As of 7/20/16, stuy-books only accepts @stuy.edu emails for administrators
+
+'''
+# hosted at NameCheap from Github Student Pack until 7/10/2017
+#website_url = 'http://www.stuybooks.me'
+website_url = 'localhost:5000' # change back to url once done
+
 # base directory for stuy-books
 home_dir = "" #+ os.path.dirname(__file__) + '/'
-password_dir = os.path.dirname(__file__) + '/'
+
+# Use only with local machines when testing
+password_dir = os.path.dirname(__file__)
+
+# Use only with Apache2 Server (Epsilon)
+#password_dir = os.path.dirname(__file__) + '/'
 
 ourEmail = 'stuybooks.JASH@gmail.com'
 ourPassword = open( password_dir + 'password.txt', 'r').read()[:-1]
-#print ourPassword
 
-# hosted at NameCheap from Github Student Pack until 7/10/2017
-website_url = 'http://www.stuybooks.me' # change to official domain name once working (temporary host ip address)
+# NOTE: As of 7/20/16, stuy-books only accepts @stuy.edu emails for administrators
+
+siteAdmin = 'helen1@stuy.edu'
+siteAdminEmailService = '@stuy.edu'
+
+''' ---------------- SYSTEM ADMIN AREA END ------------------- '''
 
 #Wrapper function put before routes that require user to log in
 def requireLogin(f):
@@ -30,6 +106,15 @@ def requireLogin(f):
     def decorated_function(*args, **kwargs):
         if session.get('email') is None:
             return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
+
+def requireAdmin(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        print session.get('email')
+        if session.get('email') + siteAdminEmailService != siteAdmin:
+            return redirect(url_for('home', next=request.url))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -48,13 +133,13 @@ def home():
                 email = email[:-9]
                 session['email'] = email
 
-                return render_template( home_dir + "index.html")
+                return render_template("index.html")
             else:
                 return redirect(url_for('login', msg="Email is not valid. Please use a stuy.edu email."))
         else:
 #            path = path.dirname("index.html")
 #            print path
-            return render_template( home_dir + "index.html")
+            return render_template("index.html")
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -63,49 +148,57 @@ def home():
 def login():
     if request.method == "GET":
         if request.args.get("msg") == None:
-            return render_template( home_dir + "login.html")
+            return render_template("login.html")
         else:
             msg=request.args.get("msg")
-            return render_template( home_dir + "login.html", msg=msg)
+            return render_template("login.html", msg=msg)
     else:
         email = request.form['email']
         pword = request.form['pword']
 
         if email == '':
-            return render_template( home_dir + "login.html", msg = 'Please enter your email')
+            return render_template("login.html", msg = 'Please enter your email')
         if pword == '':
-            return render_template( home_dir + "login.html", msg = 'Please enter your password')
+            return render_template("login.html", msg = 'Please enter your password')
 
         m = sha256()
         m.update(pword)
         passwordHash = m.hexdigest()
 
-        if authenticate(email, passwordHash):
+        if database.authenticate(email, passwordHash):
             session['email'] = email
-            return redirect(url_for('home'))
+            if session['email'] + siteAdminEmailService == siteAdmin:
+                # Site admins may not have "@stuy.edu" emails
+                session['email'] = email # + siteAdminEmailService
+                return redirect(url_for('admin'))
+            # request.args.get'next') ==> doesn't redirect to home, but last active page
+            return redirect(request.args.get('next') or url_for('home')) #redirect still internal server error
 
-        return render_template( home_dir + "login.html", msg = 'Incorrect email/password combination')
+        return render_template("login.html", msg = 'Incorrect email/password combination. If you have not activated your account, please check your email for an activation link.')
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
     if request.method == "GET":
-        return render_template( home_dir + "signup.html")
+        return render_template("signup.html")
     else:
         email = request.form['email']
         pword = request.form['pword']
 
         if email == '' or email.find('@') != -1:
-            return render_template( home_dir + "signup.html", msg = 'Please enter your stuy.edu email')
+            return render_template("signup.html", msg = 'Please enter your stuy.edu email')
         if len(pword) < 8:
-            return render_template( home_dir + "signup.html", msg = 'Please enter a password that is at least 8 characters long')
+            return render_template("signup.html", msg = 'Please enter a password that is at least 8 characters long')
         m = sha256()
         m.update(pword)
         passwordHash = m.hexdigest()
 
-        message = addUser(email, passwordHash)
-        if (message == ''):
+        print "password hashed"
 
-            user = getUser(email)
+        message = database.addUser(email, passwordHash)
+
+        print "user added to database"
+        if (message == ''):
+            user = database.getUser(email)
             data = urlencode({'email': user['email'], '_id': user['_id']})
             activateLink = website_url + '/activate?%s' %(data)
 
@@ -138,24 +231,24 @@ def signup():
             s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
             s.close()
 
-            return render_template( home_dir + "signup.html", msg = "A confirmation email has been sent to " + email + '@stuy.edu')
+            return render_template("signup.html", msg = "A confirmation email has been sent to " + email + '@stuy.edu')
 
-        return render_template( home_dir + "signup.html", msg = message)
+        return render_template("signup.html", msg = message)
 
 @app.route('/forgot', methods=['GET', 'POST'])
 def forgot():
     if request.method == 'GET':
-        return render_template( home_dir + "forgot.html")
+        return render_template("forgot.html")
     else:
 
         email = request.form.get('email')
         if email == None:
-            return render_template( home_dir + "forgot.html", msg = 'You must enter your email!')
-        if getUser(email) == None:
-            return render_template( home_dir + "forgot.html", msg = 'That is an invalid email!')
+            return render_template("forgot.html", msg = 'You must enter your email!')
+        if database.getUser(email) == None:
+            return render_template("forgot.html", msg = 'That is an invalid email!')
 
         randomGen = os.urandom(64).encode('base-64') #just for something random
-        setReset(email, randomGen)
+        database.setReset(email, randomGen)
 
         data = urlencode(randomGen)
         link = website_url + '/change?reset=%s' %(data)
@@ -198,34 +291,34 @@ def change():
     if request.method == 'GET':
         if code == None:
             return redirect(url_for('login')) #They are not allowed to access the page directly
-        return render_template( home_dir + "change.html")
+        return render_template("change.html")
     else:
-        email = getEmailFromReset(code)
+        email = database.getEmailFromReset(code)
         pword = request.form.get('pword')
         confirm = request.form.get('confirmpword')
         if len(pword) < 8:
-            return render_template( home_dir + "change.html", msg='Your password must be at least 8 characters long!', reset=code )
+            return render_template("change.html", msg='Your password must be at least 8 characters long!', reset=code )
         if len(confirmpword) < 8:
-            return render_template( home_dir + "change.html", msg2='The confirm password must be at least 8 characters long!', reset=code )
+            return render_template("change.html", msg2='The confirm password must be at least 8 characters long!', reset=code )
         if pword != confirmpword:
-            return render_template( home_dir + "change.html", msg='The confirm password must match the password!', reset=code )
-        hasReset(code) #sets to reset code back to ''
+            return render_template("change.html", msg='The confirm password must match the password!', reset=code )
+        database.hasReset(code) #sets to reset code back to ''
 
         m = sha256()
         m.update(pword)
         passwordHash = m.hexdigest()
 
-        updatePassword(email, passwordHash)
+        database.updatePassword(email, passwordHash)
         return redirect(url_for('login'))
 
 @app.route('/activate', methods=['GET', 'POST'])
 def activate():
     if request.method == 'GET':
         email = request.args['email']
-        if getStatus(email):
+        if database.getStatus(email):
             return redirect(url_for('home'))
-        updateStatus(email)
-        return render_template( home_dir + "activate.html")
+        database.updateStatus(email)
+        return render_template("activate.html")
     return redirect(url_for('home'))
 
 @app.route("/userpage", methods=['GET', 'POST'])
@@ -233,20 +326,34 @@ def activate():
 def userpage():
     if request.method == "GET":
         email = session.get('email', None)
-        info = listBooksForUser(email)
-        i = 0
-        available=[]
-        pending=[]
-        sold=[]
-        while i < len(info):
-            if info[i]["status"] == "available":
-                available.append(info[i])
-            elif info[i]["status"] == "pending":
-                pending.append(info[i])
-            else:
-                sold.append(info[i])
-            i+=1
-        return render_template( home_dir + "userpage.html", info=info, available=available, pending=pending, sold=sold)
+        print email
+#        print email
+        if email != siteAdmin:
+            info = database.listBooksForUser(email)
+            bought = database.listBoughtForUser(email)
+
+            #for boughtBook in bought:
+            #    bookName = boughtBook['bookName']
+            #    author = boughtBook['author']
+            #    if database.getBookRating(bookName,author)
+            #getBookRating(email, bookName, author, price, condition)
+
+            i = 0
+            available=[]
+            pending=[]
+            sold=[]
+            while i < len(info):
+                if info[i]["status"] == "available":
+                    available.append(info[i])
+                elif info[i]["status"] == "pending":
+                    pending.append(info[i])
+                else:
+                    sold.append(info[i])
+                i+=1
+            return render_template("userpage.html", info=info, available=available, pending=pending, sold=sold, bought=bought, admin=False, email=email)
+        else:
+            return redirect(url_for('admin'))
+
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -256,7 +363,7 @@ def userpage():
 @requireLogin
 def sell():
     if request.method == 'GET':
-        return render_template( home_dir + "sell.html")
+        return render_template("sell.html")
     else:
         if request.form['signup'] == "sell":
             email = session['email']
@@ -267,26 +374,37 @@ def sell():
             condition = request.form['condition']
             price = request.form['price']
 
-            is_new = addBook(email, bookName, author, isbn, subject, condition, price)
+            is_new = database.addBook(email, bookName, author, isbn, subject, condition, price)
 
             if is_new:
                 return redirect(url_for('userpage'))
             else:
-                return render_template( home_dir + "sell2.html", bookName=bookName, author=author, isbn=isbn, subject=subject, condition=condition, price=price, msg="Book already exists")
+                return render_template("sell2.html", bookName=bookName, author=author, isbn=isbn, subject=subject, condition=condition, price=price, msg="Book already exists")
         elif request.form['signup'] == "search":
             search = request.form['searchQuery']
-            return redirect(url_for('search', query=search))
+        return redirect(url_for('search', query=search))
 
 @app.route('/buypage', methods=['GET', 'POST'])
 @requireLogin
 def buy():
     if request.method == "GET":
-        info = listAll()
+        info = database.listAll()
         actualones = []
+        ratings = []
         for i in range(len(info)):
             if info[i].get('status', None) == 'available':
+                sellerEmail = info[i]['email']
+
+                # remove @stuy.edu (intended for admin email)
+                sellerEmail = sellerEmail.replace( siteAdminEmailService, '' )
+
+                rating = database.getUserRating(sellerEmail)
+                info[i]['rating'] = rating
+                print "info rating:"
+                print info[i]['rating']
                 actualones.append(info[i])
-        return render_template(home_dir + "buypage.html", info=actualones)
+
+        return render_template("buypage.html", info=actualones)
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -296,11 +414,12 @@ def buy():
 @requireLogin
 def itempage(email, bookName, author, price, condition):
     if request.method == "GET":
-        info = listAll()
+        info = database.listAll()
         for i in range(len(info)):
             if email == info[i]['email'] and bookName == info[i]['bookName'] and author == info[i]['author'] and price == info[i]['price'] and condition == info[i]['condition']:
                 thisBook = info[i]
-                return render_template( home_dir + "itempage.html", thisBook=thisBook)
+                userRating = database.getUserRating(email)
+                return render_template("itempage.html", thisBook=thisBook, userRating=userRating)
     else:
         search = request.form['searchQuery']
         return redirect(url_for('search', query=search))
@@ -311,22 +430,26 @@ def edit(bookName):
     if request.method == 'GET':
         bookName = bookName.replace("%20", " ")
         email = session['email']
-        bookInfo = getBookInfo(bookName, email)
+        bookInfo = database.getBookInfo(bookName, email)
         if bookInfo == None:
             return redirect(url_for('userpage'), msg = 'You can only edit a book that you own.')
-        return render_template( home_dir + "edit.html", bookInfo=bookInfo)
+        return render_template("edit.html", bookInfo=bookInfo)
     else:
-        email = session['email']
-        title = request.form['title']
-        author = request.form['author']
-        isbn = request.form['serial']
-        subject = request.form['subject']
-        condition = request.form['condition']
-        price = request.form['price']
-        image_url = get_image_url( title + author + isbn )
+        if request.form['signup'] == "edit":
+            email = session['email']
+            title = request.form['title']
+            author = request.form['author']
+            isbn = request.form['serial']
+            subject = request.form['subject']
+            condition = request.form['condition']
+            price = request.form['price']
+            image_url = get_image_url( title + author + isbn )
 
-        updateBookInfo(bookName ,email, title, author, isbn, subject, condition, price, image_url)
-        return redirect(url_for('userpage'))
+            database.updateBookInfo(bookName ,email, title, author, isbn, subject, condition, price, image_url)
+            return redirect(url_for('userpage'))
+        elif request.form['signup'] == "search":
+            search = request.form['searchQuery']
+            return redirect(url_for('search', query=search))
 
 @app.route('/search', methods=["GET","POST"])
 @requireLogin
@@ -336,8 +459,8 @@ def search():
         return redirect(url_for('search', query=search))
     else:
         search = request.args.get("query")
-        results = searchForBook(search)
-        return render_template( home_dir + "search.html", info=results)
+        results = ranking.searchForBook(search)
+        return render_template("search.html", info=results)
 
 @app.route('/finish/<email>/<bookName>/<author>/<price>/<condition>')
 @requireLogin
@@ -345,7 +468,8 @@ def finish(email, bookName, author, price, condition):
     bookName = bookName.replace("%20", " ")
 
     sellerEmail = email + '@stuy.edu'
-    buyerEmail = getBuyerEmail(email, bookName, author, price, condition) + '@stuy.edu'
+    buyerEmail = database.getBuyerEmail(email, bookName, author, price, condition) + '@stuy.edu'
+    rateLink = 'stuybooks.stuycs.org/userpage#bought'
 
     s = smtplib.SMTP('smtp.gmail.com', 587)
     s.ehlo()
@@ -375,23 +499,23 @@ def finish(email, bookName, author, price, condition):
     messageB['Subject'] = 'Finished transaction'
     messageB['From'] = ourEmail
     messageB['To'] = buyerEmail
-
+    #TODO send link to rate
     textB = '''
     Hello,
 
     Our records indicate that you have bought %s for $%s. The seller has confirmed that you have received the book.
+    Please rate the transaction at: %s
     If you have not received your book contact us immediately at %s
 
     Yours,
-    Team JASH''' %(bookName, price, ourEmail)
+    Team JASH''' %(bookName, price, rateLink, ourEmail)
 
     messageB.attach(MIMEText(textB, 'plain'))
     s.sendmail(ourEmail, buyerEmail, messageB.as_string())
 
     s.close()
 
-    setBookStatus(bookName, email, author, price, condition, 'sold')
-    setBuyerEmail(bookName, email, author, price, condition, '')
+    database.setBookStatus(bookName, email, author, price, condition, 'sold')
 
     return redirect(url_for('userpage'))
 
@@ -464,8 +588,8 @@ def bought(email, bookName, author, price, condition):
 
     s.close()
 
-    setBookStatus(bookName, email, author, price, condition, 'pending')
-    setBuyerEmail(bookName, email, author, price, condition, session['email'])
+    database.setBookStatus(bookName, email, author, price, condition, 'pending')
+    database.setBuyerEmail(bookName, email, author, price, condition, session['email'])
 
     return redirect(url_for('userpage'))
 
@@ -474,8 +598,8 @@ def bought(email, bookName, author, price, condition):
 def cancel(email, bookName, author, price, condition):
     bookName = bookName.replace('%20', ' ')
     author = author.replace('%20', ' ')
-    setBookStatus(bookName, session['email'], author, price, condition, 'available')
-    setBuyerEmail(bookName, session['email'], author, price, condition, '')
+    database.setBookStatus(bookName, session['email'], author, price, condition, 'available')
+    database.setBuyerEmail(bookName, session['email'], author, price, condition, '')
 
     #Alert the buyer that the seller has canceled the transaction
     s = smtplib.SMTP('smtp.gmail.com', 587)
@@ -503,8 +627,8 @@ def cancel(email, bookName, author, price, condition):
 
     s.close()
 
-    setBookStatus(bookName, email, author, price, condition, 'available')
-    setBuyerEmail(bookName, email, author, price, condition, session['email'])
+    database.setBookStatus(bookName, email, author, price, condition, 'available')
+    database.setBuyerEmail(bookName, email, author, price, condition, session['email'])
     return redirect(url_for('userpage'))
 
 @app.route('/remove/<email>/<bookName>/<author>/<price>/<condition>')
@@ -512,7 +636,132 @@ def cancel(email, bookName, author, price, condition):
 def remove(email, bookName, author, price, condition):
     bookName = bookName.replace("%20", " ")
     author = author.replace('%20', ' ')
-    deleteAllBooks(email, bookName, author, price, condition)
+    database.deleteAllBooks(email, bookName, author, price, condition)
+    return redirect(url_for('userpage'))
+
+@app.route('/rate', methods=['GET', 'POST'])
+def rate1():
+    if request.method == 'GET':
+        return render_template("rate.html")
+    else:
+        if request.form["signup"] == "Submit":
+            rating = request.form['rating']
+            print rating
+            return redirect(url_for('home'))
+        elif request.form["signup"] == "search":
+            search = request.form['searchQuery']
+            return redirect(url_for('search', query=search))
+
+
+@app.route('/rate/<buyerEmail>/<sellerEmail>/<bookName>/<author>/<price>/<condition>', methods=['GET', 'POST'])
+@requireLogin
+def rate(buyerEmail, sellerEmail, bookName, author, price, condition):
+    if request.method == 'GET':
+        buyerEmail = session['email']
+        print buyerEmail
+        print "HELLLLLLLLLLLLLLLLLLLLLLLLO"
+        if request.args.get("rate")!= None:
+            print "RATTTTED"
+            rating = request.args.get("rate")
+            print rating
+
+            if rating == 2 or rating == str(2):
+                print "upvoting"
+                database.upvoteBook(sellerEmail, bookName, author, price, condition)
+            elif rating == 1 or rating == str(1):
+                print "downvoting"
+                database.downvoteBook(sellerEmail, bookName, author, price, condition)
+
+            return redirect(url_for("userpage"))
+        else:
+            rated = database.getBookRating(sellerEmail, bookName, author, price, condition)
+            if rated == None or rated == 0:
+                print "to be rated"
+                return render_template('rate.html', message="to be rated", buyerEmail=buyerEmail, sellerEmail=sellerEmail, bookName=bookName, author=author, price=price, condition=condition, email=buyerEmail)
+            else:
+                print "already rated"
+                return redirect(url_for("userpage"))
+    else:
+        if request.form["signup"] == "search":
+            search = request.form['searchQuery']
+            return redirect(url_for('search', query=search))
+
+@app.route('/report/<reporterEmail>/<email>/<bookName>/<author>/<price>/<condition>')
+@requireLogin
+def report():
+    bookName = bookName.replace('%20', ' ')
+    author = author.replace('%20', ' ')
+
+    #Report the seller for inappropriate behavior
+    s = smtplib.SMTP('smtp.gmail.com', 587)
+    s.ehlo()
+    s.starttls()
+    s.ehlo()
+    s.login(ourEmail, ourPassword)
+
+    report = MIMEMultipart()
+    report['Subject'] = 'Inappropriate Conduct by User'
+    report['From'] = ourEmail
+    report['To'] = siteAdmin
+
+    adminMessage = '''
+    Dear Administrator,
+
+    %s has reported %s for inappropriate behavior.
+    Please reach out to the users and take appropriate action.
+
+    Yours,
+    Team JASH
+    ''' %(reporterEmail + '@stuy.edu', email + '@stuy.edu')
+
+    report.attach(MIMEText(adminMessage, 'plain'))
+    s.sendmail(ourEmail, siteAdmin, report.as_string())
+
+    message = MIMEMultipart()
+    message['Subject'] = 'Inappropriate Conduct'
+    message['From'] = ourEmail
+    message['To'] = email + '@stuy.edu'
+
+    text = '''
+    Hello,
+
+    Someone has reported you for misconduct. An email has been sent out to the website administrator, who will reach out to you at as soon as possible.
+
+    If you believe this to be a mistake, please feel free to resolve it with the administrator.
+
+    Yours,
+    Team JASH
+    '''
+
+    message.attach(MIMEText(text, 'plain'))
+    s.sendmail(ourEmail, email + '@stuy.edu', message.as_string())
+
+    message = MIMEMultipart()
+    message['Subject'] = 'Your Report Has Been Submitted'
+    message['From'] = ourEmail
+    message['To'] = reporterEmail + '@stuy.edu'
+
+    text = '''
+    Hello,
+
+    Your report has been successfully filed for the following book: %s.
+
+    A site administrator may contact you for additional information.
+
+    Thank you for your support in keeping StuyBooks safe.
+
+    Yours,
+    Team JASH
+
+    If you believe this message to be in error, please reply to this email.
+    ''' %(bookName)
+
+    message.attach(MIMEText(text, 'plain'))
+    s.sendmail(ourEmail, reporterEmail + '@stuy.edu', message.as_string())
+
+    s.close()
+
+    database.setBookStatus(bookName, email, author, price, condition, 'inappropriate')
     return redirect(url_for('userpage'))
 
 @app.route('/logout')
@@ -520,7 +769,35 @@ def logout():
     session.pop('email', None)
     return redirect(url_for('home'))
 
+#------------------ Administrator Functions ------------------#
+@app.route('/admin', methods=['GET', 'POST'])
+@requireLogin
+@requireAdmin
+def admin():
+    if request.method == 'GET':
+        unapproved = image.getUnapprovedImageUrls()
+        print unapproved
+        return render_template('userpage.html', admin=True, unapproved=unapproved)
+    else:
+        unapproved = image.getUnapprovedImageUrls()
+        print unapproved
+        return render_template('userpage.html', admin=True, unapproved=unapproved)
+
+@app.route('/approve/<image_url>')
+@requireLogin
+@requireAdmin
+def approve():
+    image.changeImageStatus(image_url, 'unapproved', 'approved')
+    return redirect(url_for('admin'))
+
+@app.route('/veto/<image_url>')
+@requireLogin
+@requireAdmin
+def veto():
+    image.changeImageStatus(image_url, 'unapproved', 'vetoed')
+    return redirect(url_for('admin'))
+
 if __name__ == "__main__":
-    app.debug = False
+    app.debug = True # change to false when deploying
     app.secret_key = str(uuid4())
     app.run()
