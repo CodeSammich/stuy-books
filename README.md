@@ -12,7 +12,7 @@ Book marketplace for Stuyvesant High School
 
 We are currently working on transferring servers to Digital Ocean for launch at Stuyvesant High School.
 
-#### [Stuybooks!](http://stuybooks.me)
+~~#### [Stuybooks!](http://stuybooks.me)~~
 
 ### Meet The Team!
 
