@@ -8,7 +8,8 @@ Book marketplace for Stuyvesant High School
 
 ~~As of 9:23PM, 7/10/16, we are live!~~
 
-*IN PROGRESS*
+**IN PROGRESS**
+
 We are currently working on transferring servers to Digital Ocean for launch at Stuyvesant High School.
 
 #### [Stuybooks!](http://stuybooks.me)
